@@ -188,16 +188,28 @@ barba.init({
         destroyView = null;
         ScrollTrigger.getAll().forEach((t) => t.kill());
       },
-      async enter({ next }) {
+      async enter({ current, next }) {
+        // Barba only removes the outgoing page after this hook. Take it out of the layout now,
+        // otherwise every ScrollTrigger on the new page is measured with the old page above it
+        // and starts (or never starts) in the wrong place.
+        current.container.style.display = "none";
         // Barba has already pushed the clicked URL; read it from location, because some static
         // hosts redirect "page.html?x" to "/page" and Barba's next.url then loses the query.
         const url = new URL(location.href);
         scroll.start();
-        if (lenis) lenis.scrollTo(0, { immediate: true, force: true });
         window.scrollTo(0, 0);
+        if (lenis) {
+          lenis.resize();
+          lenis.scrollTo(0, { immediate: true, force: true });
+        }
         initView(next.container, url.href, { skipIntro: url.hash.length > 1 });
         jumpToHash(url.hash);
         await reveal();
+      },
+      after() {
+        // Re-measure once the old page is gone and fonts and images have settled.
+        if (lenis) lenis.resize();
+        ScrollTrigger.refresh();
       },
     },
   ],

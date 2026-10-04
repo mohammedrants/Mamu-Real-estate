@@ -238,6 +238,7 @@ export function initHero(track, ctx) {
     gsap.set([refl, towerLights], { autoAlpha: 1 });
   }
 
+  let textTl = null;
   function revealText(animate) {
     gsap.set(title, { autoAlpha: 1 });
     centreOrigins(titleWords);
@@ -259,7 +260,7 @@ export function initHero(track, ctx) {
       filter: "blur(8px)",
       willChange: "opacity, transform, filter",
     });
-    gsap
+    textTl = gsap
       .timeline({ onComplete: done })
       .to(titleWords, {
         autoAlpha: 1,
@@ -283,7 +284,7 @@ export function initHero(track, ctx) {
       revealText(false);
       return;
     }
-    ctx.scroll.stop();
+    // The opening never holds the page: the first scroll, swipe or key press finishes it at once.
     const tl = gsap.timeline();
     tl.fromTo(scene, { autoAlpha: 0 }, { autoAlpha: 1, duration: 1.4, ease: "power1.inOut" }, 0)
       .fromTo(
@@ -297,7 +298,18 @@ export function initHero(track, ctx) {
       .to(wins, { autoAlpha: 1, duration: 0.4, ease: "power2.out", stagger: 0.12 }, 0.7)
       .to(refl, { autoAlpha: 1, duration: 1.2, ease: "power1.out" }, 1.1)
       .add(() => revealText(true), 1.2);
-    cleanups.push(() => tl.kill());
+    const finish = () => {
+      if (state.textReady) return;
+      tl.progress(1);
+      if (textTl) textTl.progress(1);
+    };
+    const events = ["wheel", "touchmove", "keydown"];
+    events.forEach((ev) => window.addEventListener(ev, finish, { passive: true, once: true }));
+    cleanups.push(() => {
+      tl.kill();
+      if (textTl) textTl.kill();
+      events.forEach((ev) => window.removeEventListener(ev, finish));
+    });
   }
 
   /* ---------- Boot ---------- */
