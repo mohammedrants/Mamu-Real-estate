@@ -1,15 +1,29 @@
 # Mera Ghar Meri Jannat — website
 
-Website for **Mera Ghar Meri Jannat · Real Estate Solutions** — *Your Dream Property Partner*.
+Website for **Mera Ghar Meri Jannat · Real Estate Solutions** — _Your Dream Property Partner_.
 Black and gold, after the brand's logo and Facebook cover.
 
 It's a static site (HTML, CSS, vanilla JS), so there's no build step.
 
 ## Run it locally
 
+You need [Node.js](https://nodejs.org) 20.19 or newer (`.nvmrc` pins 22; run `nvm use` if you have nvm).
+
 ```sh
-npx serve .
+npm install
+npm run dev
 ```
+
+This opens http://localhost:3000, and the page reloads whenever you save a file.
+
+| Command                | What it does                                                                   |
+| ---------------------- | ------------------------------------------------------------------------------ |
+| `npm run dev`          | Local server on port 3000 that reloads on save (Vite).                         |
+| `npm start`            | Serves the folder exactly as it'll be deployed, on port 3000 (no live reload). |
+| `npm run format`       | Formats HTML, CSS, JS, JSON and Markdown with Prettier.                        |
+| `npm run format:check` | Checks the formatting without changing files.                                  |
+
+The page loads its scripts as ES modules, so open it through one of these servers. Double-clicking `index.html` won't load the listings.
 
 ## Edit the content
 
@@ -35,4 +49,4 @@ Listing categories match the services on the cover: `home` (houses & villas), `r
 
 ## Deploy
 
-Upload the folder to any static host: GitHub Pages, Netlify, Vercel or cPanel hosting.
+Upload the folder to any static host: GitHub Pages, Netlify, Vercel or cPanel hosting. Leave out `node_modules/`. Only `index.html`, `css/`, `js/` and `assets/` are needed. On Vercel or Netlify, set no build command and use the repository root as the output directory.

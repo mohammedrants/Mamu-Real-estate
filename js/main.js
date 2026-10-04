@@ -3,8 +3,12 @@
 
   var data = window.MGMJ;
   var biz = data.business;
-  var $ = function (sel, root) { return (root || document).querySelector(sel); };
-  var $$ = function (sel, root) { return Array.prototype.slice.call((root || document).querySelectorAll(sel)); };
+  var $ = function (sel, root) {
+    return (root || document).querySelector(sel);
+  };
+  var $$ = function (sel, root) {
+    return Array.prototype.slice.call((root || document).querySelectorAll(sel));
+  };
 
   function waLink(text) {
     var url = "https://wa.me/" + biz.whatsapp;
@@ -16,19 +20,33 @@
     var value = biz[el.getAttribute("data-field")];
     if (value) el.textContent = value;
   });
-  $$("[data-tel]").forEach(function (el) { el.href = "tel:" + biz.phone; });
-  $$("[data-wa]").forEach(function (el) { el.href = waLink("Assalam o Alaikum, I found you on your website."); });
-  $$("[data-mail]").forEach(function (el) { el.href = "mailto:" + biz.email; });
-  $$("[data-fb]").forEach(function (el) { el.href = biz.facebook; });
-  $$("[data-yt]").forEach(function (el) { el.href = biz.youtube; });
-  $$("[data-year]").forEach(function (el) { el.textContent = new Date().getFullYear(); });
+  $$("[data-tel]").forEach(function (el) {
+    el.href = "tel:" + biz.phone;
+  });
+  $$("[data-wa]").forEach(function (el) {
+    el.href = waLink("Assalam o Alaikum, I found you on your website.");
+  });
+  $$("[data-mail]").forEach(function (el) {
+    el.href = "mailto:" + biz.email;
+  });
+  $$("[data-fb]").forEach(function (el) {
+    el.href = biz.facebook;
+  });
+  $$("[data-yt]").forEach(function (el) {
+    el.href = biz.youtube;
+  });
+  $$("[data-year]").forEach(function (el) {
+    el.textContent = new Date().getFullYear();
+  });
 
   // ---------- Header and mobile nav ----------
   var header = $("[data-header]");
   var nav = $("[data-nav]");
   var toggle = $("[data-nav-toggle]");
 
-  function onScroll() { header.classList.toggle("is-scrolled", window.scrollY > 24); }
+  function onScroll() {
+    header.classList.toggle("is-scrolled", window.scrollY > 24);
+  }
   window.addEventListener("scroll", onScroll, { passive: true });
   onScroll();
 
@@ -54,11 +72,21 @@
   var portal = $(".portal");
   // Open once the arch is properly in view, so phone visitors see it too.
   if (portal) {
-    var open = function () { setTimeout(function () { portal.classList.add("is-open"); }, 350); };
+    var open = function () {
+      setTimeout(function () {
+        portal.classList.add("is-open");
+      }, 350);
+    };
     if ("IntersectionObserver" in window) {
-      var io = new IntersectionObserver(function (entries) {
-        if (entries[0].isIntersecting) { open(); io.disconnect(); }
-      }, { threshold: 0.45 });
+      var io = new IntersectionObserver(
+        function (entries) {
+          if (entries[0].isIntersecting) {
+            open();
+            io.disconnect();
+          }
+        },
+        { threshold: 0.45 },
+      );
       io.observe(portal);
     } else {
       open();
@@ -71,7 +99,9 @@
     if (rupees >= 100000) return "PKR " + trim(rupees / 100000) + " Lakh";
     return "PKR " + rupees.toLocaleString("en-PK");
   }
-  function trim(n) { return String(Math.round(n * 100) / 100); }
+  function trim(n) {
+    return String(Math.round(n * 100) / 100);
+  }
 
   function formatArea(area) {
     var units = { marla: "Marla", kanal: "Kanal", sqft: "sq ft" };
@@ -109,22 +139,45 @@
     if (item.beds) specs.push("<li>" + icons.bed + item.beds + " bed</li>");
     if (item.baths) specs.push("<li>" + icons.bath + item.baths + " bath</li>");
     specs.push("<li>" + icons.area + formatArea(item.area) + "</li>");
-    var ask = "Assalam o Alaikum, I'm interested in: " + item.title + ", " + item.location + " (" + formatPrice(item.price) + "). Is it still available?";
+    var ask =
+      "Assalam o Alaikum, I'm interested in: " +
+      item.title +
+      ", " +
+      item.location +
+      " (" +
+      formatPrice(item.price) +
+      "). Is it still available?";
 
     return (
       '<li class="listing">' +
-        '<div class="listing-media">' +
-          '<img src="' + escapeHtml(item.image) + '" alt="Illustration of the ' + escapeHtml(item.title.toLowerCase()) + '" loading="lazy" width="480" height="320">' +
-          '<span class="listing-tag">' + categoryLabels[item.category] + "</span>" +
-        "</div>" +
-        '<div class="listing-body">' +
-          '<p class="listing-price">' + formatPrice(item.price) + "</p>" +
-          '<h3 class="listing-title">' + escapeHtml(item.title) + "</h3>" +
-          '<p class="listing-loc">' + escapeHtml(item.location) + "</p>" +
-          (item.note ? '<p class="listing-note">' + escapeHtml(item.note) + "</p>" : "") +
-          '<ul class="listing-specs">' + specs.join("") + "</ul>" +
-          '<div class="listing-cta"><a class="btn btn-outline" href="' + waLink(ask) + '" target="_blank" rel="noopener">Ask about this property</a></div>' +
-        "</div>" +
+      '<div class="listing-media">' +
+      '<img src="' +
+      escapeHtml(item.image) +
+      '" alt="Illustration of the ' +
+      escapeHtml(item.title.toLowerCase()) +
+      '" loading="lazy" width="480" height="320">' +
+      '<span class="listing-tag">' +
+      categoryLabels[item.category] +
+      "</span>" +
+      "</div>" +
+      '<div class="listing-body">' +
+      '<p class="listing-price">' +
+      formatPrice(item.price) +
+      "</p>" +
+      '<h3 class="listing-title">' +
+      escapeHtml(item.title) +
+      "</h3>" +
+      '<p class="listing-loc">' +
+      escapeHtml(item.location) +
+      "</p>" +
+      (item.note ? '<p class="listing-note">' + escapeHtml(item.note) + "</p>" : "") +
+      '<ul class="listing-specs">' +
+      specs.join("") +
+      "</ul>" +
+      '<div class="listing-cta"><a class="btn btn-outline" href="' +
+      waLink(ask) +
+      '" target="_blank" rel="noopener">Ask about this property</a></div>' +
+      "</div>" +
       "</li>"
     );
   }
@@ -189,12 +242,18 @@
 
   function sqftPer(unit, marla) {
     switch (unit) {
-      case "marla": return marla;
-      case "kanal": return marla * 20;
-      case "sqft": return 1;
-      case "sqyd": return 9;
-      case "sqm": return 10.7639;
-      case "acre": return 43560;
+      case "marla":
+        return marla;
+      case "kanal":
+        return marla * 20;
+      case "sqft":
+        return 1;
+      case "sqyd":
+        return 9;
+      case "sqm":
+        return 10.7639;
+      case "acre":
+        return 43560;
     }
   }
 
@@ -209,17 +268,29 @@
     var unit = conv.unit.value;
     var marla = parseFloat(conv.querySelector("input[name=marla]:checked").value);
     if (isNaN(value) || value < 0) {
-      out.innerHTML = '<div><dt>Enter a size</dt><dd>—</dd></div>';
+      out.innerHTML = "<div><dt>Enter a size</dt><dd>—</dd></div>";
       return;
     }
     var sqft = value * sqftPer(unit, marla);
-    out.innerHTML = Object.keys(unitNames).map(function (u) {
-      return '<div' + (u === unit ? ' class="is-source"' : "") + "><dt>" + unitNames[u] + "</dt><dd>" + fmt(sqft / sqftPer(u, marla)) + "</dd></div>";
-    }).join("");
+    out.innerHTML = Object.keys(unitNames)
+      .map(function (u) {
+        return (
+          "<div" +
+          (u === unit ? ' class="is-source"' : "") +
+          "><dt>" +
+          unitNames[u] +
+          "</dt><dd>" +
+          fmt(sqft / sqftPer(u, marla)) +
+          "</dd></div>"
+        );
+      })
+      .join("");
   }
   conv.addEventListener("input", convert);
   conv.addEventListener("change", convert);
-  conv.addEventListener("submit", function (e) { e.preventDefault(); });
+  conv.addEventListener("submit", function (e) {
+    e.preventDefault();
+  });
   convert();
 
   // ---------- Enquiry → WhatsApp ----------
@@ -230,10 +301,16 @@
     var ok = true;
     ["name", "phone"].forEach(function (name) {
       var input = f[name];
-      var valid = name === "phone" ? /\d{7,}/.test(input.value.replace(/\D/g, "")) : input.value.trim().length > 0;
+      var valid =
+        name === "phone"
+          ? /\d{7,}/.test(input.value.replace(/\D/g, ""))
+          : input.value.trim().length > 0;
       input.closest(".field").classList.toggle("has-error", !valid);
       input.setAttribute("aria-invalid", String(!valid));
-      if (!valid && ok) { input.focus(); ok = false; }
+      if (!valid && ok) {
+        input.focus();
+        ok = false;
+      }
     });
     if (!ok) return;
 
