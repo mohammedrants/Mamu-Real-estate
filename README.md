@@ -91,4 +91,4 @@ They're copied into `vendor/` as plain browser files, so the site still needs no
 
 ## Deploy
 
-Upload the folder to any static host: GitHub Pages, Netlify, Vercel or cPanel hosting. Leave out `node_modules/`. Only the `.html` files, `css/`, `js/`, `vendor/` and `assets/` are needed. On Vercel or Netlify, set no build command and use the repository root as the output directory.
+Upload the folder to any static host: GitHub Pages, Netlify, Vercel or cPanel hosting. Leave out `node_modules/`. Only the `.html` files, `css/`, `js/`, `vendor/` and `assets/` are needed. On Vercel, `vercel.json` already does this: no build step, and the repository root is served as is (without it, Vercel detects Vite and publishes only the home page). On Netlify, set no build command and use the repository root as the publish directory.
