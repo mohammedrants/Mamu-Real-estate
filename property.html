@@ -18,6 +18,20 @@
     />
     <link rel="stylesheet" href="vendor/lenis.css" />
     <link rel="stylesheet" href="css/styles.css" />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "RealEstateAgent",
+        "name": "Mera Ghar Meri Jannat",
+        "alternateName": "میرا گھر میری جنت",
+        "description": "Real estate solutions: residential plots, commercial plots, houses and villas, and property investment.",
+        "telephone": "+923114101892",
+        "email": "dreamproperties64@gmail.com",
+        "logo": "assets/svg/logo.svg",
+        "areaServed": { "@type": "Country", "name": "Pakistan" },
+        "sameAs": ["https://www.facebook.com/profile.php?id=61590870142852", "https://www.youtube.com/@MeraGharMeriJannat1"]
+      }
+    </script>
   </head>
   <body data-barba="wrapper">
     <a class="skip-link" href="#main">Skip to content</a>
@@ -41,6 +55,15 @@
           <a href="services.html" data-nav-link="services">Services</a>
           <a href="about.html" data-nav-link="about">About</a>
           <a href="contact.html" data-nav-link="contact">Contact</a>
+          <a class="nav-saved" href="properties.html?saved=1" data-nav-saved>
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path
+                d="M12 20s-7.5-4.6-9.2-9.3C1.6 7.3 3.9 4 7.3 4c2 0 3.6 1.1 4.7 2.7C13.1 5.1 14.7 4 16.7 4c3.4 0 5.7 3.3 4.5 6.7C19.5 15.4 12 20 12 20Z"
+              />
+            </svg>
+            <span class="nav-saved-label">Shortlist</span>
+            <span class="saved-count" data-saved-count aria-label="saved properties">0</span>
+          </a>
           <a class="btn btn-gold nav-call" href="#" data-tel>
             <svg class="btn-icon" viewBox="0 0 32 32" aria-hidden="true">
               <path d="M8 4h5l2 7-3 2c1.5 3 4 5.5 7 7l2-3 7 2v5c0 1-1 2-2 2C14 26 6 18 6 6c0-1 1-2 2-2Z" />
@@ -59,30 +82,156 @@
             <a href="index.html">Home</a><span aria-hidden="true">/</span><a href="properties.html">Properties</a
             ><span aria-hidden="true">/</span><span aria-current="page" data-p-crumb>Property</span>
           </nav>
+
           <div class="property-grid">
-            <figure class="property-media" data-tilt-media>
-              <img data-p-image src="assets/img/villa.svg" alt="" width="480" height="320" />
-              <figcaption class="property-tag" data-p-category></figcaption>
-            </figure>
+            <!-- Gallery -->
+            <div class="gallery" data-gallery>
+              <figure class="gallery-main" data-tilt-media>
+                <button type="button" class="gallery-open" data-gallery-open aria-label="View images full screen">
+                  <img data-gallery-main src="assets/img/villa.svg" alt="" width="480" height="320" />
+                </button>
+                <figcaption class="property-tag" data-p-category></figcaption>
+                <span class="gallery-count" data-gallery-count></span>
+              </figure>
+              <div class="gallery-thumbs" role="group" aria-label="Choose image" data-gallery-thumbs></div>
+            </div>
+
+            <!-- Summary -->
             <div class="property-info">
-              <p class="property-price" data-p-price></p>
+              <div class="property-flags">
+                <span class="status-pill" data-p-status></span>
+                <span class="badge-pill" data-p-badge hidden></span>
+              </div>
               <h1 class="property-title" data-p-title></h1>
               <p class="property-loc" data-p-location></p>
+              <p class="property-price"><span data-p-price></span> <span class="property-rate" data-p-rate></span></p>
               <ul class="property-specs" data-p-specs></ul>
-              <p class="property-desc" data-p-desc></p>
               <div class="property-cta">
                 <a class="btn btn-gold" href="#" data-p-wa target="_blank" rel="noopener">Ask about this on WhatsApp</a>
                 <a class="btn btn-outline" href="#" data-tel>Call <span data-field="phoneDisplay"></span></a>
               </div>
-              <ul class="property-assure">
-                <li>Ownership and dues checked before any token money</li>
-                <li>Visits arranged at a time that suits you</li>
-                <li>Help with transfer and handover</li>
-              </ul>
+              <div class="property-actions">
+                <span data-p-save></span>
+                <button type="button" class="action-btn" data-p-share>
+                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M8.6 13.5l6.8 4M15.4 6.5l-6.8 4" />
+                    <circle cx="18" cy="5" r="3" />
+                    <circle cx="6" cy="12" r="3" />
+                    <circle cx="18" cy="19" r="3" />
+                  </svg>
+                  <span data-share-label>Share</span>
+                </button>
+              </div>
+              <div class="property-verified" data-p-verified hidden>
+                <span data-p-seal></span>
+                <p>
+                  <strong>Papers checked.</strong> Ownership, society dues and NOCs for this property have been verified by our team. Ask us
+                  for copies before your visit.
+                </p>
+              </div>
             </div>
+          </div>
+
+          <div class="property-detail">
+            <div class="property-main">
+              <section class="detail-block" aria-labelledby="about-title">
+                <h2 id="about-title">About this property</h2>
+                <p class="property-desc" data-p-desc></p>
+              </section>
+
+              <section class="detail-block" aria-labelledby="facts-title">
+                <h2 id="facts-title">Key facts</h2>
+                <dl class="facts" data-p-facts></dl>
+              </section>
+
+              <section class="detail-block" aria-labelledby="features-title" data-p-features-block>
+                <h2 id="features-title">Features</h2>
+                <ul class="features" data-p-features></ul>
+              </section>
+
+              <section class="detail-block" aria-labelledby="map-title">
+                <h2 id="map-title">Location</h2>
+                <div class="map-box" data-map>
+                  <p class="map-place" data-p-place></p>
+                  <p class="map-note">The map loads from Google Maps. We share the exact address once you book a visit.</p>
+                  <button type="button" class="btn btn-outline" data-map-load>Show on map</button>
+                </div>
+              </section>
+            </div>
+
+            <aside class="property-side">
+              <section class="side-card" aria-labelledby="calc-title">
+                <h2 id="calc-title">Instalment calculator</h2>
+                <form class="calc" data-calc>
+                  <label class="field">
+                    <span class="field-label">Price (PKR)</span>
+                    <input type="number" name="price" min="0" step="100000" inputmode="numeric" />
+                  </label>
+                  <label class="field">
+                    <span class="field-label">Down payment <output name="downOut">25%</output></span>
+                    <input type="range" name="down" min="10" max="90" step="5" value="25" />
+                  </label>
+                  <label class="field">
+                    <span class="field-label">Plan length</span>
+                    <select name="years">
+                      <option value="1">1 year</option>
+                      <option value="2">2 years</option>
+                      <option value="3" selected>3 years</option>
+                      <option value="5">5 years</option>
+                    </select>
+                  </label>
+                  <dl class="calc-out" aria-live="polite">
+                    <div>
+                      <dt>Down payment</dt>
+                      <dd data-calc-down></dd>
+                    </div>
+                    <div>
+                      <dt>Monthly instalment</dt>
+                      <dd data-calc-monthly></dd>
+                    </div>
+                  </dl>
+                  <p class="hint">
+                    Equal monthly instalments, no profit added. Actual plans vary by developer — ask us for the real schedule.
+                  </p>
+                </form>
+              </section>
+
+              <section class="side-card" aria-labelledby="visit-title">
+                <h2 id="visit-title">Book a visit</h2>
+                <form class="visit" data-visit novalidate>
+                  <label class="field">
+                    <span class="field-label">Your name</span>
+                    <input type="text" name="name" autocomplete="name" required />
+                    <span class="field-error">Enter your name.</span>
+                  </label>
+                  <label class="field">
+                    <span class="field-label">Preferred day</span>
+                    <input type="date" name="day" required />
+                    <span class="field-error">Pick a day for the visit.</span>
+                  </label>
+                  <label class="field">
+                    <span class="field-label">Time</span>
+                    <select name="time">
+                      <option>Morning (10am – 1pm)</option>
+                      <option>Afternoon (1pm – 5pm)</option>
+                      <option>Evening (5pm – 8pm)</option>
+                    </select>
+                  </label>
+                  <button class="btn btn-gold" type="submit">Request visit on WhatsApp</button>
+                </form>
+              </section>
+            </aside>
           </div>
         </div>
       </article>
+
+      <dialog class="lightbox" data-lightbox aria-label="Property images">
+        <img data-lightbox-img src="" alt="" />
+        <p class="lightbox-caption" data-lightbox-caption></p>
+        <button type="button" class="lightbox-btn lightbox-prev" data-lightbox-prev aria-label="Previous image">‹</button>
+        <button type="button" class="lightbox-btn lightbox-next" data-lightbox-next aria-label="Next image">›</button>
+        <button type="button" class="lightbox-close" data-lightbox-close aria-label="Close">×</button>
+      </dialog>
 
       <div class="property-missing wrap" data-p-missing hidden>
         <h1>This property isn't on our list any more</h1>

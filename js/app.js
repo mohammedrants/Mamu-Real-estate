@@ -1,6 +1,6 @@
 // Entry point: smooth scroll (Lenis + ScrollTrigger), the persistent header,
 // and Barba page transitions between all pages.
-import { $, $$, fillBusiness, reducedMotion } from "./shared.js";
+import { $, $$, fillBusiness, reducedMotion, shortlist } from "./shared.js";
 import { initHome, initProperties, initServices, initAbout, initContact } from "./views.js";
 import { initProperty } from "./property.js";
 
@@ -105,6 +105,14 @@ const views = {
   property: initProperty,
 };
 
+/** Shortlist counts appear in the header and on the properties page. */
+function updateSavedCount() {
+  const n = shortlist.ids().length;
+  $$("[data-saved-count]").forEach((el) => (el.textContent = n));
+  $$("[data-nav-saved]").forEach((el) => el.classList.toggle("has-items", n > 0));
+}
+shortlist.subscribe(updateSavedCount);
+
 /** The header persists across pages, so mark the current section in it after each transition. */
 function markNav(namespace) {
   const section = namespace === "property" ? "properties" : namespace;
@@ -118,6 +126,7 @@ let destroyView = null;
 function initView(container, url, { skipIntro = false } = {}) {
   fillBusiness(container);
   markNav(container.dataset.barbaNamespace);
+  updateSavedCount();
   const init = views[container.dataset.barbaNamespace];
   destroyView = init ? init(container, { scroll, skipIntro }, url) : null;
   onScroll();

@@ -31,26 +31,34 @@ The page loads its scripts as ES modules, so open it through one of these server
 Every business detail and listing is in **`js/data.js`**:
 
 - `business`: phone, WhatsApp number, email, YouTube and Facebook links.
-- `listings`: the properties shown on the site. The current ones are **samples**. Replace them with real properties (title, location, category, price in rupees, area, beds and baths, image, and a `description` for the property page).
+- `listings`: the properties shown on the site. The current ones are **samples**. Replace them with real properties — the comment at the top of the list explains every field (society, city, price, area, status, badge, `verified`, listing date, images, features, description).
+- `faq`: the buyer questions shown on the Services page.
 
 Listing categories match the services on the cover: `home` (houses & villas), `residential` (residential plots), `commercial` and `investment`.
 
 ## Pages
 
-| Page                 | What's on it                                                                            |
-| -------------------- | --------------------------------------------------------------------------------------- |
-| `index.html`         | Cinematic hero, search, featured properties, services overview, our promise             |
-| `properties.html`    | All listings with search and filters, and the Marla / Kanal / sq ft converter           |
-| `property.html?id=…` | One property in full: price, specs, description, WhatsApp and call buttons              |
-| `services.html`      | The four services in detail, with what we check for each, and the four-step process     |
-| `about.html`         | Who we are, our promise and the YouTube channel                                         |
-| `contact.html`       | Phone, WhatsApp, email and an enquiry form that opens WhatsApp with the message written |
+| Page                 | What's on it                                                                                                      |
+| -------------------- | ----------------------------------------------------------------------------------------------------------------- |
+| `index.html`         | Cinematic hero, search, featured properties, browse by area, services, our promise, "Selling your property?"      |
+| `properties.html`    | All listings with search, city / budget / size filters, sorting and the shortlist; Marla / Kanal converter        |
+| `property.html?id=…` | Gallery with full-screen view, key facts, features, location map, instalment calculator, "Book a visit" and share |
+| `services.html`      | The four services in detail with what we check for each, the four-step process and a buyer FAQ                    |
+| `about.html`         | Who we are, our promise and the YouTube channel                                                                   |
+| `contact.html`       | Phone, WhatsApp, email and an enquiry form that opens WhatsApp with the message written                           |
 
-Every page except Contact ends with a call-to-action band, and they all share one header and footer.
+**What makes the listings different**
 
-**Home page hero:** a night scene seen through a gold Mughal arch. The moon rises, the villa's windows light up one by one and the title blooms in. Scrolling moves the camera through the arch towards the house, then the scene fades to the statement "Every property checked. Every step explained."
+- **"Papers checked" seal** (تصدیق شدہ) on every property whose ownership, dues and NOCs have been verified (`verified: true` in `js/data.js`).
+- **Price per marla** and the area in both marla and square feet on every card.
+- **Shortlist**: the heart on any property saves it in the visitor's browser; the count shows in the header and `properties.html?saved=1` lists them.
+- **Book a visit**, **Ask on WhatsApp** and the enquiry form all open WhatsApp with the message already written.
+- The **map** only loads from Google when the visitor asks for it.
+- Search engines get structured data: the business (`RealEstateAgent`), breadcrumbs, the FAQ and each listing (`RealEstateListing`).
 
-**Motion:** headings sharpen in word by word, service icons draw themselves in gold, the line between the four steps fills as you scroll, the promise quote inks in, property cards tilt in 3D on hover, and moving between pages drops a gold-edged curtain with the logo. Everything respects the visitor's reduced-motion setting.
+**Home page hero:** a night scene seen through a gold Mughal arch. The moon rises, the villa's windows light up one by one and the title blooms in. Scrolling moves the camera through the arch towards the house, then the scene fades to the statement "Every property checked. Every step explained." The opening never blocks scrolling — the first scroll finishes it.
+
+**Motion:** headings sharpen in word by word, service icons draw themselves in gold, the line between the four steps fills as you scroll, property cards tilt in 3D on hover, and moving between pages drops a gold-edged curtain with the logo. Everything respects the visitor's reduced-motion setting.
 
 ### Animation libraries
 
@@ -79,7 +87,7 @@ They're copied into `vendor/` as plain browser files, so the site still needs no
 
 - `assets/svg/logo.svg`: the logo redrawn as a vector (crescent, bird, house, tree, towers).
 - `assets/svg/jaali.svg`, `jaali-faint.svg`: the lattice pattern.
-- `assets/img/*.svg`: property illustrations, to use until real photos are added. Photos (`.jpg`/`.webp`) can go in `assets/img/`; point each listing's `image` at its photo.
+- `assets/img/*.svg`: property illustrations and illustrative floor / plot plans (`plan-*.svg`), to use until real photos are added. Photos (`.jpg`/`.webp`) can go in `assets/img/`; point each listing's `image` at its photo.
 
 ## Deploy
 

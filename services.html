@@ -24,6 +24,30 @@
     />
     <link rel="stylesheet" href="vendor/lenis.css" />
     <link rel="stylesheet" href="css/styles.css" />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "RealEstateAgent",
+        "name": "Mera Ghar Meri Jannat",
+        "alternateName": "میرا گھر میری جنت",
+        "description": "Real estate solutions: residential plots, commercial plots, houses and villas, and property investment.",
+        "telephone": "+923114101892",
+        "email": "dreamproperties64@gmail.com",
+        "logo": "assets/svg/logo.svg",
+        "areaServed": { "@type": "Country", "name": "Pakistan" },
+        "sameAs": ["https://www.facebook.com/profile.php?id=61590870142852", "https://www.youtube.com/@MeraGharMeriJannat1"]
+      }
+    </script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Home", "item": "index.html" },
+          { "@type": "ListItem", "position": 2, "name": "Services", "item": "services.html" }
+        ]
+      }
+    </script>
   </head>
   <body data-barba="wrapper">
     <a class="skip-link" href="#main">Skip to content</a>
@@ -47,6 +71,15 @@
           <a href="services.html" data-nav-link="services" aria-current="page">Services</a>
           <a href="about.html" data-nav-link="about">About</a>
           <a href="contact.html" data-nav-link="contact">Contact</a>
+          <a class="nav-saved" href="properties.html?saved=1" data-nav-saved>
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path
+                d="M12 20s-7.5-4.6-9.2-9.3C1.6 7.3 3.9 4 7.3 4c2 0 3.6 1.1 4.7 2.7C13.1 5.1 14.7 4 16.7 4c3.4 0 5.7 3.3 4.5 6.7C19.5 15.4 12 20 12 20Z"
+              />
+            </svg>
+            <span class="nav-saved-label">Shortlist</span>
+            <span class="saved-count" data-saved-count aria-label="saved properties">0</span>
+          </a>
           <a class="btn btn-gold nav-call" href="#" data-tel>
             <svg class="btn-icon" viewBox="0 0 32 32" aria-hidden="true">
               <path d="M8 4h5l2 7-3 2c1.5 3 4 5.5 7 7l2-3 7 2v5c0 1-1 2-2 2C14 26 6 18 6 6c0-1 1-2 2-2Z" />
@@ -64,7 +97,10 @@
           <nav class="crumbs" aria-label="Breadcrumb">
             <a href="index.html">Home</a><span aria-hidden="true">/</span><span aria-current="page">Services</span>
           </nav>
-          <h1 data-reveal>Services</h1>
+          <div class="page-title">
+            <h1 data-reveal>Services</h1>
+            <p class="page-urdu" lang="ur" dir="rtl">خدمات</p>
+          </div>
           <p class="page-lede">
             From a 5 marla plot to a commercial building, we find the right property, check every paper and stay with you until the transfer
             is done.
@@ -185,6 +221,17 @@
               <p>We handle the bayana, the transfer and the handover — and we're a call away after you move in.</p>
             </li>
           </ol>
+        </div>
+      </section>
+
+      <!-- FAQ -->
+      <section class="section faq" aria-labelledby="faq-title">
+        <div class="wrap faq-grid">
+          <div>
+            <h2 id="faq-title" data-reveal>Questions buyers ask us</h2>
+            <p class="section-intro">Straight answers to what comes up most. Anything else, just ask on WhatsApp.</p>
+          </div>
+          <div class="faq-list" data-faq></div>
         </div>
       </section>
 

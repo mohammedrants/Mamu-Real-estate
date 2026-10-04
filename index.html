@@ -24,6 +24,20 @@
     />
     <link rel="stylesheet" href="vendor/lenis.css" />
     <link rel="stylesheet" href="css/styles.css" />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "RealEstateAgent",
+        "name": "Mera Ghar Meri Jannat",
+        "alternateName": "میرا گھر میری جنت",
+        "description": "Real estate solutions: residential plots, commercial plots, houses and villas, and property investment.",
+        "telephone": "+923114101892",
+        "email": "dreamproperties64@gmail.com",
+        "logo": "assets/svg/logo.svg",
+        "areaServed": { "@type": "Country", "name": "Pakistan" },
+        "sameAs": ["https://www.facebook.com/profile.php?id=61590870142852", "https://www.youtube.com/@MeraGharMeriJannat1"]
+      }
+    </script>
   </head>
   <body data-barba="wrapper">
     <a class="skip-link" href="#main">Skip to content</a>
@@ -47,6 +61,15 @@
           <a href="services.html" data-nav-link="services">Services</a>
           <a href="about.html" data-nav-link="about">About</a>
           <a href="contact.html" data-nav-link="contact">Contact</a>
+          <a class="nav-saved" href="properties.html?saved=1" data-nav-saved>
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path
+                d="M12 20s-7.5-4.6-9.2-9.3C1.6 7.3 3.9 4 7.3 4c2 0 3.6 1.1 4.7 2.7C13.1 5.1 14.7 4 16.7 4c3.4 0 5.7 3.3 4.5 6.7C19.5 15.4 12 20 12 20Z"
+              />
+            </svg>
+            <span class="nav-saved-label">Shortlist</span>
+            <span class="saved-count" data-saved-count aria-label="saved properties">0</span>
+          </a>
           <a class="btn btn-gold nav-call" href="#" data-tel>
             <svg class="btn-icon" viewBox="0 0 32 32" aria-hidden="true">
               <path d="M8 4h5l2 7-3 2c1.5 3 4 5.5 7 7l2-3 7 2v5c0 1-1 2-2 2C14 26 6 18 6 6c0-1 1-2 2-2Z" />
@@ -538,6 +561,17 @@
         </div>
       </section>
 
+      <!-- Browse by area -->
+      <section class="section areas" aria-labelledby="areas-title">
+        <div class="wrap">
+          <div class="section-head">
+            <h2 id="areas-title" data-reveal>Browse by area</h2>
+            <p class="section-intro">The societies and neighbourhoods we're currently showing property in.</p>
+          </div>
+          <ul class="area-list" data-areas></ul>
+        </div>
+      </section>
+
       <!-- Services, as on the cover -->
       <section class="section services" id="services" aria-labelledby="services-title">
         <div class="wrap">
@@ -612,6 +646,28 @@
             </li>
             <li class="promise-more"><a class="text-link" href="about.html">More about us</a></li>
           </ul>
+        </div>
+      </section>
+
+      <!-- Sellers -->
+      <section class="section sell" aria-labelledby="sell-title">
+        <div class="wrap sell-inner">
+          <div class="sell-copy">
+            <h2 id="sell-title" data-reveal>Selling your property?</h2>
+            <p class="section-intro">
+              We list it, show it only to serious buyers, and handle the paperwork through to transfer — so you're not taking calls all day.
+            </p>
+            <ol class="sell-steps">
+              <li><strong>Tell us about it</strong> — location, size, asking price and photos on WhatsApp.</li>
+              <li><strong>We check the papers</strong> — so buyers can move quickly and with confidence.</li>
+              <li><strong>Qualified buyers only</strong> — we arrange viewings and negotiate on your behalf.</li>
+            </ol>
+            <a class="btn btn-gold" href="#" data-wa-sell target="_blank" rel="noopener">List your property with us</a>
+          </div>
+          <div class="sell-art" aria-hidden="true">
+            <img src="assets/img/plan-plot.svg" alt="" width="480" height="320" loading="lazy" />
+            <span class="sell-seal" data-sell-seal></span>
+          </div>
         </div>
       </section>
 

@@ -24,6 +24,30 @@
     />
     <link rel="stylesheet" href="vendor/lenis.css" />
     <link rel="stylesheet" href="css/styles.css" />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "RealEstateAgent",
+        "name": "Mera Ghar Meri Jannat",
+        "alternateName": "میرا گھر میری جنت",
+        "description": "Real estate solutions: residential plots, commercial plots, houses and villas, and property investment.",
+        "telephone": "+923114101892",
+        "email": "dreamproperties64@gmail.com",
+        "logo": "assets/svg/logo.svg",
+        "areaServed": { "@type": "Country", "name": "Pakistan" },
+        "sameAs": ["https://www.facebook.com/profile.php?id=61590870142852", "https://www.youtube.com/@MeraGharMeriJannat1"]
+      }
+    </script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Home", "item": "index.html" },
+          { "@type": "ListItem", "position": 2, "name": "Properties", "item": "properties.html" }
+        ]
+      }
+    </script>
   </head>
   <body data-barba="wrapper">
     <a class="skip-link" href="#main">Skip to content</a>
@@ -47,6 +71,15 @@
           <a href="services.html" data-nav-link="services">Services</a>
           <a href="about.html" data-nav-link="about">About</a>
           <a href="contact.html" data-nav-link="contact">Contact</a>
+          <a class="nav-saved" href="properties.html?saved=1" data-nav-saved>
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path
+                d="M12 20s-7.5-4.6-9.2-9.3C1.6 7.3 3.9 4 7.3 4c2 0 3.6 1.1 4.7 2.7C13.1 5.1 14.7 4 16.7 4c3.4 0 5.7 3.3 4.5 6.7C19.5 15.4 12 20 12 20Z"
+              />
+            </svg>
+            <span class="nav-saved-label">Shortlist</span>
+            <span class="saved-count" data-saved-count aria-label="saved properties">0</span>
+          </a>
           <a class="btn btn-gold nav-call" href="#" data-tel>
             <svg class="btn-icon" viewBox="0 0 32 32" aria-hidden="true">
               <path d="M8 4h5l2 7-3 2c1.5 3 4 5.5 7 7l2-3 7 2v5c0 1-1 2-2 2C14 26 6 18 6 6c0-1 1-2 2-2Z" />
@@ -64,7 +97,10 @@
           <nav class="crumbs" aria-label="Breadcrumb">
             <a href="index.html">Home</a><span aria-hidden="true">/</span><span aria-current="page">Properties</span>
           </nav>
-          <h1 data-reveal>Properties</h1>
+          <div class="page-title">
+            <h1 data-reveal>Properties</h1>
+            <p class="page-urdu" lang="ur" dir="rtl">جائیدادیں</p>
+          </div>
           <p class="page-lede">
             Houses, villas, residential and commercial plots and investment projects we're currently showing. Every listing is checked
             before it goes up.
@@ -78,25 +114,71 @@
       <!-- Listings -->
       <section class="section listings" id="properties" aria-labelledby="properties-title">
         <div class="wrap">
-          <form class="search search-inline" data-search aria-label="Search properties">
-            <label class="field">
+          <form class="filter-bar" data-search aria-label="Search and filter properties">
+            <label class="field field-q">
               <span class="field-label">Area or society</span>
               <input type="search" name="q" placeholder="e.g. DHA, Bahria Town" autocomplete="off" />
             </label>
+            <label class="field">
+              <span class="field-label">City</span>
+              <select name="city" data-city-options>
+                <option value="">All cities</option>
+              </select>
+            </label>
+            <label class="field">
+              <span class="field-label">Budget</span>
+              <select name="budget">
+                <option value="">Any budget</option>
+                <option value="0-20000000">Up to 2 crore</option>
+                <option value="20000000-50000000">2 – 5 crore</option>
+                <option value="50000000-100000000">5 – 10 crore</option>
+                <option value="100000000-">10 crore +</option>
+              </select>
+            </label>
+            <label class="field">
+              <span class="field-label">Size</span>
+              <select name="size">
+                <option value="">Any size</option>
+                <option value="0-5">Up to 5 marla</option>
+                <option value="5-10">5 – 10 marla</option>
+                <option value="10-20">10 marla – 1 kanal</option>
+                <option value="20-">1 kanal +</option>
+              </select>
+            </label>
             <button class="btn btn-gold search-go" type="submit">Search</button>
           </form>
-          <div class="filters" role="group" aria-label="Filter properties" data-filters>
-            <button type="button" class="chip" data-filter="all" aria-pressed="true">All</button>
-            <button type="button" class="chip" data-filter="home" aria-pressed="false">Houses &amp; villas</button>
-            <button type="button" class="chip" data-filter="residential" aria-pressed="false">Residential plots</button>
-            <button type="button" class="chip" data-filter="commercial" aria-pressed="false">Commercial</button>
-            <button type="button" class="chip" data-filter="investment" aria-pressed="false">Investment</button>
+          <div class="results-bar">
+            <div class="filters" role="group" aria-label="Property type" data-filters>
+              <button type="button" class="chip" data-filter="all" aria-pressed="true">All</button>
+              <button type="button" class="chip" data-filter="home" aria-pressed="false">Houses &amp; villas</button>
+              <button type="button" class="chip" data-filter="residential" aria-pressed="false">Residential plots</button>
+              <button type="button" class="chip" data-filter="commercial" aria-pressed="false">Commercial</button>
+              <button type="button" class="chip" data-filter="investment" aria-pressed="false">Investment</button>
+              <button type="button" class="chip chip-saved" data-saved-toggle aria-pressed="false">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path
+                    d="M12 20s-7.5-4.6-9.2-9.3C1.6 7.3 3.9 4 7.3 4c2 0 3.6 1.1 4.7 2.7C13.1 5.1 14.7 4 16.7 4c3.4 0 5.7 3.3 4.5 6.7C19.5 15.4 12 20 12 20Z"
+                  />
+                </svg>
+                Shortlist <span data-saved-count>0</span>
+              </button>
+            </div>
+            <label class="sort">
+              <span class="field-label">Sort by</span>
+              <select data-sort>
+                <option value="newest">Newest first</option>
+                <option value="price-asc">Price: low to high</option>
+                <option value="price-desc">Price: high to low</option>
+                <option value="size-desc">Size: largest first</option>
+                <option value="rate-asc">Price per marla: lowest</option>
+              </select>
+            </label>
           </div>
           <p class="results-count" aria-live="polite" data-count></p>
           <ul class="listing-grid" data-listings></ul>
           <div class="empty" data-empty hidden>
-            <p class="empty-title">Nothing on our list matches that yet.</p>
-            <p>Tell us what you're looking for and we'll send you options as soon as they come in.</p>
+            <p class="empty-title" data-empty-title>Nothing on our list matches that yet.</p>
+            <p data-empty-text>Tell us what you're looking for and we'll send you options as soon as they come in.</p>
             <div class="empty-actions">
               <button type="button" class="btn btn-outline" data-reset>Show all properties</button>
               <a class="btn btn-gold" href="contact.html">Tell us what you need</a>

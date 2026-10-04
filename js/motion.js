@@ -97,7 +97,16 @@ export function tilt(elements, options = {}) {
     gyroscope: false,
     ...options,
   });
-  return () => els.forEach((el) => el.vanillaTilt && el.vanillaTilt.destroy());
+  // Vanilla-Tilt queues a reset for the next frame on mouseleave, and that reset throws if the
+  // instance has been destroyed meanwhile. Neutralise what it would call, then destroy.
+  return () =>
+    els.forEach((el) => {
+      const t = el.vanillaTilt;
+      if (!t) return;
+      const noop = () => {};
+      t.onMouseEnter = t.updateElementPosition = t.update = t.setTransition = noop;
+      t.destroy();
+    });
 }
 
 /** A scrubbed "ink" effect: words of a paragraph light up as it scrolls through. */
