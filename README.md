@@ -16,12 +16,13 @@ npm run dev
 
 This opens http://localhost:3000, and the page reloads whenever you save a file.
 
-| Command                | What it does                                                                   |
-| ---------------------- | ------------------------------------------------------------------------------ |
-| `npm run dev`          | Local server on port 3000 that reloads on save (Vite).                         |
-| `npm start`            | Serves the folder exactly as it'll be deployed, on port 3000 (no live reload). |
-| `npm run format`       | Formats HTML, CSS, JS, JSON and Markdown with Prettier.                        |
-| `npm run format:check` | Checks the formatting without changing files.                                  |
+| Command                | What it does                                                                                        |
+| ---------------------- | --------------------------------------------------------------------------------------------------- |
+| `npm run dev`          | Local server on port 3000 that reloads on save (Vite).                                              |
+| `npm start`            | Serves the folder exactly as it'll be deployed, on port 3000 (no live reload).                      |
+| `npm run format`       | Formats HTML, CSS, JS, JSON and Markdown with Prettier.                                             |
+| `npm run format:check` | Checks the formatting without changing files.                                                       |
+| `npm run vendor`       | Copies the animation libraries from `node_modules/` into `vendor/` (also runs after `npm install`). |
 
 The page loads its scripts as ES modules, so open it through one of these servers. Double-clicking `index.html` won't load the listings.
 
@@ -30,16 +31,44 @@ The page loads its scripts as ES modules, so open it through one of these server
 Every business detail and listing is in **`js/data.js`**:
 
 - `business`: phone, WhatsApp number, email, YouTube and Facebook links.
-- `listings`: the properties shown on the site. The current ones are **samples**. Replace them with real properties (title, location, category, price in rupees, area, beds and baths, image).
+- `listings`: the properties shown on the site. The current ones are **samples**. Replace them with real properties (title, location, category, price in rupees, area, beds and baths, image, and a `description` for the property page).
 
 Listing categories match the services on the cover: `home` (houses & villas), `residential` (residential plots), `commercial` and `investment`.
 
 ## What's on the page
 
-- An arched gateway in the hero whose gold jaali doors open onto a villa at night (it respects reduced-motion settings).
-- Property search and filters.
-- A Marla / Kanal / sq ft converter, with both the 225 and 272.25 sq ft marla.
-- An enquiry form that opens WhatsApp with the message already written.
+- **Gate** (first visit per browser session): the name in Urdu and a short line blur in word by word, then _Enter_.
+- **Hero**: a night scene seen through a gold Mughal arch. The moon rises, the villa's windows light up one by one, and the title blooms in. Scrolling moves the camera through the arch towards the house, each layer at its own depth. The scene then fades to a two-line statement, and on desktop property illustrations trail the cursor.
+- **Search and filters** for the listings. Each card tilts in 3D on hover and opens its own **property page** (`property.html?id=…`).
+- Section headings sharpen in word by word, service icons draw themselves in gold, the gold line between the four steps fills as you scroll, and the promise quote inks in.
+- **Marla / Kanal / sq ft converter**, with both the 225 and 272.25 sq ft marla.
+- **Enquiry form** that opens WhatsApp with the message already written.
+- **Page transitions**: moving between the home page and a property page drops a gold-edged curtain with the logo.
+
+Everything respects the visitor's reduced-motion setting: no gate, no camera travel, simple fades.
+
+### Animation libraries
+
+| Library                                                     | Used for                                                  |
+| ----------------------------------------------------------- | --------------------------------------------------------- |
+| [GSAP](https://gsap.com) + ScrollTrigger + SplitText        | All timelines, scroll-driven motion and word splitting    |
+| [Lenis](https://lenis.darkroom.engineering)                 | Smooth scrolling (synced to ScrollTrigger)                |
+| [Barba.js](https://barba.js.org)                            | Page transitions between `index.html` and `property.html` |
+| [Vanilla-Tilt](https://micku7zu.github.io/vanilla-tilt.js/) | 3D tilt and gold glare on property cards                  |
+
+They're copied into `vendor/` as plain browser files, so the site still needs no build step.
+
+### Code layout
+
+| File             | What's in it                                                 |
+| ---------------- | ------------------------------------------------------------ |
+| `js/data.js`     | Business details and listings                                |
+| `js/app.js`      | Entry point: Lenis, header, in-page links, Barba transitions |
+| `js/hero.js`     | Gate, night scene and scroll-driven camera                   |
+| `js/home.js`     | Home page: listings, filters, converter, enquiry form        |
+| `js/property.js` | Property page                                                |
+| `js/motion.js`   | Shared scroll reveals and tilt                               |
+| `js/shared.js`   | Formatting helpers and the listing card                      |
 
 ## Assets
 
@@ -49,4 +78,4 @@ Listing categories match the services on the cover: `home` (houses & villas), `r
 
 ## Deploy
 
-Upload the folder to any static host: GitHub Pages, Netlify, Vercel or cPanel hosting. Leave out `node_modules/`. Only `index.html`, `css/`, `js/` and `assets/` are needed. On Vercel or Netlify, set no build command and use the repository root as the output directory.
+Upload the folder to any static host: GitHub Pages, Netlify, Vercel or cPanel hosting. Leave out `node_modules/`. Only `index.html`, `property.html`, `css/`, `js/`, `vendor/` and `assets/` are needed. On Vercel or Netlify, set no build command and use the repository root as the output directory.

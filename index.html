@@ -22,21 +22,30 @@
       href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600&family=Instrument+Sans:wght@400;500;600&family=Marcellus&family=Noto+Nastaliq+Urdu:wght@500;700&display=swap"
       rel="stylesheet"
     />
+    <link rel="stylesheet" href="vendor/lenis.css" />
     <link rel="stylesheet" href="css/styles.css" />
   </head>
-  <body>
+  <body data-barba="wrapper">
     <a class="skip-link" href="#main">Skip to content</a>
 
-    <!-- Shared arch shape, used to clip the hero view -->
-    <svg width="0" height="0" aria-hidden="true" focusable="false" style="position: absolute">
-      <clipPath id="arch-clip" clipPathUnits="objectBoundingBox">
-        <path d="M.05 1V.4286C.05 .2679.275 .1607.5 .0357.725 .1607.95 .2679.95 .4286V1Z" />
-      </clipPath>
-    </svg>
+    <!-- Entry gate: shown once per visit, before the hero plays -->
+    <div class="gate" data-gate hidden>
+      <div class="gate-inner">
+        <img class="gate-logo" src="assets/svg/logo.svg" alt="" width="88" height="88" />
+        <p class="gate-urdu" lang="ur" dir="rtl">میرا گھر میری جنت</p>
+        <p class="gate-words" data-gate-words>Every family deserves a home that feels like jannat. Let us help you find yours.</p>
+        <div class="gate-actions" data-gate-actions>
+          <button class="enter-btn" type="button" data-enter>
+            <span class="enter-label" aria-hidden="true"></span>
+            <span class="sr-only">Enter the website</span>
+          </button>
+        </div>
+      </div>
+    </div>
 
     <header class="site-header" data-header>
       <div class="wrap header-inner">
-        <a class="brand" href="#top" aria-label="Mera Ghar Meri Jannat, home">
+        <a class="brand" href="index.html" aria-label="Mera Ghar Meri Jannat, home">
           <img src="assets/svg/logo.svg" alt="" width="44" height="44" />
           <span class="brand-text">
             <span class="brand-name">Mera Ghar Meri Jannat</span>
@@ -48,11 +57,11 @@
           <span class="sr-only">Menu</span>
         </button>
         <nav class="site-nav" id="site-nav" aria-label="Main" data-nav>
-          <a href="#properties">Properties</a>
-          <a href="#services">Services</a>
-          <a href="#process">How it works</a>
-          <a href="#tools">Area converter</a>
-          <a href="#contact">Contact</a>
+          <a href="index.html#properties">Properties</a>
+          <a href="index.html#services">Services</a>
+          <a href="index.html#process">How it works</a>
+          <a href="index.html#tools">Area converter</a>
+          <a href="index.html#contact">Contact</a>
           <a class="btn btn-gold nav-call" href="#" data-tel>
             <svg class="btn-icon" viewBox="0 0 32 32" aria-hidden="true">
               <path d="M8 4h5l2 7-3 2c1.5 3 4 5.5 7 7l2-3 7 2v5c0 1-1 2-2 2C14 26 6 18 6 6c0-1 1-2 2-2Z" />
@@ -61,20 +70,463 @@
           </a>
         </nav>
       </div>
+      <span class="scroll-progress" data-progress aria-hidden="true"></span>
     </header>
 
-    <main id="main">
-      <!-- Hero -->
-      <section class="hero" id="top">
-        <div class="wrap hero-grid">
-          <div class="hero-copy">
-            <p class="hero-urdu" lang="ur" dir="rtl">میرا گھر میری جنت</p>
-            <h1>Your dream property partner.</h1>
-            <p class="hero-lede">
-              A house, a villa, a plot, a mansion or a commercial building — tell us what you're looking for and we'll find you the best
-              one, with every paper checked before you pay.
-            </p>
+    <main id="main" data-barba="container" data-barba-namespace="home">
+      <!-- Hero: a night scene you travel into as you scroll -->
+      <section class="hero-track" data-hero aria-labelledby="hero-title">
+        <div class="hero-panel">
+          <div class="scene" data-scene aria-hidden="true">
+            <!-- sky, moon and stars -->
+            <div class="layer" data-depth="0.06" data-push="0.08">
+              <svg class="layer-art" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMax slice">
+                <defs>
+                  <linearGradient id="hSky" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0" stop-color="#040405" />
+                    <stop offset=".46" stop-color="#0c0a07" />
+                    <stop offset=".63" stop-color="#2a1f10" />
+                    <stop offset=".71" stop-color="#5e4319" />
+                  </linearGradient>
+                  <radialGradient id="hMoonGlow">
+                    <stop offset="0" stop-color="#f6dc93" stop-opacity=".35" />
+                    <stop offset="1" stop-color="#f6dc93" stop-opacity="0" />
+                  </radialGradient>
+                  <linearGradient id="hGold" x1="0" y1="0" x2="1" y2="1">
+                    <stop offset="0" stop-color="#f6dc93" />
+                    <stop offset=".55" stop-color="#d4a64a" />
+                    <stop offset="1" stop-color="#9c7426" />
+                  </linearGradient>
+                </defs>
+                <rect width="1600" height="900" fill="url(#hSky)" />
+                <g class="stars" fill="#f5efe3">
+                  <circle class="star" cx="525" cy="98" r="0.8" />
+                  <circle class="star" cx="133" cy="299" r="1.1" />
+                  <circle class="star" cx="929" cy="493" r="1" />
+                  <circle class="star" cx="78" cy="245" r="0.8" />
+                  <circle class="star" cx="395" cy="307" r="0.8" />
+                  <circle class="star" cx="1310" cy="84" r="1" />
+                  <circle class="star" cx="1004" cy="323" r="0.8" />
+                  <circle class="star" cx="920" cy="226" r="1" />
+                  <circle class="star" cx="93" cy="466" r="1.1" />
+                  <circle class="star" cx="674" cy="301" r="1.6" />
+                  <circle class="star" cx="501" cy="444" r="1" />
+                  <circle class="star" cx="181" cy="317" r="1" />
+                  <circle class="star" cx="601" cy="305" r="0.8" />
+                  <circle class="star" cx="900" cy="342" r="1.3" />
+                  <circle class="star" cx="1081" cy="242" r="1.1" />
+                  <circle class="star" cx="746" cy="500" r="1.1" />
+                  <circle class="star" cx="488" cy="433" r="1" />
+                  <circle class="star" cx="148" cy="176" r="1.3" />
+                  <circle class="star" cx="1385" cy="399" r="1.1" />
+                  <circle class="star" cx="970" cy="58" r="1.6" />
+                  <circle class="star" cx="672" cy="414" r="1" />
+                  <circle class="star" cx="1476" cy="239" r="0.8" />
+                  <circle class="star" cx="1213" cy="318" r="1.1" />
+                  <circle class="star" cx="551" cy="202" r="1.3" />
+                  <circle class="star" cx="925" cy="257" r="0.8" />
+                  <circle class="star" cx="1494" cy="267" r="0.8" />
+                  <circle class="star" cx="115" cy="385" r="1.6" />
+                  <circle class="star" cx="1569" cy="447" r="1.1" />
+                  <circle class="star" cx="1138" cy="481" r="1.1" />
+                  <circle class="star" cx="55" cy="260" r="1" />
+                  <circle class="star" cx="973" cy="277" r="1" />
+                  <circle class="star" cx="1218" cy="87" r="1" />
+                  <circle class="star" cx="641" cy="497" r="1.3" />
+                  <circle class="star" cx="146" cy="254" r="1.6" />
+                  <circle class="star" cx="453" cy="91" r="1.3" />
+                  <circle class="star" cx="1368" cy="165" r="1.3" />
+                  <circle class="star" cx="1559" cy="375" r="1.3" />
+                  <circle class="star" cx="1514" cy="98" r="1" />
+                  <circle class="star" cx="256" cy="362" r="0.8" />
+                  <circle class="star" cx="777" cy="326" r="1.1" />
+                  <circle class="star" cx="460" cy="96" r="1.6" />
+                  <circle class="star" cx="596" cy="314" r="1" />
+                  <circle class="star" cx="1097" cy="288" r="1.6" />
+                  <circle class="star" cx="1042" cy="405" r="1.3" />
+                  <circle class="star" cx="1423" cy="426" r="1.6" />
+                  <circle class="star" cx="632" cy="227" r="0.8" />
+                  <circle class="star" cx="771" cy="228" r="1" />
+                  <circle class="star" cx="125" cy="129" r="1" />
+                  <circle class="star" cx="191" cy="332" r="0.8" />
+                  <circle class="star" cx="20" cy="99" r="0.8" />
+                  <circle class="star" cx="1500" cy="339" r="0.8" />
+                  <circle class="star" cx="1384" cy="339" r="1" />
+                  <circle class="star" cx="1010" cy="517" r="1.6" />
+                  <circle class="star" cx="588" cy="84" r="1.3" />
+                  <circle class="star" cx="1569" cy="262" r="1.3" />
+                  <circle class="star" cx="506" cy="95" r="1.1" />
+                  <circle class="star" cx="1175" cy="269" r="1" />
+                  <circle class="star" cx="825" cy="127" r="1.6" />
+                  <circle class="star" cx="584" cy="379" r="0.8" />
+                  <circle class="star" cx="1203" cy="175" r="0.8" />
+                  <circle class="star" cx="1106" cy="156" r="1.1" />
+                  <circle class="star" cx="1437" cy="205" r="1" />
+                  <circle class="star" cx="851" cy="425" r="1.1" />
+                  <circle class="star" cx="1013" cy="339" r="1" />
+                  <circle class="star" cx="1277" cy="446" r="1" />
+                  <circle class="star" cx="332" cy="276" r="0.8" />
+                  <circle class="star" cx="1564" cy="431" r="1.3" />
+                  <circle class="star" cx="424" cy="380" r="1.1" />
+                  <circle class="star" cx="718" cy="507" r="1.1" />
+                  <circle class="star" cx="1510" cy="210" r="1" />
+                </g>
+              </svg>
+            </div>
+            <!-- the logo's crescent and bird; positioned by CSS so it stays in view on every screen -->
+            <div class="layer layer-moon" data-depth="0.08" data-push="0.12">
+              <div class="moon-art">
+                <svg class="moon" data-moon viewBox="0 0 300 300">
+                  <defs>
+                    <mask id="hCrescent">
+                      <rect width="300" height="300" fill="#fff" />
+                      <circle cx="172" cy="132" r="44" fill="#000" />
+                    </mask>
+                  </defs>
+                  <circle cx="150" cy="150" r="150" fill="url(#hMoonGlow)" />
+                  <circle cx="150" cy="150" r="48" fill="url(#hGold)" mask="url(#hCrescent)" />
+                  <path
+                    d="M228 100c6-6 12-7.5 18-6.6-4.8 1.8-7.8 4.2-9.6 7.8 4.2-2.4 9-3 13.8-1.8-7.2 1.8-12 6-15 11.4Z"
+                    fill="url(#hGold)"
+                  />
+                </svg>
+              </div>
+            </div>
+            <!-- skyline -->
+            <div class="layer" data-depth="0.12" data-push="0.22">
+              <svg class="layer-art" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMax slice">
+                <g class="skyline">
+                  <g class="towers">
+                    <rect x="0" y="462" width="40" height="178" />
+                    <rect x="53" y="494" width="75" height="146" />
+                    <rect x="131" y="459" width="76" height="181" />
+                    <rect x="217" y="458" width="64" height="182" />
+                    <rect x="291" y="375" width="66" height="265" />
+                    <rect x="363" y="541" width="74" height="99" />
+                    <rect x="399" y="517" width="2" height="24" />
+                    <rect x="440" y="517" width="45" height="123" />
+                    <rect x="488" y="493" width="59" height="147" />
+                    <rect x="554" y="587" width="60" height="53" />
+                    <rect x="619" y="584" width="65" height="56" />
+                    <rect x="693" y="591" width="36" height="49" />
+                    <rect x="743" y="586" width="47" height="54" />
+                    <rect x="804" y="585" width="74" height="55" />
+                    <rect x="887" y="586" width="63" height="54" />
+                    <rect x="962" y="580" width="36" height="60" />
+                    <rect x="1007" y="596" width="45" height="44" />
+                    <rect x="1058" y="526" width="70" height="114" />
+                    <rect x="1140" y="559" width="47" height="81" />
+                    <rect x="1194" y="414" width="60" height="226" />
+                    <rect x="1223" y="390" width="2" height="24" />
+                    <rect x="1263" y="403" width="73" height="237" />
+                    <rect x="1338" y="355" width="37" height="285" />
+                    <rect x="1388" y="480" width="46" height="160" />
+                    <rect x="1448" y="493" width="58" height="147" />
+                    <rect x="1476" y="469" width="2" height="24" />
+                    <rect x="1510" y="466" width="52" height="174" />
+                    <rect x="1573" y="481" width="43" height="159" />
+                  </g>
+                  <g class="tower-lights">
+                    <rect x="16" y="486" width="4" height="5" />
+                    <rect x="6" y="514" width="4" height="5" />
+                    <rect x="16" y="542" width="4" height="5" />
+                    <rect x="6" y="570" width="4" height="5" />
+                    <rect x="6" y="584" width="4" height="5" />
+                    <rect x="16" y="626" width="4" height="5" />
+                    <rect x="69" y="546" width="4" height="5" />
+                    <rect x="99" y="546" width="4" height="5" />
+                    <rect x="59" y="574" width="4" height="5" />
+                    <rect x="109" y="616" width="4" height="5" />
+                    <rect x="157" y="469" width="4" height="5" />
+                    <rect x="177" y="483" width="4" height="5" />
+                    <rect x="137" y="511" width="4" height="5" />
+                    <rect x="157" y="525" width="4" height="5" />
+                    <rect x="197" y="525" width="4" height="5" />
+                    <rect x="177" y="567" width="4" height="5" />
+                    <rect x="187" y="567" width="4" height="5" />
+                    <rect x="167" y="581" width="4" height="5" />
+                    <rect x="177" y="581" width="4" height="5" />
+                    <rect x="157" y="595" width="4" height="5" />
+                    <rect x="167" y="623" width="4" height="5" />
+                    <rect x="177" y="623" width="4" height="5" />
+                    <rect x="223" y="468" width="4" height="5" />
+                    <rect x="253" y="496" width="4" height="5" />
+                    <rect x="263" y="496" width="4" height="5" />
+                    <rect x="273" y="496" width="4" height="5" />
+                    <rect x="253" y="510" width="4" height="5" />
+                    <rect x="253" y="552" width="4" height="5" />
+                    <rect x="253" y="566" width="4" height="5" />
+                    <rect x="273" y="566" width="4" height="5" />
+                    <rect x="233" y="580" width="4" height="5" />
+                    <rect x="243" y="580" width="4" height="5" />
+                    <rect x="273" y="608" width="4" height="5" />
+                    <rect x="307" y="399" width="4" height="5" />
+                    <rect x="337" y="399" width="4" height="5" />
+                    <rect x="347" y="413" width="4" height="5" />
+                    <rect x="347" y="427" width="4" height="5" />
+                    <rect x="317" y="441" width="4" height="5" />
+                    <rect x="327" y="469" width="4" height="5" />
+                    <rect x="327" y="483" width="4" height="5" />
+                    <rect x="337" y="483" width="4" height="5" />
+                    <rect x="307" y="511" width="4" height="5" />
+                    <rect x="297" y="525" width="4" height="5" />
+                    <rect x="327" y="567" width="4" height="5" />
+                    <rect x="337" y="567" width="4" height="5" />
+                    <rect x="297" y="595" width="4" height="5" />
+                    <rect x="327" y="595" width="4" height="5" />
+                    <rect x="327" y="623" width="4" height="5" />
+                    <rect x="337" y="623" width="4" height="5" />
+                    <rect x="419" y="565" width="4" height="5" />
+                    <rect x="409" y="579" width="4" height="5" />
+                    <rect x="429" y="579" width="4" height="5" />
+                    <rect x="446" y="541" width="4" height="5" />
+                    <rect x="466" y="583" width="4" height="5" />
+                    <rect x="466" y="611" width="4" height="5" />
+                    <rect x="514" y="503" width="4" height="5" />
+                    <rect x="514" y="531" width="4" height="5" />
+                    <rect x="524" y="545" width="4" height="5" />
+                    <rect x="514" y="559" width="4" height="5" />
+                    <rect x="524" y="559" width="4" height="5" />
+                    <rect x="534" y="573" width="4" height="5" />
+                    <rect x="504" y="615" width="4" height="5" />
+                    <rect x="534" y="629" width="4" height="5" />
+                    <rect x="625" y="594" width="4" height="5" />
+                    <rect x="655" y="594" width="4" height="5" />
+                    <rect x="665" y="594" width="4" height="5" />
+                    <rect x="625" y="622" width="4" height="5" />
+                    <rect x="635" y="622" width="4" height="5" />
+                    <rect x="709" y="615" width="4" height="5" />
+                    <rect x="719" y="629" width="4" height="5" />
+                    <rect x="779" y="596" width="4" height="5" />
+                    <rect x="769" y="624" width="4" height="5" />
+                    <rect x="810" y="595" width="4" height="5" />
+                    <rect x="820" y="595" width="4" height="5" />
+                    <rect x="810" y="623" width="4" height="5" />
+                    <rect x="860" y="623" width="4" height="5" />
+                    <rect x="933" y="596" width="4" height="5" />
+                    <rect x="988" y="604" width="4" height="5" />
+                    <rect x="968" y="618" width="4" height="5" />
+                    <rect x="1094" y="564" width="4" height="5" />
+                    <rect x="1084" y="578" width="4" height="5" />
+                    <rect x="1104" y="578" width="4" height="5" />
+                    <rect x="1094" y="606" width="4" height="5" />
+                    <rect x="1176" y="569" width="4" height="5" />
+                    <rect x="1146" y="583" width="4" height="5" />
+                    <rect x="1166" y="625" width="4" height="5" />
+                    <rect x="1230" y="438" width="4" height="5" />
+                    <rect x="1240" y="438" width="4" height="5" />
+                    <rect x="1230" y="452" width="4" height="5" />
+                    <rect x="1240" y="452" width="4" height="5" />
+                    <rect x="1200" y="494" width="4" height="5" />
+                    <rect x="1220" y="508" width="4" height="5" />
+                    <rect x="1220" y="522" width="4" height="5" />
+                    <rect x="1230" y="550" width="4" height="5" />
+                    <rect x="1220" y="620" width="4" height="5" />
+                    <rect x="1289" y="413" width="4" height="5" />
+                    <rect x="1279" y="427" width="4" height="5" />
+                    <rect x="1329" y="427" width="4" height="5" />
+                    <rect x="1309" y="441" width="4" height="5" />
+                    <rect x="1319" y="441" width="4" height="5" />
+                    <rect x="1279" y="455" width="4" height="5" />
+                    <rect x="1319" y="511" width="4" height="5" />
+                    <rect x="1269" y="553" width="4" height="5" />
+                    <rect x="1309" y="581" width="4" height="5" />
+                    <rect x="1269" y="595" width="4" height="5" />
+                    <rect x="1279" y="595" width="4" height="5" />
+                    <rect x="1319" y="609" width="4" height="5" />
+                    <rect x="1289" y="623" width="4" height="5" />
+                    <rect x="1354" y="393" width="4" height="5" />
+                    <rect x="1364" y="393" width="4" height="5" />
+                    <rect x="1344" y="407" width="4" height="5" />
+                    <rect x="1354" y="421" width="4" height="5" />
+                    <rect x="1344" y="477" width="4" height="5" />
+                    <rect x="1344" y="519" width="4" height="5" />
+                    <rect x="1344" y="547" width="4" height="5" />
+                    <rect x="1364" y="561" width="4" height="5" />
+                    <rect x="1364" y="603" width="4" height="5" />
+                    <rect x="1424" y="546" width="4" height="5" />
+                    <rect x="1414" y="560" width="4" height="5" />
+                    <rect x="1424" y="560" width="4" height="5" />
+                    <rect x="1424" y="574" width="4" height="5" />
+                    <rect x="1394" y="588" width="4" height="5" />
+                    <rect x="1404" y="602" width="4" height="5" />
+                    <rect x="1424" y="616" width="4" height="5" />
+                    <rect x="1464" y="503" width="4" height="5" />
+                    <rect x="1454" y="517" width="4" height="5" />
+                    <rect x="1474" y="545" width="4" height="5" />
+                    <rect x="1464" y="573" width="4" height="5" />
+                    <rect x="1484" y="573" width="4" height="5" />
+                    <rect x="1454" y="587" width="4" height="5" />
+                    <rect x="1454" y="615" width="4" height="5" />
+                    <rect x="1474" y="615" width="4" height="5" />
+                    <rect x="1546" y="490" width="4" height="5" />
+                    <rect x="1526" y="504" width="4" height="5" />
+                    <rect x="1546" y="546" width="4" height="5" />
+                    <rect x="1546" y="560" width="4" height="5" />
+                    <rect x="1579" y="547" width="4" height="5" />
+                    <rect x="1589" y="561" width="4" height="5" />
+                    <rect x="1609" y="575" width="4" height="5" />
+                    <rect x="1599" y="589" width="4" height="5" />
+                  </g>
+                </g>
+                <path d="M0 636c260-12 520-8 800-10s560 2 800 10v264H0Z" fill="#0b0907" />
+              </svg>
+            </div>
+            <!-- villa and garden -->
+            <div class="layer" data-depth="0.22" data-push="0.75">
+              <svg class="layer-art" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMax slice">
+                <defs>
+                  <linearGradient id="hWin" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0" stop-color="#ffe9ad" />
+                    <stop offset="1" stop-color="#d9962f" />
+                  </linearGradient>
+                  <linearGradient id="hSlab" x1="0" y1="0" x2="1" y2="0">
+                    <stop offset="0" stop-color="#9c7426" />
+                    <stop offset=".5" stop-color="#f6dc93" />
+                    <stop offset="1" stop-color="#9c7426" />
+                  </linearGradient>
+                </defs>
+                <!-- house body -->
+                <rect x="600" y="562" width="400" height="88" fill="#15120d" />
+                <rect x="646" y="494" width="308" height="70" fill="#1b1711" />
+                <rect x="630" y="486" width="340" height="9" fill="url(#hSlab)" />
+                <rect x="586" y="556" width="428" height="8" fill="url(#hSlab)" />
+                <!-- dark glass, always there -->
+                <g fill="#221c13">
+                  <rect x="664" y="506" width="60" height="48" />
+                  <rect x="732" y="506" width="60" height="48" />
+                  <rect x="808" y="506" width="60" height="48" />
+                  <rect x="876" y="506" width="60" height="48" />
+                  <rect x="614" y="574" width="150" height="70" />
+                  <rect x="836" y="574" width="150" height="70" />
+                </g>
+                <!-- lights, switched on one by one -->
+                <g fill="url(#hWin)">
+                  <rect class="win" x="664" y="506" width="60" height="48" />
+                  <rect class="win" x="876" y="506" width="60" height="48" />
+                  <rect class="win" x="732" y="506" width="60" height="48" />
+                  <rect class="win" x="808" y="506" width="60" height="48" />
+                  <rect class="win" x="614" y="574" width="150" height="70" />
+                  <rect class="win" x="836" y="574" width="150" height="70" />
+                </g>
+                <g stroke="#15120d" stroke-width="3">
+                  <path d="M664 530h60M876 530h60M732 530h60M808 530h60" />
+                  <path d="M664 574v70M714 574v70M886 574v70M936 574v70" />
+                </g>
+                <path d="M780 650v-54a20 20 0 0 1 40 0v54Z" fill="#0d0b08" stroke="url(#hSlab)" stroke-width="2" />
+                <circle class="win" cx="812" cy="624" r="2.4" fill="#f6dc93" />
+                <!-- garden: the logo's golden tree, cypresses, lamps -->
+                <g fill="url(#hGold)">
+                  <rect x="528" y="592" width="5" height="58" />
+                  <circle cx="530" cy="572" r="22" />
+                  <circle cx="510" cy="590" r="14" />
+                  <circle cx="550" cy="590" r="14" />
+                  <circle cx="530" cy="548" r="12" />
+                </g>
+                <g fill="#050505">
+                  <path d="M460 652c18-70 22-130 10-180-6 40-20 80-32 104 8 26 14 50 22 76Z" />
+                  <path d="M1140 652c-18-70-22-130-10-180 6 40 20 80 32 104-8 26-14 50-22 76Z" />
+                  <path d="M1086 652c-12-48-15-90-7-124 4 28 14 56 22 72-6 18-10 34-15 52Z" />
+                </g>
+                <g class="lamps" fill="#f6dc93">
+                  <circle cx="572" cy="640" r="3" />
+                  <circle cx="1030" cy="640" r="3" />
+                  <circle cx="420" cy="648" r="2.5" />
+                  <circle cx="1190" cy="648" r="2.5" />
+                </g>
+              </svg>
+            </div>
+            <!-- terrace and reflecting pool -->
+            <div class="layer" data-depth="0.34" data-push="1.6">
+              <svg class="layer-art" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMax slice">
+                <defs>
+                  <linearGradient id="hPool" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0" stop-color="#3b2c13" />
+                    <stop offset=".25" stop-color="#121516" />
+                    <stop offset="1" stop-color="#07090a" />
+                  </linearGradient>
+                  <linearGradient id="hRefl" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0" stop-color="#f3c870" stop-opacity=".7" />
+                    <stop offset="1" stop-color="#f3c870" stop-opacity="0" />
+                  </linearGradient>
+                </defs>
+                <path d="M0 650h1600v250H0Z" fill="#0d0b08" />
+                <path d="M520 656h560l360 244H160Z" fill="#17130d" />
+                <path d="M610 662h380l300 238H310Z" fill="url(#hPool)" />
+                <path d="M610 662h380l300 238H310Z" fill="none" stroke="url(#hGold)" stroke-width="2" />
+                <g class="refl" fill="url(#hRefl)">
+                  <path d="M620 664h150l-24 160H572Z" />
+                  <path d="M830 664h150l48 160H854Z" />
+                  <path d="M668 664h264l-10 60H678Z" opacity=".6" />
+                </g>
+                <g class="ripples" stroke="#f6dc93" stroke-width="1.6" stroke-linecap="round" opacity=".4">
+                  <path d="M640 700h60M880 716h70M560 760h90M900 790h110M700 840h180" />
+                </g>
+              </svg>
+            </div>
+            <!-- the arched gateway, nearest to the camera; JS sizes it to the screen -->
+            <div class="layer layer-arch" data-depth="0.5" data-push="5">
+              <svg class="arch" data-arch preserveAspectRatio="none">
+                <defs>
+                  <pattern id="archJaali" width="44" height="44" patternUnits="userSpaceOnUse">
+                    <g fill="none" stroke="#d4a64a" stroke-width="1" opacity=".16">
+                      <rect x="12" y="12" width="20" height="20" />
+                      <path d="M22 6 38 22 22 38 6 22Z" />
+                      <path d="M22 0v6M22 38v6M0 22h6M38 22h6M0 0l12 12M44 0 32 12M0 44l12-12M44 44 32 32" />
+                    </g>
+                  </pattern>
+                  <linearGradient id="archGold" x1="0" y1="0" x2="1" y2="1">
+                    <stop offset="0" stop-color="#f6dc93" />
+                    <stop offset=".5" stop-color="#d4a64a" />
+                    <stop offset="1" stop-color="#9c7426" />
+                  </linearGradient>
+                </defs>
+                <path data-arch-wall fill="#0a0806" fill-rule="evenodd" />
+                <path data-arch-wall fill="url(#archJaali)" fill-rule="evenodd" />
+                <path data-arch-outer fill="none" stroke="url(#archGold)" stroke-width="1.2" opacity=".6" />
+                <path data-arch-edge fill="none" stroke="url(#archGold)" stroke-width="3" />
+                <circle data-arch-finial r="5" fill="#f6dc93" />
+              </svg>
+            </div>
+          </div>
 
+          <div class="hero-copy">
+            <h1 class="hero-title" id="hero-title" data-hero-title>Your dream property partner.</h1>
+            <p class="hero-desc" data-hero-desc>
+              Houses, villas, plots and commercial buildings — found for you, with every paper checked before you pay.
+            </p>
+          </div>
+          <a class="scroll-cue" href="#find" data-scroll-cue>
+            <span>Scroll</span>
+            <span class="scroll-cue-line" aria-hidden="true"></span>
+          </a>
+
+          <div class="statement" data-statement-wrap>
+            <p class="statement-text" data-statement>We don't sell plots.<br />We find you jannat.</p>
+            <div class="trail" data-trail aria-hidden="true">
+              <img class="trail-item" src="assets/img/villa.svg" alt="" />
+              <img class="trail-item" src="assets/img/plot.svg" alt="" />
+              <img class="trail-item" src="assets/img/farmhouse.svg" alt="" />
+              <img class="trail-item" src="assets/img/commercial.svg" alt="" />
+              <img class="trail-item" src="assets/img/townhouse.svg" alt="" />
+              <img class="trail-item" src="assets/img/apartment.svg" alt="" />
+              <img class="trail-item" src="assets/img/villa.svg" alt="" />
+              <img class="trail-item" src="assets/img/plot.svg" alt="" />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Search -->
+      <section class="find" id="find" aria-labelledby="find-title">
+        <div class="wrap find-inner">
+          <div>
+            <h2 id="find-title" data-reveal>What are you looking for?</h2>
+            <p class="section-intro">
+              A house, a villa, a plot, a mansion or a commercial building — tell us and we'll find you the best one.
+            </p>
+          </div>
+          <div>
             <form class="search" data-search aria-label="Search properties">
               <label class="field">
                 <span class="field-label">I'm looking for</span>
@@ -92,161 +544,8 @@
               </label>
               <button class="btn btn-gold search-go" type="submit">Search</button>
             </form>
-            <p class="hero-call">Prefer to talk? Call <a href="#" data-tel data-field="phoneDisplay"></a></p>
+            <p class="find-call">Prefer to talk? Call <a href="#" data-tel data-field="phoneDisplay"></a></p>
           </div>
-
-          <figure class="portal" aria-label="Illustration: a lit villa beside a reflecting pool at night, seen through an arched gateway">
-            <div class="portal-view">
-              <svg class="scene" viewBox="0 0 400 560" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
-                <defs>
-                  <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0" stop-color="#050506" />
-                    <stop offset=".45" stop-color="#14100A" />
-                    <stop offset=".6" stop-color="#4A3412" />
-                  </linearGradient>
-                  <linearGradient id="gold" x1="0" y1="0" x2="1" y2="1">
-                    <stop offset="0" stop-color="#F6DC93" />
-                    <stop offset=".55" stop-color="#D4A64A" />
-                    <stop offset="1" stop-color="#9C7426" />
-                  </linearGradient>
-                  <linearGradient id="glow" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0" stop-color="#FFE7A6" />
-                    <stop offset="1" stop-color="#D99A35" />
-                  </linearGradient>
-                  <linearGradient id="pool" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0" stop-color="#3A2C14" />
-                    <stop offset=".3" stop-color="#14181A" />
-                    <stop offset="1" stop-color="#0A0C0D" />
-                  </linearGradient>
-                  <linearGradient id="reflect" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0" stop-color="#F3C870" stop-opacity=".75" />
-                    <stop offset="1" stop-color="#F3C870" stop-opacity="0" />
-                  </linearGradient>
-                  <mask id="crescent">
-                    <rect width="400" height="560" fill="#fff" />
-                    <circle cx="148" cy="128" r="30" fill="#000" />
-                  </mask>
-                </defs>
-                <rect width="400" height="560" fill="url(#sky)" />
-                <g fill="#F5EFE3" opacity=".6">
-                  <circle cx="90" cy="200" r="1.2" />
-                  <circle cx="300" cy="96" r="1" />
-                  <circle cx="250" cy="150" r="1.2" />
-                  <circle cx="330" cy="190" r="1" />
-                  <circle cx="196" cy="88" r="1" />
-                  <circle cx="62" cy="268" r="1" />
-                </g>
-                <!-- crescent and bird, from the logo -->
-                <circle cx="134" cy="138" r="32" fill="url(#gold)" mask="url(#crescent)" />
-                <path d="M196 132c4-4 8-5 12-4.4-3.2 1.2-5.2 2.8-6.4 5.2 2.8-1.6 6-2 9.2-1.2-4.8 1.2-8 4-10 7.6Z" fill="url(#gold)" />
-                <!-- skyline -->
-                <g fill="#0E0C09" stroke="#7A5C22" stroke-width="1">
-                  <rect x="244" y="150" width="34" height="180" />
-                  <rect x="282" y="112" width="30" height="218" />
-                  <rect x="316" y="170" width="40" height="160" />
-                  <rect x="40" y="200" width="36" height="130" />
-                  <rect x="80" y="236" width="28" height="94" />
-                </g>
-                <g fill="#F3C870" opacity=".85">
-                  <rect x="250" y="166" width="4" height="3" />
-                  <rect x="262" y="180" width="4" height="3" />
-                  <rect x="250" y="210" width="4" height="3" />
-                  <rect x="268" y="236" width="4" height="3" />
-                  <rect x="288" y="130" width="4" height="3" />
-                  <rect x="300" y="152" width="4" height="3" />
-                  <rect x="288" y="190" width="4" height="3" />
-                  <rect x="300" y="226" width="4" height="3" />
-                  <rect x="292" y="262" width="4" height="3" />
-                  <rect x="324" y="186" width="4" height="3" />
-                  <rect x="340" y="208" width="4" height="3" />
-                  <rect x="330" y="246" width="4" height="3" />
-                  <rect x="48" y="214" width="4" height="3" />
-                  <rect x="62" y="240" width="4" height="3" />
-                  <rect x="50" y="270" width="4" height="3" />
-                  <rect x="88" y="252" width="4" height="3" />
-                </g>
-                <path d="M0 318c60-10 120-6 200-8s150 0 200 8v20H0Z" fill="#110E09" />
-                <!-- villa -->
-                <g>
-                  <rect x="104" y="250" width="192" height="80" fill="#15120D" />
-                  <rect x="132" y="206" width="136" height="46" fill="#1B1711" />
-                  <rect x="122" y="200" width="160" height="7" fill="url(#gold)" />
-                  <rect x="94" y="246" width="212" height="6" fill="url(#gold)" />
-                  <rect x="144" y="214" width="112" height="30" fill="url(#glow)" />
-                  <path d="M172 214v30M200 214v30M228 214v30" stroke="#15120D" stroke-width="2.5" />
-                  <rect x="114" y="262" width="74" height="62" fill="url(#glow)" />
-                  <rect x="212" y="262" width="74" height="62" fill="url(#glow)" />
-                  <path d="M138.6 262v62M163.3 262v62M236.6 262v62M261.3 262v62" stroke="#15120D" stroke-width="2.5" />
-                  <rect x="194" y="262" width="12" height="62" fill="#0D0B08" />
-                </g>
-                <!-- terrace and pool -->
-                <path d="M0 330h400v230H0Z" fill="#0D0B08" />
-                <path d="M60 336h280l60 224H0Z" fill="#1A1610" />
-                <path d="M96 344h208l52 216H44Z" fill="url(#pool)" />
-                <path d="M96 344h208l52 216H44Z" fill="none" stroke="url(#gold)" stroke-width="1.6" />
-                <g fill="url(#reflect)">
-                  <path d="M118 346h66l-4 120h-58Z" />
-                  <path d="M216 346h66l4 120h-58Z" />
-                  <path d="M150 346h100l-6 40h-88Z" opacity=".6" />
-                </g>
-                <g stroke="#F6DC93" stroke-width="1.2" stroke-linecap="round" opacity=".45">
-                  <path d="M130 400h30M236 420h40M110 470h50M240 492h60M170 520h60" />
-                </g>
-                <!-- garden lights and trees -->
-                <g fill="#F6DC93">
-                  <circle cx="70" cy="340" r="2" />
-                  <circle cx="330" cy="340" r="2" />
-                  <circle cx="30" cy="420" r="2.4" />
-                  <circle cx="370" cy="420" r="2.4" />
-                </g>
-                <g fill="#050505">
-                  <path d="M34 330c14-60 18-110 10-150-4 30-14 60-24 80 6 20 10 46 14 70Z" />
-                  <path d="M370 330c-14-60-18-110-10-150 4 30 14 60 24 80-6 20-10 46-14 70Z" />
-                </g>
-                <g fill="url(#gold)">
-                  <rect x="58" y="296" width="3" height="40" />
-                  <circle cx="60" cy="286" r="12" />
-                  <circle cx="48" cy="296" r="8" />
-                  <circle cx="72" cy="296" r="8" />
-                  <circle cx="60" cy="272" r="7" />
-                </g>
-              </svg>
-              <div class="door door-l" aria-hidden="true"></div>
-              <div class="door door-r" aria-hidden="true"></div>
-            </div>
-            <svg class="portal-frame" viewBox="0 0 400 560" aria-hidden="true">
-              <defs>
-                <linearGradient id="frameGold" x1="0" y1="0" x2="1" y2="1">
-                  <stop offset="0" stop-color="#F6DC93" />
-                  <stop offset=".5" stop-color="#D4A64A" />
-                  <stop offset="1" stop-color="#9C7426" />
-                </linearGradient>
-                <pattern id="spandrel" width="24" height="24" patternUnits="userSpaceOnUse">
-                  <path
-                    d="M12 3.3 20.7 12 12 20.7 3.3 12Z M6.5 6.5h11v11h-11Z"
-                    fill="none"
-                    stroke="#D4A64A"
-                    stroke-width=".8"
-                    opacity=".22"
-                  />
-                </pattern>
-              </defs>
-              <path
-                fill-rule="evenodd"
-                fill="url(#spandrel)"
-                d="M0 0h400v560H0Z M20 560V240C20 150 110 90 200 20c90 70 180 130 180 220v320Z"
-              />
-              <path d="M20 560V240C20 150 110 90 200 20c90 70 180 130 180 220v320" fill="none" stroke="url(#frameGold)" stroke-width="3" />
-              <path
-                d="M8 560V236C8 140 104 76 200 6c96 70 192 134 192 230v324"
-                fill="none"
-                stroke="url(#frameGold)"
-                stroke-width="1"
-                opacity=".7"
-              />
-              <circle cx="200" cy="6" r="4" fill="#F6DC93" />
-            </svg>
-          </figure>
         </div>
       </section>
 
@@ -254,13 +553,13 @@
       <section class="section services" id="services" aria-labelledby="services-title">
         <div class="wrap">
           <div class="section-head">
-            <h2 id="services-title">Our services</h2>
+            <h2 id="services-title" data-reveal>Our services</h2>
             <p class="section-intro">
               Whether you're buying a family home or investing for the future, we find the right property and stay with you until the
               transfer is done.
             </p>
           </div>
-          <ul class="service-list">
+          <ul class="service-list" data-services>
             <li>
               <svg class="icon" viewBox="0 0 48 48" aria-hidden="true">
                 <path d="M6 40 12 8h24l6 32Z" />
@@ -303,7 +602,7 @@
       <section class="section listings" id="properties" aria-labelledby="properties-title">
         <div class="wrap">
           <div class="section-head">
-            <h2 id="properties-title">Properties available now</h2>
+            <h2 id="properties-title" data-reveal>Properties available now</h2>
             <p class="section-intro">
               A selection from our current list. New properties come in every week — if you don't see what you want, ask us.
             </p>
@@ -322,7 +621,7 @@
             <p>Tell us what you're looking for and we'll send you options as soon as they come in.</p>
             <div class="empty-actions">
               <button type="button" class="btn btn-outline" data-reset>Show all properties</button>
-              <a class="btn btn-gold" href="#contact">Tell us what you need</a>
+              <a class="btn btn-gold" href="index.html#contact">Tell us what you need</a>
             </div>
           </div>
         </div>
@@ -332,10 +631,10 @@
       <section class="section process" id="process" aria-labelledby="process-title">
         <div class="wrap">
           <div class="section-head">
-            <h2 id="process-title">From first call to keys in hand</h2>
+            <h2 id="process-title" data-reveal>From first call to keys in hand</h2>
             <p class="section-intro">Four steps, and we're with you through every one.</p>
           </div>
-          <ol class="steps">
+          <ol class="steps" data-steps>
             <li>
               <span class="step-num" aria-hidden="true">1</span>
               <h3>Tell us what you need</h3>
@@ -364,7 +663,7 @@
       <section class="section promise" aria-labelledby="promise-title">
         <div class="wrap promise-grid">
           <blockquote class="promise-quote">
-            <p id="promise-title">
+            <p id="promise-title" data-ink>
               A house is bricks and paperwork. A home is where your family feels at peace. We take care of the first, so you can enjoy the
               second.
             </p>
@@ -390,7 +689,7 @@
       <section class="section tools" id="tools" aria-labelledby="tools-title">
         <div class="wrap tools-grid">
           <div>
-            <h2 id="tools-title">Marla, kanal, square feet</h2>
+            <h2 id="tools-title" data-reveal>Marla, kanal, square feet</h2>
             <p class="section-intro">Plot sizes are quoted differently everywhere. Type a size to see it in every unit.</p>
             <p class="tools-note">
               Most housing societies count 1 marla as 225 sq ft. Older revenue records use 272.25 sq ft — check which one your papers use.
@@ -443,7 +742,7 @@
       <section class="section contact" id="contact" aria-labelledby="contact-title">
         <div class="wrap contact-grid">
           <div class="contact-info">
-            <h2 id="contact-title">Tell us about the property you want</h2>
+            <h2 id="contact-title" data-reveal>Tell us about the property you want</h2>
             <p class="section-intro">Send a few details and we'll reply on WhatsApp with options.</p>
             <ul class="contact-ways">
               <li>
@@ -484,12 +783,12 @@
             <label class="field">
               <span class="field-label">Your name</span>
               <input type="text" name="name" autocomplete="name" required />
-              <span class="field-error" data-error-for="name">Enter your name so we know who we're talking to.</span>
+              <span class="field-error">Enter your name so we know who we're talking to.</span>
             </label>
             <label class="field">
               <span class="field-label">Phone number</span>
               <input type="tel" name="phone" autocomplete="tel" placeholder="03xx xxxxxxx" required />
-              <span class="field-error" data-error-for="phone">Enter a phone number we can reach you on.</span>
+              <span class="field-error">Enter a phone number we can reach you on.</span>
             </label>
             <label class="field">
               <span class="field-label">I want to</span>
@@ -529,11 +828,11 @@
           </div>
         </div>
         <nav class="footer-nav" aria-label="Footer">
-          <a href="#properties">Properties</a>
-          <a href="#services">Services</a>
-          <a href="#process">How it works</a>
-          <a href="#tools">Area converter</a>
-          <a href="#contact">Contact</a>
+          <a href="index.html#properties">Properties</a>
+          <a href="index.html#services">Services</a>
+          <a href="index.html#process">How it works</a>
+          <a href="index.html#tools">Area converter</a>
+          <a href="index.html#contact">Contact</a>
           <a href="#" data-yt target="_blank" rel="noopener">YouTube</a>
           <a href="#" data-fb target="_blank" rel="noopener">Facebook</a>
         </nav>
@@ -544,6 +843,12 @@
       </div>
     </footer>
 
+    <!-- Page transition: a gold-edged curtain carrying the logo -->
+    <div class="curtain" data-curtain aria-hidden="true">
+      <div class="curtain-panel"></div>
+      <img class="curtain-logo" src="assets/svg/logo.svg" alt="" width="96" height="96" />
+    </div>
+
     <a class="wa-float" href="#" data-wa target="_blank" rel="noopener" aria-label="Chat with us on WhatsApp">
       <svg viewBox="0 0 32 32" aria-hidden="true">
         <path
@@ -552,7 +857,12 @@
       </svg>
     </a>
 
-    <script type="module" src="js/data.js"></script>
-    <script type="module" src="js/main.js"></script>
+    <script src="vendor/gsap.min.js"></script>
+    <script src="vendor/ScrollTrigger.min.js"></script>
+    <script src="vendor/SplitText.min.js"></script>
+    <script src="vendor/lenis.min.js"></script>
+    <script src="vendor/barba.umd.js"></script>
+    <script src="vendor/vanilla-tilt.min.js"></script>
+    <script type="module" src="js/app.js"></script>
   </body>
 </html>

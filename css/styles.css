@@ -32,6 +32,7 @@
   --wrap: 1200px;
   --gutter: 1rem;
   --header-h: 68px;
+  --ease-expo: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 @media (min-width: 768px) {
@@ -267,7 +268,7 @@ h3 {
 .brand-name {
   font-family: var(--font-display);
   font-weight: 600;
-  font-size: 1rem;
+  font-size: clamp(0.8rem, 3.4vw, 1rem);
   line-height: 1.2;
   background: var(--gold-metal);
   -webkit-background-clip: text;
@@ -407,58 +408,340 @@ h3 {
   }
 }
 
-/* ---------- Hero ---------- */
+/* ---------- Gate (first visit) ---------- */
 
-.hero {
-  position: relative;
-  padding-top: calc(var(--header-h) + var(--space-4));
-  padding-bottom: var(--space-6);
+.gate {
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+  display: grid;
+  place-items: center;
+  padding: var(--gutter);
   background:
-    radial-gradient(ellipse 70% 60% at 75% 65%, rgba(212, 166, 74, 0.16), transparent 70%),
-    var(--night);
-  overflow: hidden;
+    radial-gradient(ellipse 60% 50% at 50% 55%, rgba(212, 166, 74, 0.1), transparent 70%), #050505;
+  text-align: center;
 }
-.hero::after {
+.gate[hidden] {
+  display: none;
+}
+.gate-inner {
+  display: grid;
+  justify-items: center;
+  gap: var(--space-2);
+  max-width: 40rem;
+}
+.gate-logo {
+  width: 88px;
+  height: 88px;
+}
+.gate-urdu {
+  font-size: clamp(2rem, 1.4rem + 3vw, 3.4rem);
+  color: var(--gold);
+  line-height: 2;
+}
+.gate-words {
+  font-family: var(--font-serif);
+  font-size: clamp(1.25rem, 1rem + 1.2vw, 1.75rem);
+  line-height: 1.45;
+  color: var(--ivory);
+  text-wrap: balance;
+}
+.gate-words .word {
+  display: inline-block;
+}
+.gate-actions {
+  margin-top: var(--space-3);
+}
+body.is-gated .site-header,
+body.is-gated .wa-float {
+  opacity: 0;
+  pointer-events: none;
+}
+.site-header,
+.wa-float {
+  transition:
+    opacity 1s var(--ease-expo),
+    background-color 0.3s ease,
+    border-color 0.3s ease;
+}
+
+/* Enter: each letter carries a ghost copy above it and rolls down on hover. */
+.enter-btn {
+  position: relative;
+  padding: 0.6rem 0.2rem;
+  border: 0;
+  background: none;
+  color: var(--gold-hi);
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  letter-spacing: 0.32em;
+  cursor: pointer;
+}
+.enter-label {
+  display: inline-flex;
+  overflow: hidden;
+  padding-left: 0.32em;
+}
+.enter-letter {
+  display: inline-block;
+  text-shadow: 0 -2em 0 var(--gold-hi);
+  transition: transform 0.75s cubic-bezier(0.43, 0.195, 0.02, 1);
+  transition-delay: calc(var(--i, 0) * 0.03s);
+}
+.enter-btn::after {
   content: "";
   position: absolute;
-  inset: auto 0 0 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
   height: 1px;
-  background: linear-gradient(90deg, transparent, var(--gold), transparent);
-  opacity: 0.6;
+  background: var(--gold);
+  transform-origin: right;
+  transition: transform 0.75s cubic-bezier(0.43, 0.195, 0.02, 1);
 }
-.hero-grid {
-  display: grid;
-  gap: var(--space-5);
-  align-items: center;
+.enter-btn:hover .enter-letter,
+.enter-btn:focus-visible .enter-letter {
+  transform: translateY(2em);
 }
+.enter-btn:hover::after,
+.enter-btn:focus-visible::after {
+  transform: scaleX(0);
+}
+
+/* ---------- Hero: a night scene the camera travels into ---------- */
+
+.hero-track {
+  position: relative;
+  height: 300svh; /* (INTRO 2.6 + OUTRO 0.4) screens, see js/hero.js */
+  background: #050505;
+}
+.hero-panel {
+  position: sticky;
+  top: 0;
+  height: 100svh;
+  overflow: hidden;
+  background:
+    linear-gradient(rgba(5, 5, 5, 0.86), rgba(5, 5, 5, 0.94)),
+    url("../assets/svg/jaali-faint.svg") center / 48px,
+    #050505;
+}
+.scene {
+  position: absolute;
+  inset: 0;
+  visibility: hidden; /* shown by the opening shot */
+}
+.layer {
+  position: absolute;
+  inset: -3%; /* room for the pointer drift */
+}
+.layer-art,
+.arch {
+  position: absolute;
+  inset: 3%;
+  width: 94%;
+  height: 94%;
+  will-change: transform;
+}
+.moon-art {
+  position: absolute;
+  inset: 3%;
+  will-change: transform;
+}
+.moon {
+  position: absolute;
+  top: 30%;
+  right: 2%;
+  width: clamp(150px, 20vw, 300px);
+  height: auto;
+}
+@media (min-width: 768px) {
+  .moon {
+    top: 30%;
+    right: 24%;
+  }
+}
+.layer-arch .arch {
+  overflow: visible;
+}
+.star {
+  animation: twinkle 4s ease-in-out infinite;
+}
+.star:nth-child(3n) {
+  animation-duration: 5.5s;
+  animation-delay: -2s;
+}
+.star:nth-child(4n + 1) {
+  animation-duration: 3.2s;
+  animation-delay: -1s;
+}
+@keyframes twinkle {
+  50% {
+    opacity: 0.25;
+  }
+}
+.skyline .towers {
+  fill: #0b0907;
+  stroke: #4a3815;
+  stroke-width: 1;
+}
+.skyline .tower-lights {
+  fill: #f3c870;
+  opacity: 0.8;
+}
+.ripples {
+  animation: ripple 6s ease-in-out infinite;
+}
+@keyframes ripple {
+  50% {
+    transform: translateX(14px);
+    opacity: 0.2;
+  }
+}
+
 .hero-copy {
-  min-width: 0;
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
 }
-.hero-urdu {
-  font-size: clamp(1.6rem, 1.2rem + 1.8vw, 2.4rem);
-  color: var(--gold);
-  text-align: left;
-  margin-bottom: var(--space-1);
+.hero-title {
+  position: absolute;
+  left: var(--gutter);
+  right: var(--gutter);
+  top: calc(var(--header-h) + 12svh);
+  margin-inline: auto;
+  max-width: 12ch;
+  font-size: clamp(2.3rem, 0.8rem + 3.8vw, 4.4rem);
+  font-weight: 500;
+  line-height: 1.02;
+  text-align: center;
+  visibility: hidden;
+  color: var(--gold-hi);
 }
-.hero h1 {
-  font-size: clamp(2.4rem, 1.4rem + 4.6vw, 4.5rem);
-  font-weight: 600;
-  line-height: 1.06;
+.hero-title .word {
+  display: inline-block;
+  padding-bottom: 0.06em;
   background: var(--gold-metal);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
-  padding-bottom: 0.08em;
 }
-.hero-lede {
-  margin-top: var(--space-3);
+.hero-desc {
+  position: absolute;
+  left: var(--gutter);
+  right: var(--gutter);
+  bottom: calc(6.5rem + env(safe-area-inset-bottom, 0px));
+  margin-inline: auto;
   max-width: 34rem;
-  font-size: 1.125rem;
+  text-align: center;
+  font-size: clamp(1rem, 0.9rem + 0.4vw, 1.15rem);
+  color: var(--ivory);
+  text-shadow: 0 2px 18px rgba(0, 0, 0, 0.9);
+}
+.scroll-cue {
+  position: absolute;
+  left: 50%;
+  bottom: var(--space-2);
+  transform: translateX(-50%);
+  display: grid;
+  justify-items: center;
+  gap: 0.4rem;
+  min-height: 44px;
+  padding: 0.25rem 1rem;
   color: var(--muted);
+  font-size: 0.75rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  text-decoration: none;
+  visibility: hidden;
+}
+.scroll-cue-line {
+  width: 1px;
+  height: 28px;
+  background: linear-gradient(var(--gold), transparent);
+  transform-origin: top;
+  animation: cue 2.2s cubic-bezier(0.8, 0, 0, 1) infinite;
+}
+@keyframes cue {
+  0% {
+    transform: scaleY(0);
+  }
+  50% {
+    transform: scaleY(1);
+    transform-origin: top;
+  }
+  51% {
+    transform-origin: bottom;
+  }
+  100% {
+    transform: scaleY(0);
+    transform-origin: bottom;
+  }
+}
+
+.statement {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: var(--gutter);
+  pointer-events: none;
+}
+.statement-text {
+  position: relative;
+  z-index: 2;
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(2rem, 1rem + 4.6vw, 5.2rem);
+  line-height: 1.12;
+  text-align: center;
+  color: var(--ivory);
+}
+.statement-text .word {
+  display: inline-block;
+  visibility: hidden;
+}
+.trail {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+}
+.trail.is-active {
+  pointer-events: auto;
+}
+.trail-item {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 240px;
+  height: 160px;
+  object-fit: cover;
+  border: 1px solid var(--line-strong);
+  border-radius: 120px 120px 6px 6px / 70px 70px 6px 6px;
+  visibility: hidden;
+  opacity: 0;
+}
+
+/* ---------- Search band ---------- */
+
+.find {
+  padding-block: var(--space-6);
+  border-bottom: 1px solid var(--line);
+  background: var(--night);
+}
+.find-inner {
+  display: grid;
+  gap: var(--space-4);
+  align-items: end;
+}
+@media (min-width: 1024px) {
+  .find-inner {
+    grid-template-columns: 1fr 1.15fr;
+    gap: var(--space-6);
+  }
 }
 
 .search {
-  margin-top: var(--space-4);
   display: grid;
   gap: var(--space-2);
   padding: var(--space-2);
@@ -481,12 +764,12 @@ h3 {
     padding-inline: 1.8rem;
   }
 }
-.hero-call {
+.find-call {
   margin-top: var(--space-2);
   color: var(--muted);
   font-size: 0.95rem;
 }
-.hero-call a {
+.find-call a {
   color: var(--gold-hi);
   font-weight: 600;
   text-underline-offset: 3px;
@@ -559,110 +842,6 @@ h3 {
 }
 .field.has-error .field-error {
   display: block;
-}
-
-/* The arched gateway */
-.portal {
-  position: relative;
-  margin: 0 auto;
-  width: min(100%, 420px);
-  aspect-ratio: 400 / 560;
-}
-.portal-view,
-.portal-frame {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-}
-.portal-view {
-  clip-path: url(#arch-clip);
-  perspective: 1400px;
-  background: #050506;
-}
-.scene {
-  width: 100%;
-  height: 100%;
-}
-.portal-frame {
-  pointer-events: none;
-}
-
-.door {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  width: 50%;
-  background:
-    linear-gradient(
-      90deg,
-      rgba(0, 0, 0, 0.55),
-      transparent 20%,
-      transparent 80%,
-      rgba(0, 0, 0, 0.55)
-    ),
-    url("../assets/svg/jaali.svg") center / 38px,
-    #120f0a;
-  border: 2px solid var(--gold);
-  backface-visibility: hidden;
-  will-change: transform;
-}
-.door-l {
-  left: 0;
-  transform-origin: left center;
-}
-.door-r {
-  right: 0;
-  transform-origin: right center;
-}
-.door::after {
-  content: "";
-  position: absolute;
-  top: 58%;
-  width: 14px;
-  height: 14px;
-  border: 2px solid var(--gold-hi);
-  border-radius: 50%;
-  background: var(--night);
-}
-.door-l::after {
-  right: 10px;
-}
-.door-r::after {
-  left: 10px;
-}
-
-.portal.is-open .door-l {
-  animation: door-open-l 2.4s cubic-bezier(0.65, 0, 0.2, 1) forwards;
-}
-.portal.is-open .door-r {
-  animation: door-open-r 2.4s cubic-bezier(0.65, 0, 0.2, 1) forwards;
-}
-@keyframes door-open-l {
-  to {
-    transform: rotateY(-108deg);
-  }
-}
-@keyframes door-open-r {
-  to {
-    transform: rotateY(108deg);
-  }
-}
-
-@media (min-width: 900px) {
-  .hero {
-    padding-top: calc(var(--header-h) + var(--space-5));
-    padding-bottom: var(--space-7);
-  }
-  .hero-grid {
-    grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
-    gap: var(--space-6);
-  }
-  .portal {
-    width: 100%;
-    max-width: 440px;
-    margin-right: 0;
-  }
 }
 
 /* ---------- Sections ---------- */
@@ -820,6 +999,7 @@ h3 {
 }
 
 .listing {
+  position: relative;
   display: flex;
   flex-direction: column;
   min-width: 0;
@@ -962,6 +1142,8 @@ h3 {
   bottom: calc(-1 * var(--space-4));
   width: 1px;
   background: linear-gradient(var(--gold), transparent);
+  transform: scaleY(var(--fill, 1));
+  transform-origin: top;
 }
 .steps li:last-child::before {
   display: none;
@@ -980,6 +1162,15 @@ h3 {
   font-size: 1.1rem;
   color: var(--gold-hi);
   background: var(--night-2);
+  transition:
+    background-color 0.5s ease,
+    color 0.5s ease,
+    box-shadow 0.5s ease;
+}
+.steps li.is-lit .step-num {
+  background: var(--gold);
+  color: #1a1408;
+  box-shadow: 0 0 24px rgba(212, 166, 74, 0.45);
 }
 .steps h3 {
   margin-bottom: 0.4rem;
@@ -1005,6 +1196,8 @@ h3 {
     width: auto;
     height: 1px;
     background: linear-gradient(90deg, var(--gold), rgba(212, 166, 74, 0.2));
+    transform: scaleX(var(--fill, 1));
+    transform-origin: left;
   }
   .steps h3 {
     padding-top: 0;
@@ -1395,6 +1588,222 @@ h3 {
   fill: #1a1408;
 }
 
+/* Whole card opens the property page; the WhatsApp button sits above that link. */
+.listing-link {
+  color: inherit;
+  text-decoration: none;
+}
+.listing-link::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+.listing-link:focus-visible {
+  outline: none;
+}
+.listing:has(.listing-link:focus-visible) {
+  outline: 2px solid var(--gold-hi);
+  outline-offset: 4px;
+}
+.listing-cta {
+  position: relative;
+  z-index: 2;
+}
+.listing .js-tilt-glare {
+  border-radius: inherit;
+}
+
+/* Scroll progress hairline under the header */
+.scroll-progress {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -1px;
+  height: 2px;
+  background: var(--gold-metal);
+  transform: scaleX(0);
+  transform-origin: left;
+  pointer-events: none;
+}
+
+/* ---------- Page transition curtain ---------- */
+
+.curtain {
+  position: fixed;
+  inset: 0;
+  z-index: 95;
+  display: grid;
+  place-items: center;
+  pointer-events: none;
+  visibility: hidden;
+}
+.curtain-panel {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(rgba(5, 5, 5, 0.9), rgba(5, 5, 5, 0.96)),
+    url("../assets/svg/jaali-faint.svg") center / 48px,
+    #050505;
+  border-block: 2px solid var(--gold);
+  transform: scaleY(0);
+}
+.curtain-logo {
+  position: relative;
+  width: 96px;
+  height: 96px;
+  visibility: hidden;
+}
+
+/* ---------- Property page ---------- */
+
+.property {
+  padding-top: calc(var(--header-h) + var(--space-4));
+  padding-bottom: var(--space-5);
+}
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  min-height: 44px;
+  margin-bottom: var(--space-3);
+  color: var(--muted);
+  text-decoration: none;
+}
+.back-link svg {
+  width: 18px;
+  height: 18px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+}
+.back-link:hover {
+  color: var(--gold-hi);
+}
+.property-grid {
+  display: grid;
+  gap: var(--space-4);
+  align-items: start;
+}
+.property-media {
+  position: relative;
+  margin: 0;
+  border: 1px solid var(--line-strong);
+  border-radius: 400px 400px var(--radius-m) var(--radius-m) / 220px 220px var(--radius-m)
+    var(--radius-m);
+  overflow: hidden;
+  aspect-ratio: 4 / 3;
+  background: var(--night-3);
+}
+.property-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.property-tag {
+  position: absolute;
+  left: 50%;
+  bottom: var(--space-2);
+  transform: translateX(-50%);
+  padding: 0.3rem 0.9rem;
+  border: 1px solid var(--line-strong);
+  border-radius: 999px;
+  background: rgba(13, 11, 8, 0.85);
+  color: var(--gold-hi);
+  font-size: 0.85rem;
+  white-space: nowrap;
+}
+.property-info {
+  display: grid;
+  gap: var(--space-2);
+  min-width: 0;
+}
+.property-price {
+  font-family: var(--font-serif);
+  font-size: clamp(2rem, 1.5rem + 2vw, 2.8rem);
+  color: var(--gold-hi);
+  line-height: 1.1;
+}
+.property-title {
+  font-size: clamp(1.6rem, 1.2rem + 1.6vw, 2.4rem);
+  text-wrap: balance;
+}
+.property-loc {
+  color: var(--muted);
+  font-size: 1.1rem;
+}
+.property-specs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem 1.4rem;
+  padding-block: var(--space-2);
+  border-block: 1px solid var(--line);
+}
+.property-specs li {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+}
+.property-specs svg {
+  width: 20px;
+  height: 20px;
+  fill: none;
+  stroke: var(--gold);
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.property-desc {
+  color: var(--muted);
+  max-width: 60ch;
+}
+.property-cta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin-top: var(--space-1);
+}
+.property-assure {
+  display: grid;
+  gap: 0.5rem;
+  margin-top: var(--space-2);
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+.property-assure li {
+  padding-left: 1.6rem;
+  position: relative;
+}
+.property-assure li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.45em;
+  width: 10px;
+  height: 10px;
+  border: 1.5px solid var(--gold);
+  transform: rotate(45deg);
+}
+.property-missing {
+  padding-top: calc(var(--header-h) + var(--space-6));
+  padding-bottom: var(--space-5);
+}
+.property-missing .empty-actions {
+  justify-content: flex-start;
+}
+.more {
+  background: var(--night-2);
+}
+@media (min-width: 900px) {
+  .property {
+    padding-top: calc(var(--header-h) + var(--space-5));
+  }
+  .property-grid {
+    grid-template-columns: 1.1fr 1fr;
+    gap: var(--space-6);
+  }
+}
+
 /* Motion preferences */
 @media (prefers-reduced-motion: reduce) {
   html {
@@ -1406,7 +1815,7 @@ h3 {
     transition-duration: 0.01ms !important;
     animation-duration: 0.01ms !important;
   }
-  .door {
-    display: none;
+  .hero-track {
+    height: 200svh;
   }
 }
