@@ -58,6 +58,8 @@ Listing categories match the services on the cover: `home` (houses & villas), `r
 
 **Home page hero:** a night scene seen through a gold Mughal arch. The moon rises, the villa's windows light up one by one and the title blooms in. Scrolling moves the camera through the arch towards the house, then the scene fades to the statement "Every property checked. Every step explained." The opening never blocks scrolling — the first scroll finishes it.
 
+**On phones (below 768px):** the hero is a still screen — a shorter opening, no scroll-driven camera — with "View properties" and "Search" buttons, and the statement follows as a normal section. Scroll animations are lighter (short fades, no blur, nothing tied to the scroll position), the 3D tilt is off, and page transitions are quicker. A Call / WhatsApp bar sits along the bottom of every page; on a property page its WhatsApp message names that property. On the Properties page, city, budget and size fold away behind a Filters button.
+
 **Motion:** headings sharpen in word by word, service icons draw themselves in gold, the line between the four steps fills as you scroll, property cards tilt in 3D on hover, and moving between pages drops a gold-edged curtain with the logo. Everything respects the visitor's reduced-motion setting.
 
 ### Animation libraries

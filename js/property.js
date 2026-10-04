@@ -19,6 +19,7 @@ import {
   waLink,
   askText,
   reducedMotion,
+  isPhone,
 } from "./shared.js";
 import { revealHeadings, riseIn, tilt } from "./motion.js";
 import { validate } from "./views.js";
@@ -46,17 +47,32 @@ export function initProperty(container, ctx, url) {
     );
     addStructuredData(container, item);
 
+    // The phone contact bar asks about this listing while it's open.
+    const barWa = $("[data-m-bar-wa]");
+    if (barWa) {
+      const general = barWa.href;
+      barWa.href = waLink(askText(item));
+      cleanups.push(() => (barWa.href = general));
+    }
+
     if (!reducedMotion) {
+      const phone = isPhone();
       const tl = gsap.timeline({ delay: 0.15 });
-      tl.from("[data-gallery]", { autoAlpha: 0, y: 20, duration: 1.1, ease: "expo.out" }).from(
+      tl.from($("[data-gallery]", container), {
+        autoAlpha: 0,
+        y: 20,
+        duration: phone ? 0.7 : 1.1,
+        ease: "expo.out",
+      }).from(
         $$(".property-info > *", container),
         {
           autoAlpha: 0,
-          y: 20,
-          filter: "blur(6px)",
-          duration: 0.8,
+          y: phone ? 12 : 20,
+          filter: phone ? "none" : "blur(6px)",
+          duration: phone ? 0.5 : 0.8,
           ease: "power3.out",
-          stagger: 0.06,
+          stagger: phone ? 0.04 : 0.06,
+          clearProps: "filter",
         },
         0.15,
       );

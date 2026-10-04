@@ -11,6 +11,7 @@ import {
   shortlist,
   areaMarla,
   pricePerMarla,
+  isPhone,
 } from "./shared.js";
 import { initHero } from "./hero.js";
 import { revealHeadings, drawIcons, riseIn, tilt, inkText, fillSteps } from "./motion.js";
@@ -64,7 +65,11 @@ export function initHome(container, ctx) {
 }
 
 export function initProperties(container, ctx, url) {
-  return run([initListings(container, url), initConverter(container), revealHeadings(container)]);
+  return run([
+    initListings(container, url, ctx),
+    initConverter(container),
+    revealHeadings(container),
+  ]);
 }
 
 export function initServices(container) {
@@ -113,7 +118,7 @@ function initFaq(container) {
 }
 
 /* ---------- Listings: search, filters, sort and shortlist (properties page) ---------- */
-function initListings(container, url) {
+function initListings(container, url, ctx) {
   const list = $("[data-listings]", container);
   const countEl = $("[data-count]", container);
   const emptyEl = $("[data-empty]", container);
@@ -121,6 +126,9 @@ function initListings(container, url) {
   const form = $("[data-search]", container);
   const sortEl = $("[data-sort]", container);
   const savedBtn = $("[data-saved-toggle]", container);
+  const more = $("[data-filter-more]", container);
+  const moreBtn = $("[data-filter-toggle]", container);
+  const moreCount = $("[data-filter-count]", container);
   const params = new URL(url, location.href).searchParams;
 
   const cities = [...new Set(data.listings.map((l) => l.city))].sort();
@@ -199,6 +207,9 @@ function initListings(container, url) {
       btn.setAttribute("aria-pressed", String(btn.getAttribute("data-filter") === state.category)),
     );
     savedBtn.setAttribute("aria-pressed", String(state.saved));
+    const active = ["city", "budget", "size"].filter((k) => state[k]).length;
+    moreCount.textContent = active;
+    moreCount.hidden = active === 0;
 
     const cards = $$(".listing", list);
     if (first) unrise = riseIn(cards);
@@ -239,10 +250,21 @@ function initListings(container, url) {
       render();
     }),
   );
+  moreBtn.addEventListener("click", () => {
+    const open = !more.classList.contains("is-open");
+    more.classList.toggle("is-open", open);
+    moreBtn.setAttribute("aria-expanded", String(open));
+    ScrollTrigger.refresh();
+  });
   form.addEventListener("submit", (e) => {
     e.preventDefault();
     state.q = form.q.value;
     render();
+    // On a phone, put the keyboard away and bring the results into view.
+    if (isPhone()) {
+      document.activeElement.blur();
+      ctx.scroll.to($(".results-bar", container));
+    }
   });
   $("[data-reset]", container).addEventListener("click", () => {
     state = fresh();

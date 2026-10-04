@@ -11,6 +11,10 @@ export const reducedMotion = matchMedia("(prefers-reduced-motion: reduce)").matc
 export const finePointer = matchMedia("(hover: hover) and (pointer: fine)").matches;
 export const clamp01 = (v) => Math.min(1, Math.max(0, v));
 
+/** Phones get a still hero and lighter, non-scrubbed motion. Matches the 768px breakpoint in CSS. */
+export const phoneQuery = matchMedia("(max-width: 767px)");
+export const isPhone = () => phoneQuery.matches;
+
 export function waLink(text) {
   const url = `https://wa.me/${biz.whatsapp}`;
   return text ? `${url}?text=${encodeURIComponent(text)}` : url;

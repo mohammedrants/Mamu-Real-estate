@@ -1,12 +1,29 @@
 // Scroll reveals and 3D tilt used across pages. Each helper returns a cleanup
 // function so a page can tear its motion down before a Barba transition.
-import { $$, reducedMotion, finePointer } from "./shared.js";
+//
+// On phones the motion is lighter: reveals play once with a short rise and no blur, and nothing
+// is scrubbed to the scroll position.
+import { $$, reducedMotion, finePointer, isPhone } from "./shared.js";
 
 const { gsap, ScrollTrigger, SplitText, VanillaTilt } = window;
 
 /** Headings marked data-reveal sharpen in word by word, the hero's vocabulary at a smaller scale. */
 export function revealHeadings(root) {
   if (reducedMotion) return () => {};
+  if (isPhone()) {
+    const els = $$("[data-reveal]", root);
+    gsap.set(els, { autoAlpha: 0, y: 14 });
+    const triggers = ScrollTrigger.batch(els, {
+      start: "top 92%",
+      once: true,
+      onEnter: (batch) =>
+        gsap.to(batch, { autoAlpha: 1, y: 0, duration: 0.6, ease: "power2.out", stagger: 0.08 }),
+    });
+    return () => {
+      triggers.forEach((t) => t.kill());
+      gsap.set(els, { clearProps: "opacity,visibility,transform" });
+    };
+  }
   const splits = [];
   const triggers = $$("[data-reveal]", root).map((el) => {
     const split = SplitText.create(el, { type: "words" });
@@ -67,17 +84,18 @@ export function drawIcons(list) {
 /** Cards rise in as their row reaches the viewport. */
 export function riseIn(cards) {
   if (reducedMotion || !cards.length) return () => {};
-  gsap.set(cards, { autoAlpha: 0, y: 48 });
+  const phone = isPhone();
+  gsap.set(cards, { autoAlpha: 0, y: phone ? 20 : 48 });
   const triggers = ScrollTrigger.batch(cards, {
-    start: "top 92%",
+    start: phone ? "top 95%" : "top 92%",
     once: true,
     onEnter: (batch) =>
       gsap.to(batch, {
         autoAlpha: 1,
         y: 0,
-        duration: 1,
-        ease: "expo.out",
-        stagger: 0.1,
+        duration: phone ? 0.6 : 1,
+        ease: phone ? "power2.out" : "expo.out",
+        stagger: phone ? 0.06 : 0.1,
         overwrite: true,
       }),
   });
@@ -86,7 +104,7 @@ export function riseIn(cards) {
 
 /** Gold-glare 3D tilt on hover (desktop pointers only). */
 export function tilt(elements, options = {}) {
-  if (reducedMotion || !finePointer || !VanillaTilt) return () => {};
+  if (reducedMotion || !finePointer || isPhone() || !VanillaTilt) return () => {};
   const els = elements.filter(Boolean);
   VanillaTilt.init(els, {
     max: 6,
@@ -111,7 +129,8 @@ export function tilt(elements, options = {}) {
 
 /** A scrubbed "ink" effect: words of a paragraph light up as it scrolls through. */
 export function inkText(el) {
-  if (!el || reducedMotion) return () => {};
+  // Phones just show the paragraph.
+  if (!el || reducedMotion || isPhone()) return () => {};
   const split = SplitText.create(el, { type: "words" });
   const tween = gsap.fromTo(
     split.words,
@@ -132,7 +151,8 @@ export function inkText(el) {
 
 /** Process steps: the gold line between numbers fills as you scroll, lighting each step it reaches. */
 export function fillSteps(list) {
-  if (!list || reducedMotion) return () => {};
+  // Phones show every step lit.
+  if (!list || reducedMotion || isPhone()) return () => {};
   const steps = $$("li", list);
   const n = steps.length;
   const st = ScrollTrigger.create({

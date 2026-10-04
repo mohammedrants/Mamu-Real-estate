@@ -1,6 +1,6 @@
 // Entry point: smooth scroll (Lenis + ScrollTrigger), the persistent header,
 // and Barba page transitions between all pages.
-import { $, $$, fillBusiness, reducedMotion, shortlist } from "./shared.js";
+import { $, $$, fillBusiness, reducedMotion, shortlist, isPhone } from "./shared.js";
 import { initHome, initProperties, initServices, initAbout, initContact } from "./views.js";
 import { initProperty } from "./property.js";
 
@@ -148,6 +148,9 @@ const curtainEl = $("[data-curtain]");
 const curtainPanel = $(".curtain-panel", curtainEl);
 const curtainLogo = $(".curtain-logo", curtainEl);
 
+/** Phones get a quicker curtain. */
+const curtainSpeed = () => (isPhone() ? 1.6 : 1);
+
 function cover() {
   return new Promise((resolve) => {
     if (reducedMotion)
@@ -162,7 +165,8 @@ function cover() {
         { autoAlpha: 0, y: 24, scale: 0.9 },
         { autoAlpha: 1, y: 0, scale: 1, duration: 0.6, ease: "power3.out" },
         "-=0.3",
-      );
+      )
+      .timeScale(curtainSpeed());
   });
 }
 
@@ -175,7 +179,8 @@ function reveal() {
       .to(curtainLogo, { autoAlpha: 0, y: -18, duration: 0.4, ease: "power2.in" })
       .set(curtainPanel, { transformOrigin: "50% 0%" })
       .to(curtainPanel, { scaleY: 0, duration: 0.85, ease: "expo.inOut" }, "-=0.05")
-      .set(curtainEl, { autoAlpha: 0 });
+      .set(curtainEl, { autoAlpha: 0 })
+      .timeScale(curtainSpeed());
   });
 }
 

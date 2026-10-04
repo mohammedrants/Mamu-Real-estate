@@ -119,32 +119,43 @@
               <span class="field-label">Area or society</span>
               <input type="search" name="q" placeholder="e.g. DHA, Bahria Town" autocomplete="off" />
             </label>
-            <label class="field">
-              <span class="field-label">City</span>
-              <select name="city" data-city-options>
-                <option value="">All cities</option>
-              </select>
-            </label>
-            <label class="field">
-              <span class="field-label">Budget</span>
-              <select name="budget">
-                <option value="">Any budget</option>
-                <option value="0-20000000">Up to 2 crore</option>
-                <option value="20000000-50000000">2 – 5 crore</option>
-                <option value="50000000-100000000">5 – 10 crore</option>
-                <option value="100000000-">10 crore +</option>
-              </select>
-            </label>
-            <label class="field">
-              <span class="field-label">Size</span>
-              <select name="size">
-                <option value="">Any size</option>
-                <option value="0-5">Up to 5 marla</option>
-                <option value="5-10">5 – 10 marla</option>
-                <option value="10-20">10 marla – 1 kanal</option>
-                <option value="20-">1 kanal +</option>
-              </select>
-            </label>
+            <div class="filter-more" id="filter-more" data-filter-more>
+              <label class="field">
+                <span class="field-label">City</span>
+                <select name="city" data-city-options>
+                  <option value="">All cities</option>
+                </select>
+              </label>
+              <label class="field">
+                <span class="field-label">Budget</span>
+                <select name="budget">
+                  <option value="">Any budget</option>
+                  <option value="0-20000000">Up to 2 crore</option>
+                  <option value="20000000-50000000">2 – 5 crore</option>
+                  <option value="50000000-100000000">5 – 10 crore</option>
+                  <option value="100000000-">10 crore +</option>
+                </select>
+              </label>
+              <label class="field">
+                <span class="field-label">Size</span>
+                <select name="size">
+                  <option value="">Any size</option>
+                  <option value="0-5">Up to 5 marla</option>
+                  <option value="5-10">5 – 10 marla</option>
+                  <option value="10-20">10 marla – 1 kanal</option>
+                  <option value="20-">1 kanal +</option>
+                </select>
+              </label>
+            </div>
+            <button
+              class="btn btn-outline filter-toggle"
+              type="button"
+              aria-expanded="false"
+              aria-controls="filter-more"
+              data-filter-toggle
+            >
+              Filters <span class="filter-count" data-filter-count hidden></span>
+            </button>
             <button class="btn btn-gold search-go" type="submit">Search</button>
           </form>
           <div class="results-bar">
@@ -286,6 +297,23 @@
       <img class="curtain-logo" src="assets/svg/logo.svg" alt="" width="96" height="96" />
     </div>
 
+    <!-- Phones: call and WhatsApp always in reach (replaces the round WhatsApp button) -->
+    <div class="m-bar" role="group" aria-label="Contact us">
+      <a class="btn btn-outline" href="#" data-tel>
+        <svg class="btn-icon" viewBox="0 0 32 32" aria-hidden="true">
+          <path d="M8 4h5l2 7-3 2c1.5 3 4 5.5 7 7l2-3 7 2v5c0 1-1 2-2 2C14 26 6 18 6 6c0-1 1-2 2-2Z" />
+        </svg>
+        Call
+      </a>
+      <a class="btn btn-gold" href="#" data-wa data-m-bar-wa target="_blank" rel="noopener">
+        <svg class="m-bar-wa" viewBox="0 0 32 32" aria-hidden="true">
+          <path
+            d="M16 3a13 13 0 0 0-11.2 19.6L3 29l6.6-1.7A13 13 0 1 0 16 3Zm0 23.6a10.6 10.6 0 0 1-5.4-1.5l-.4-.2-3.9 1 1-3.8-.2-.4A10.6 10.6 0 1 1 16 26.6Zm5.8-7.9c-.3-.2-1.9-.9-2.2-1s-.5-.2-.7.2-.8 1-1 1.2-.4.2-.7.1a8.7 8.7 0 0 1-4.3-3.8c-.3-.6.3-.5 1-1.7.1-.2 0-.4 0-.6l-1-2.4c-.3-.6-.5-.5-.7-.5h-.6a1.2 1.2 0 0 0-.9.4 3.7 3.7 0 0 0-1.1 2.7 6.4 6.4 0 0 0 1.4 3.4 14.6 14.6 0 0 0 5.6 4.9c2 .9 2.9.9 3.9.8a3.4 3.4 0 0 0 2.2-1.6 2.8 2.8 0 0 0 .2-1.6c-.1-.2-.3-.3-.6-.5Z"
+          />
+        </svg>
+        WhatsApp
+      </a>
+    </div>
     <a class="wa-float" href="#" data-wa target="_blank" rel="noopener" aria-label="Chat with us on WhatsApp">
       <svg viewBox="0 0 32 32" aria-hidden="true">
         <path

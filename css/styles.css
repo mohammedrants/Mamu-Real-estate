@@ -32,6 +32,7 @@
   --wrap: 1200px;
   --gutter: 1rem;
   --header-h: 68px;
+  --m-bar-h: calc(66px + env(safe-area-inset-bottom, 0px)); /* phone contact bar */
   --ease-expo: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
@@ -39,6 +40,7 @@
   :root {
     --gutter: 2rem;
     --header-h: 80px;
+    --m-bar-h: 0px;
   }
 }
 
@@ -422,25 +424,46 @@ h3 {
 
 /* ---------- Hero: a night scene the camera travels into ---------- */
 
+/* Phones: one still screen with the scene, then the statement as a section below it.
+   From 768px: a pinned panel the camera travels through as you scroll (js/hero.js). */
 .hero-track {
   position: relative;
-  height: 300svh; /* (INTRO 2.6 + OUTRO 0.4) screens, see js/hero.js */
   background: #050505;
+  /* the screen above the contact bar */
+  --hero-h: max(calc(100svh - var(--m-bar-h)), 460px);
 }
 .hero-panel {
-  position: sticky;
-  top: 0;
-  height: 100svh;
+  position: relative;
   overflow: hidden;
   background:
     linear-gradient(rgba(5, 5, 5, 0.86), rgba(5, 5, 5, 0.94)),
     url("../assets/svg/jaali-faint.svg") center / 48px,
     #050505;
 }
+.hero-panel::before {
+  content: "";
+  display: block;
+  height: var(--hero-h);
+}
 .scene {
   position: absolute;
-  inset: 0;
+  inset: 0 0 auto;
+  height: var(--hero-h);
   visibility: hidden; /* shown by the opening shot */
+}
+@media (min-width: 768px) {
+  .hero-track {
+    height: 300svh; /* (INTRO 2.6 + OUTRO 0.4) screens, see js/hero.js */
+    --hero-h: 100svh;
+  }
+  .hero-panel {
+    position: sticky;
+    top: 0;
+    height: 100svh;
+  }
+  .hero-panel::before {
+    display: none;
+  }
 }
 .layer {
   position: absolute;
@@ -461,15 +484,16 @@ h3 {
 }
 .moon {
   position: absolute;
-  top: 30%;
-  right: 2%;
-  width: clamp(150px, 20vw, 300px);
+  top: 36%;
+  right: 0;
+  width: clamp(110px, 30vw, 160px);
   height: auto;
 }
 @media (min-width: 768px) {
   .moon {
     top: 30%;
     right: 24%;
+    width: clamp(150px, 20vw, 300px);
   }
 }
 .layer-arch .arch {
@@ -512,8 +536,16 @@ h3 {
 
 .hero-copy {
   position: absolute;
-  inset: 0;
+  inset: 0 0 auto;
+  height: var(--hero-h);
   pointer-events: none;
+  /* a scrim so the copy reads over the lit pool */
+  background: linear-gradient(transparent 52%, rgba(5, 5, 5, 0.8) 82%);
+}
+@media (min-width: 768px) {
+  .hero-copy {
+    background: none;
+  }
 }
 .hero-title {
   position: absolute;
@@ -541,7 +573,7 @@ h3 {
   position: absolute;
   left: var(--gutter);
   right: var(--gutter);
-  bottom: calc(6.5rem + env(safe-area-inset-bottom, 0px));
+  bottom: 5.75rem;
   margin-inline: auto;
   max-width: 34rem;
   text-align: center;
@@ -549,7 +581,36 @@ h3 {
   color: var(--ivory);
   text-shadow: 0 2px 18px rgba(0, 0, 0, 0.9);
 }
+.hero-actions {
+  position: absolute;
+  left: var(--gutter);
+  right: var(--gutter);
+  bottom: var(--space-3);
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: 0.75rem;
+  max-width: 26rem;
+  margin-inline: auto;
+  pointer-events: auto;
+  visibility: hidden; /* shown by the opening shot */
+}
+.hero-actions .btn {
+  padding-inline: 0.75rem;
+  white-space: nowrap;
+}
+.hero-actions .btn-outline {
+  background: rgba(5, 5, 5, 0.55);
+}
+@media (min-width: 768px) {
+  .hero-actions {
+    display: none;
+  }
+  .hero-desc {
+    bottom: calc(6.5rem + env(safe-area-inset-bottom, 0px));
+  }
+}
 .scroll-cue {
+  display: none;
   position: absolute;
   left: 50%;
   bottom: var(--space-2);
@@ -565,6 +626,11 @@ h3 {
   text-transform: uppercase;
   text-decoration: none;
   visibility: hidden;
+}
+@media (min-width: 768px) {
+  .scroll-cue {
+    display: grid;
+  }
 }
 .scroll-cue-line {
   width: 1px;
@@ -591,12 +657,20 @@ h3 {
 }
 
 .statement {
-  position: absolute;
-  inset: 0;
+  position: relative;
   display: grid;
   place-items: center;
-  padding: var(--gutter);
+  padding: var(--space-6) var(--gutter);
+  border-top: 1px solid var(--line);
   pointer-events: none;
+}
+@media (min-width: 768px) {
+  .statement {
+    position: absolute;
+    inset: 0;
+    padding: var(--gutter);
+    border-top: 0;
+  }
 }
 .statement-text {
   position: relative;
@@ -737,7 +811,12 @@ h3 {
 /* ---------- Sections ---------- */
 
 .section {
-  padding-block: var(--space-6);
+  padding-block: var(--space-5);
+}
+@media (min-width: 768px) {
+  .section {
+    padding-block: var(--space-6);
+  }
 }
 @media (min-width: 900px) {
   .section {
@@ -1405,6 +1484,9 @@ h3 {
   color: var(--muted);
 }
 .contact-ways a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
   font-size: 1.1rem;
   color: var(--ivory);
   text-decoration-color: var(--line-strong);
@@ -1454,7 +1536,7 @@ h3 {
 
 /* Footer */
 .site-footer {
-  padding: var(--space-6) 0 calc(var(--space-5) + 56px);
+  padding: var(--space-6) 0 var(--space-5);
   background:
     linear-gradient(rgba(10, 9, 7, 0.9), #0a0907),
     url("../assets/svg/jaali-faint.svg") center / 48px;
@@ -1495,8 +1577,9 @@ h3 {
   color: var(--gold);
 }
 .footer-col a {
-  display: inline-block;
-  padding: 0.35rem 0;
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
   color: var(--muted);
   text-decoration: none;
   overflow-wrap: anywhere;
@@ -1520,6 +1603,11 @@ h3 {
     grid-template-columns: repeat(2, 1fr);
   }
 }
+@media (min-width: 768px) {
+  .site-footer {
+    padding-bottom: calc(var(--space-5) + 56px);
+  }
+}
 @media (min-width: 1024px) {
   .site-footer {
     padding-bottom: var(--space-5);
@@ -1530,15 +1618,50 @@ h3 {
   }
 }
 
+/* Phones: a contact bar along the bottom edge. From 768px, the round WhatsApp button instead. */
+.m-bar {
+  position: fixed;
+  inset: auto 0 0;
+  z-index: 40;
+  display: grid;
+  grid-template-columns: 1fr 1.4fr;
+  gap: 0.6rem;
+  padding: 0.6rem var(--gutter) calc(0.6rem + env(safe-area-inset-bottom, 0px));
+  border-top: 1px solid var(--line);
+  background: rgba(10, 9, 7, 0.94);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+}
+.m-bar .btn {
+  min-height: 46px;
+  padding-inline: 1rem;
+}
+.m-bar .btn-outline {
+  color: var(--ivory);
+}
+.m-bar-wa {
+  width: 20px;
+  height: 20px;
+  fill: currentColor;
+}
+body {
+  padding-bottom: var(--m-bar-h);
+}
+@media (min-width: 768px) {
+  .m-bar {
+    display: none;
+  }
+}
+
 /* WhatsApp button */
 .wa-float {
+  display: none;
   position: fixed;
   right: var(--gutter);
   bottom: calc(var(--gutter) + env(safe-area-inset-bottom, 0px));
   z-index: 40;
   width: 56px;
   height: 56px;
-  display: grid;
   place-items: center;
   border-radius: 50%;
   background: var(--gold-metal);
@@ -1549,6 +1672,11 @@ h3 {
 }
 .wa-float:hover {
   transform: scale(1.06);
+}
+@media (min-width: 768px) {
+  .wa-float {
+    display: grid;
+  }
 }
 .wa-float svg {
   width: 28px;
@@ -1758,7 +1886,7 @@ h3 {
 .page-head {
   position: relative;
   overflow: hidden;
-  padding: calc(var(--header-h) + var(--space-5)) 0 var(--space-5);
+  padding: calc(var(--header-h) + var(--space-4)) 0 var(--space-4);
   background:
     radial-gradient(ellipse 50% 80% at 85% 100%, rgba(212, 166, 74, 0.12), transparent 70%),
     linear-gradient(rgba(10, 9, 7, 0.88), rgba(10, 9, 7, 0.96)),
@@ -1768,6 +1896,11 @@ h3 {
 }
 .page-head-inner {
   position: relative;
+}
+@media (min-width: 768px) {
+  .page-head {
+    padding: calc(var(--header-h) + var(--space-5)) 0 var(--space-5);
+  }
 }
 .page-head h1 {
   max-width: 18ch;
@@ -1850,6 +1983,8 @@ h3 {
   margin-top: var(--space-3);
 }
 .service-link {
+  display: inline-block;
+  padding-block: 0.5rem;
   color: inherit;
   text-decoration: none;
 }
@@ -2231,9 +2366,56 @@ h3 {
   border-radius: var(--radius-m);
   background: var(--night-3);
 }
-.filter-bar .field-q,
-.filter-bar .search-go {
+.filter-bar .field-q {
   grid-column: 1 / -1;
+}
+/* Phones: city, budget and size fold away behind the Filters button. */
+.filter-more {
+  grid-column: 1 / -1;
+  display: none;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-2);
+}
+.filter-more.is-open {
+  display: grid;
+}
+.filter-more .field:last-child {
+  grid-column: 1 / -1;
+}
+.filter-toggle {
+  gap: 0.5rem;
+}
+.filter-count {
+  display: inline-grid;
+  place-items: center;
+  min-width: 1.4rem;
+  height: 1.4rem;
+  padding-inline: 0.3rem;
+  border-radius: 999px;
+  background: var(--gold);
+  color: #1a1408;
+  font-size: 0.8rem;
+}
+.section.listings {
+  padding-top: var(--space-3);
+}
+@media (min-width: 768px) {
+  .section.listings {
+    padding-top: var(--space-5);
+  }
+  .filter-more,
+  .filter-more.is-open {
+    display: contents;
+  }
+  .filter-more .field:last-child {
+    grid-column: auto;
+  }
+  .filter-toggle {
+    display: none;
+  }
+  .filter-bar .search-go {
+    grid-column: 1 / -1;
+  }
 }
 @media (min-width: 1024px) {
   .filter-bar {
@@ -2294,15 +2476,21 @@ h3 {
 }
 .area-list {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  gap: var(--space-2);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.75rem;
+}
+@media (min-width: 640px) {
+  .area-list {
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: var(--space-2);
+  }
 }
 .area-tile {
   position: relative;
   display: grid;
   gap: 0.15rem;
   min-height: 120px;
-  padding: var(--space-3);
+  padding: var(--space-3) var(--space-2) var(--space-2);
   border: 1px solid var(--line);
   border-radius: 120px 120px var(--radius-s) var(--radius-s) / 46px 46px var(--radius-s)
     var(--radius-s);
@@ -2320,7 +2508,7 @@ h3 {
 }
 .area-name {
   font-family: var(--font-serif);
-  font-size: 1.3rem;
+  font-size: clamp(1.1rem, 0.95rem + 0.6vw, 1.3rem);
   color: var(--ivory);
 }
 .area-city {
@@ -2380,10 +2568,13 @@ h3 {
 }
 .sell-seal {
   position: absolute;
-  right: -0.5rem;
+  right: 0.75rem;
   bottom: -2.5rem;
 }
 @media (min-width: 900px) {
+  .sell-seal {
+    right: -0.5rem;
+  }
   .sell-inner {
     grid-template-columns: 1.1fr 0.9fr;
     gap: var(--space-6);
@@ -2550,9 +2741,17 @@ h3 {
   font-weight: 600;
 }
 .property-rate {
+  display: block;
+  margin-top: 0.3rem;
   font-family: var(--font-body);
   font-size: 0.95rem;
   color: var(--muted);
+}
+@media (min-width: 768px) {
+  .property-rate {
+    display: inline;
+    margin-top: 0;
+  }
 }
 .property-actions {
   display: flex;
@@ -2707,7 +2906,7 @@ h3 {
   gap: var(--space-2);
 }
 .calc input[type="range"] {
-  min-height: 0;
+  min-height: 44px;
   padding: 0;
   border: 0;
   background: none;
@@ -2811,6 +3010,8 @@ h3 {
     transition-duration: 0.01ms !important;
     animation-duration: 0.01ms !important;
   }
+}
+@media (prefers-reduced-motion: reduce) and (min-width: 768px) {
   .hero-track {
     height: 200svh;
   }

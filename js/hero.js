@@ -4,7 +4,10 @@
 // 2. Travel  — scroll moves the camera forward through the arched gateway towards the house,
 //              each layer at its own depth, while the title grows away.
 // 3. Promise — the scene fades to the jaali texture and a two-line statement grows in.
-import { $, $$, reducedMotion, finePointer, clamp01 } from "./shared.js";
+//
+// Phones get a still version: the same night scene and a short opening, no scroll-driven travel,
+// and the statement as an ordinary section below that fades in once.
+import { $, $$, reducedMotion, finePointer, clamp01, isPhone, phoneQuery } from "./shared.js";
 
 const { gsap, ScrollTrigger, SplitText } = window;
 
@@ -78,6 +81,26 @@ function centreOrigins(words) {
  *           skipIntro: boolean }} ctx
  */
 export function initHero(track, ctx) {
+  const title = $("[data-hero-title]", track);
+  const statement = $("[data-statement]", track);
+  const original = [title.innerHTML, statement.innerHTML];
+  let stop = buildHero(track, ctx, isPhone());
+
+  // Rotating a tablet or resizing a window across the breakpoint rebuilds the hero in the other mode.
+  const onChange = () => {
+    stop();
+    [title.innerHTML, statement.innerHTML] = original;
+    stop = buildHero(track, { ...ctx, skipIntro: true }, isPhone());
+    ScrollTrigger.refresh();
+  };
+  phoneQuery.addEventListener("change", onChange);
+  return () => {
+    phoneQuery.removeEventListener("change", onChange);
+    stop();
+  };
+}
+
+function buildHero(track, ctx, phone) {
   const panel = $(".hero-panel", track);
   const scene = $("[data-scene]", track);
   const layers = $$(".layer", scene);
@@ -88,6 +111,7 @@ export function initHero(track, ctx) {
   const title = $("[data-hero-title]", track);
   const desc = $("[data-hero-desc]", track);
   const cue = $("[data-scroll-cue]", track);
+  const actions = $("[data-hero-actions]", track);
   const statement = $("[data-statement]", track);
   const wins = $$(".win", scene);
   const moon = $("[data-moon]", scene);
@@ -116,13 +140,13 @@ export function initHero(track, ctx) {
   /* ---------- Arch geometry, drawn to fit the screen ---------- */
   let origin = { x: 0, y: 0 };
   function layout() {
-    const W = panel.clientWidth;
-    const H = panel.clientHeight;
+    const W = scene.clientWidth;
+    const H = scene.clientHeight;
     arch.setAttribute("viewBox", `0 0 ${W} ${H}`);
 
     const ow = Math.min(W * 0.84, H * 0.96);
     const cx = W / 2;
-    const ya = Math.max(H * 0.1, 70);
+    const ya = phone ? Math.max(H * 0.13, 92) : Math.max(H * 0.1, 70);
     const opening = (w, top) => {
       const l = cx - w / 2;
       const r = cx + w / 2;
@@ -185,19 +209,43 @@ export function initHero(track, ctx) {
     });
   }
 
-  const st = ScrollTrigger.create({
-    trigger: track,
-    start: "top top",
-    end: "bottom bottom",
-    onUpdate: (self) => {
-      state.progress = self.progress;
-      update();
-    },
-  });
-  cleanups.push(() => st.kill());
+  if (phone) {
+    // The statement is its own section on phones: it fades in once, word by word.
+    if (reducedMotion) gsap.set(statementWords, { autoAlpha: 1 });
+    else {
+      gsap.set(statementWords, { autoAlpha: 0, y: "0.4em" });
+      const reveal = ScrollTrigger.create({
+        trigger: statement,
+        start: "top 85%",
+        once: true,
+        onEnter: () =>
+          gsap.to(statementWords, {
+            autoAlpha: 1,
+            y: 0,
+            duration: 0.7,
+            stagger: 0.07,
+            ease: "power3.out",
+          }),
+      });
+      cleanups.push(() => reveal.kill());
+    }
+  }
+
+  const st = phone
+    ? null
+    : ScrollTrigger.create({
+        trigger: track,
+        start: "top top",
+        end: "bottom bottom",
+        onUpdate: (self) => {
+          state.progress = self.progress;
+          update();
+        },
+      });
+  if (st) cleanups.push(() => st.kill());
 
   // Don't strand anyone mid-shot: once past 60% of the travel, finish it for them.
-  if (!reducedMotion) {
+  if (st && !reducedMotion) {
     cleanups.push(
       ctx.scroll.idle(() => {
         if (!state.textReady) return;
@@ -246,13 +294,27 @@ export function initHero(track, ctx) {
       state.textReady = true;
       gsap.set(titleWords, { willChange: "auto" });
       ctx.scroll.start();
-      update();
+      if (!phone) update();
     };
     if (!animate) {
-      gsap.set(titleWords, { autoAlpha: 1, scale: 1, filter: "blur(0px)" });
+      gsap.set(titleWords, { autoAlpha: 1, scale: 1, y: 0, filter: "blur(0px)" });
       gsap.set(descLines, { yPercent: 0, autoAlpha: 1 });
-      gsap.set(cue, { autoAlpha: 1 });
+      gsap.set([cue, actions], { autoAlpha: 1, y: 0 });
       return done();
+    }
+    if (phone) {
+      // Lighter on phones: no scale or blur, just a quick rise.
+      gsap.set(titleWords, { autoAlpha: 0, y: "0.35em" });
+      textTl = gsap
+        .timeline({ onComplete: done })
+        .to(titleWords, { autoAlpha: 1, y: 0, duration: 0.7, stagger: 0.08, ease: "power3.out" })
+        .to(
+          descLines,
+          { yPercent: 0, autoAlpha: 1, duration: 0.7, stagger: 0.1, ease: "expo.out" },
+          "-=0.35",
+        )
+        .fromTo(actions, { autoAlpha: 0, y: 12 }, { autoAlpha: 1, y: 0, duration: 0.6 }, "-=0.4");
+      return;
     }
     gsap.set(titleWords, {
       autoAlpha: 0,
@@ -286,18 +348,27 @@ export function initHero(track, ctx) {
     }
     // The opening never holds the page: the first scroll, swipe or key press finishes it at once.
     const tl = gsap.timeline();
-    tl.fromTo(scene, { autoAlpha: 0 }, { autoAlpha: 1, duration: 1.4, ease: "power1.inOut" }, 0)
-      .fromTo(
-        pushTargets,
-        { scale: (i) => 1 + (0.14 * (i + 1)) / layers.length },
-        { scale: 1, duration: 3.4, ease: "expo.out" },
-        0,
-      )
-      .fromTo(moon, { y: 70 }, { y: 0, duration: 3.2, ease: "power3.out" }, 0)
-      .to(towerLights, { autoAlpha: 1, duration: 1.4, ease: "power1.in" }, 0.4)
-      .to(wins, { autoAlpha: 1, duration: 0.4, ease: "power2.out", stagger: 0.12 }, 0.7)
-      .to(refl, { autoAlpha: 1, duration: 1.2, ease: "power1.out" }, 1.1)
-      .add(() => revealText(true), 1.2);
+    if (phone) {
+      // A shorter opening on phones, about half the length.
+      tl.fromTo(scene, { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.8, ease: "power1.inOut" }, 0)
+        .fromTo(moon, { y: 40 }, { y: 0, duration: 1.8, ease: "power3.out" }, 0)
+        .to(towerLights, { autoAlpha: 1, duration: 0.8 }, 0.2)
+        .to(wins, { autoAlpha: 1, duration: 0.3, stagger: 0.05 }, 0.35)
+        .to(refl, { autoAlpha: 1, duration: 0.8 }, 0.6)
+        .add(() => revealText(true), 0.5);
+    } else
+      tl.fromTo(scene, { autoAlpha: 0 }, { autoAlpha: 1, duration: 1.4, ease: "power1.inOut" }, 0)
+        .fromTo(
+          pushTargets,
+          { scale: (i) => 1 + (0.14 * (i + 1)) / layers.length },
+          { scale: 1, duration: 3.4, ease: "expo.out" },
+          0,
+        )
+        .fromTo(moon, { y: 70 }, { y: 0, duration: 3.2, ease: "power3.out" }, 0)
+        .to(towerLights, { autoAlpha: 1, duration: 1.4, ease: "power1.in" }, 0.4)
+        .to(wins, { autoAlpha: 1, duration: 0.4, ease: "power2.out", stagger: 0.12 }, 0.7)
+        .to(refl, { autoAlpha: 1, duration: 1.2, ease: "power1.out" }, 1.1)
+        .add(() => revealText(true), 1.2);
     const finish = () => {
       if (state.textReady) return;
       tl.progress(1);
@@ -313,9 +384,9 @@ export function initHero(track, ctx) {
   }
 
   /* ---------- Boot ---------- */
-  gsap.set(statementWords, { autoAlpha: 0, scale: 0, filter: "blur(8px)" });
+  if (!phone) gsap.set(statementWords, { autoAlpha: 0, scale: 0, filter: "blur(8px)" });
   gsap.set(title, { autoAlpha: 0 });
-  gsap.set([wins, refl, towerLights, cue], { autoAlpha: 0 });
+  gsap.set([wins, refl, towerLights, cue, actions], { autoAlpha: 0 });
   layout();
   window.addEventListener("resize", layout);
   cleanups.push(() => window.removeEventListener("resize", layout));
@@ -329,5 +400,11 @@ export function initHero(track, ctx) {
   return () => {
     cleanups.forEach((fn) => fn());
     descSplit.revert();
+    gsap.set(
+      [scene, moon, title, cue, actions, refl, towerLights, ...wins, ...layers, ...pushTargets],
+      {
+        clearProps: "all",
+      },
+    );
   };
 }
