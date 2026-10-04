@@ -1,16 +1,12 @@
 // Cinematic hero, adapted from the cinematic-scroll-hero choreography.
 //
-// 1. Gate    — once per visit: the name and a line blur in word by word; Enter starts the film.
-// 2. Night   — the camera settles, the moon rises, the villa's windows light one by one, the title blooms in.
-// 3. Travel  — scroll moves the camera forward through the arched gateway towards the house,
+// 1. Night   — the camera settles, the moon rises, the villa's windows light one by one, the title blooms in.
+// 2. Travel  — scroll moves the camera forward through the arched gateway towards the house,
 //              each layer at its own depth, while the title grows away.
-// 4. Promise — the scene fades to the jaali texture and a two-line statement grows in;
-//              on desktop, property illustrations trail the cursor.
+// 3. Promise — the scene fades to the jaali texture and a two-line statement grows in.
 import { $, $$, reducedMotion, finePointer, clamp01 } from "./shared.js";
 
 const { gsap, ScrollTrigger, SplitText } = window;
-
-const SEEN_KEY = "mgmj-entered";
 
 // Scroll track, in screens. The track is (INTRO + OUTRO) screens tall; see .hero-track in CSS.
 const INTRO = 2.6; // camera travel
@@ -97,14 +93,9 @@ export function initHero(track, ctx) {
   const moon = $("[data-moon]", scene);
   const refl = $(".refl", scene);
   const towerLights = $(".tower-lights", scene);
-  const gate = document.querySelector("[data-gate]");
-  const main = document.getElementById("main");
-  const header = document.querySelector("[data-header]");
 
   const state = { textReady: false, progress: 0 };
   const cleanups = [];
-  const trail = createTrail($("[data-trail]", track));
-  cleanups.push(() => trail.stop());
 
   title.setAttribute("aria-label", title.textContent.trim());
   statement.setAttribute("aria-label", statement.textContent.replace(/\s+/g, " ").trim());
@@ -192,9 +183,6 @@ export function initHero(track, ctx) {
       const v = growIn(outro, i, statementWords.length);
       gsap.set(w, { scale: v.scale, autoAlpha: v.opacity, filter: `blur(${v.blur.toFixed(2)}px)` });
     });
-
-    if (outro >= 0.95) trail.start();
-    else trail.stop();
   }
 
   const st = ScrollTrigger.create({
@@ -305,87 +293,11 @@ export function initHero(track, ctx) {
         0,
       )
       .fromTo(moon, { y: 70 }, { y: 0, duration: 3.2, ease: "power3.out" }, 0)
-      .to(towerLights, { autoAlpha: 1, duration: 1.6, ease: "power1.in" }, 0.6)
-      .to(wins, { autoAlpha: 1, duration: 0.45, ease: "power2.out", stagger: 0.17 }, 1.1)
-      .to(refl, { autoAlpha: 1, duration: 1.2, ease: "power1.out" }, 1.5)
-      .add(() => revealText(true), 1.9);
+      .to(towerLights, { autoAlpha: 1, duration: 1.4, ease: "power1.in" }, 0.4)
+      .to(wins, { autoAlpha: 1, duration: 0.4, ease: "power2.out", stagger: 0.12 }, 0.7)
+      .to(refl, { autoAlpha: 1, duration: 1.2, ease: "power1.out" }, 1.1)
+      .add(() => revealText(true), 1.2);
     cleanups.push(() => tl.kill());
-  }
-
-  /* ---------- Gate ---------- */
-  function runGate() {
-    const words = splitWords($("[data-gate-words]", gate));
-    const actions = $("[data-gate-actions]", gate);
-    const btn = $("[data-enter]", gate);
-    const label = $(".enter-label", btn);
-    label.innerHTML = [..."Enter"]
-      .map((c) => `<span class="enter-letter" data-c="${c}">${c}</span>`)
-      .join("");
-    gsap.set($$(".enter-letter", label), { "--i": (i) => i });
-
-    gate.hidden = false;
-    document.body.classList.add("is-gated");
-    main.inert = true;
-    header.inert = true;
-    ctx.scroll.stop();
-
-    gsap.set(words, { autoAlpha: 0, y: 12, filter: "blur(0.8rem)" });
-    gsap.set([actions, ".gate-urdu", ".gate-logo"], { autoAlpha: 0, y: 12 });
-    const tl = gsap.timeline({ delay: 0.3 });
-    tl.to([".gate-logo", ".gate-urdu"], {
-      autoAlpha: 1,
-      y: 0,
-      duration: 1.2,
-      ease: "power3.out",
-      stagger: 0.15,
-    });
-    let at = 0.9;
-    words.forEach((word, i) => {
-      tl.to(
-        word,
-        { autoAlpha: 1, y: 0, filter: "blur(0rem)", duration: 0.65, ease: "power3.out" },
-        at,
-      );
-      at += 0.11;
-      if (i < words.length - 1 && /[.!?]$/.test(word.textContent)) at += 0.42;
-      else if (i < words.length - 1 && /[,;:]$/.test(word.textContent)) at += 0.25;
-    });
-    tl.to(actions, { autoAlpha: 1, y: 0, duration: 0.9, ease: "power3.out" }, at + 0.1);
-
-    const enter = () => {
-      btn.disabled = true;
-      try {
-        sessionStorage.setItem(SEEN_KEY, "1");
-      } catch {
-        /* private mode: the gate will simply show again next visit */
-      }
-      gsap
-        .timeline({
-          onComplete: () => {
-            gate.remove();
-            document.body.classList.remove("is-gated");
-            main.inert = false;
-            header.inert = false;
-            playNight();
-          },
-        })
-        .to(actions, { autoAlpha: 0, y: 8, duration: 0.4, ease: "power2.in" }, 0)
-        .to(
-          [".gate-logo", ".gate-urdu", ...words],
-          {
-            autoAlpha: 0,
-            filter: "blur(0.8rem)",
-            y: -6,
-            duration: 0.5,
-            ease: "power2.in",
-            stagger: 0.03,
-          },
-          0,
-        )
-        .add(() => document.body.classList.add("is-entered"), 0.25)
-        .to(gate, { autoAlpha: 0, duration: 0.6, ease: "power1.inOut" }, ">-0.2");
-    };
-    btn.addEventListener("click", enter, { once: true });
   }
 
   /* ---------- Boot ---------- */
@@ -400,91 +312,10 @@ export function initHero(track, ctx) {
     if (state.textReady) centreOrigins(titleWords);
   });
 
-  let seen = false;
-  try {
-    seen = sessionStorage.getItem(SEEN_KEY) === "1";
-  } catch {
-    seen = false;
-  }
-  if (gate && !seen && !reducedMotion && !ctx.skipIntro) runGate();
-  else {
-    if (gate) gate.remove();
-    document.body.classList.add("is-entered");
-    playNight();
-  }
+  playNight();
 
   return () => {
     cleanups.forEach((fn) => fn());
     descSplit.revert();
-  };
-}
-
-/* Cursor image trail (desktop only), ported from the template. */
-function createTrail(root) {
-  const cfg = { minWidth: 1024, moveDistance: 15, stopDuration: 350, trailLength: 5 };
-  const items = $$(".trail-item", root);
-  const visible = Math.max(1, Math.min(cfg.trailLength, items.length - 1));
-  const stamps = new Map();
-  let active = false;
-  let index = 0;
-  let last = { x: 0, y: 0 };
-  let interval = 0;
-
-  const hide = (el) =>
-    gsap.to(el, {
-      opacity: 0,
-      scale: 0.2,
-      duration: 0.8,
-      ease: "expo.out",
-      onComplete: () => gsap.set(el, { autoAlpha: 0 }),
-    });
-
-  const onMove = (e) => {
-    const rect = root.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-    if (Math.hypot(last.x - x, last.y - y) <= window.innerWidth / cfg.moveDistance) return;
-    const el = items[index % items.length];
-    el.style.left = `${x - el.offsetWidth / 2}px`;
-    el.style.top = `${y - el.offsetHeight / 2}px`;
-    el.style.zIndex = String(index);
-    stamps.set(el, Date.now());
-    gsap.fromTo(
-      el,
-      { autoAlpha: 0, scale: 0.8 },
-      { scale: 1, autoAlpha: 1, duration: 0.2, overwrite: true },
-    );
-    last = { x, y };
-    if (index >= visible) hide(items[(index - visible + items.length) % items.length]);
-    index++;
-  };
-
-  const sweep = () => {
-    const now = Date.now();
-    for (const [el, t] of stamps) {
-      if (now - t > cfg.stopDuration) {
-        hide(el);
-        stamps.delete(el);
-      }
-    }
-  };
-
-  return {
-    start() {
-      if (active || reducedMotion || window.innerWidth < cfg.minWidth || !finePointer) return;
-      active = true;
-      root.classList.add("is-active");
-      root.addEventListener("mousemove", onMove);
-      interval = setInterval(sweep, 100);
-    },
-    stop() {
-      if (!active) return;
-      active = false;
-      root.classList.remove("is-active");
-      root.removeEventListener("mousemove", onMove);
-      clearInterval(interval);
-      items.forEach(hide);
-      stamps.clear();
-    },
   };
 }

@@ -1,7 +1,7 @@
 // Entry point: smooth scroll (Lenis + ScrollTrigger), the persistent header,
-// and Barba page transitions between the home and property pages.
+// and Barba page transitions between all pages.
 import { $, $$, fillBusiness, reducedMotion } from "./shared.js";
-import { initHome } from "./home.js";
+import { initHome, initProperties, initServices, initAbout, initContact } from "./views.js";
 import { initProperty } from "./property.js";
 
 const { gsap, ScrollTrigger, SplitText, Lenis, barba } = window;
@@ -96,11 +96,28 @@ document.addEventListener("click", (e) => {
 });
 
 /* ---------- Page views ---------- */
-const views = { home: initHome, property: initProperty };
+const views = {
+  home: initHome,
+  properties: initProperties,
+  services: initServices,
+  about: initAbout,
+  contact: initContact,
+  property: initProperty,
+};
+
+/** The header persists across pages, so mark the current section in it after each transition. */
+function markNav(namespace) {
+  const section = namespace === "property" ? "properties" : namespace;
+  $$("[data-nav-link]").forEach((a) => {
+    if (a.dataset.navLink === section) a.setAttribute("aria-current", "page");
+    else a.removeAttribute("aria-current");
+  });
+}
 let destroyView = null;
 
 function initView(container, url, { skipIntro = false } = {}) {
   fillBusiness(container);
+  markNav(container.dataset.barbaNamespace);
   const init = views[container.dataset.barbaNamespace];
   destroyView = init ? init(container, { scroll, skipIntro }, url) : null;
   onScroll();

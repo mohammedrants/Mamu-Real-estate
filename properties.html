@@ -3,11 +3,17 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Property — Mera Ghar Meri Jannat</title>
-    <meta name="description" content="Property details from Mera Ghar Meri Jannat — Real Estate Solutions. Call +92 311 4101892." />
+    <title>Properties — Mera Ghar Meri Jannat</title>
+    <meta
+      name="description"
+      content="Houses, villas, residential and commercial plots and investment property available through Mera Ghar Meri Jannat."
+    />
     <meta name="theme-color" content="#0D0B08" />
-    <meta property="og:title" content="Property — Mera Ghar Meri Jannat" />
-    <meta property="og:description" content="Property details from Mera Ghar Meri Jannat — Real Estate Solutions. Call +92 311 4101892." />
+    <meta property="og:title" content="Properties — Mera Ghar Meri Jannat" />
+    <meta
+      property="og:description"
+      content="Houses, villas, residential and commercial plots and investment property available through Mera Ghar Meri Jannat."
+    />
     <meta property="og:type" content="website" />
     <link rel="icon" href="assets/svg/favicon.svg" type="image/svg+xml" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -37,7 +43,7 @@
         </button>
         <nav class="site-nav" id="site-nav" aria-label="Main" data-nav>
           <a href="index.html" data-nav-link="home">Home</a>
-          <a href="properties.html" data-nav-link="properties">Properties</a>
+          <a href="properties.html" data-nav-link="properties" aria-current="page">Properties</a>
           <a href="services.html" data-nav-link="services">Services</a>
           <a href="about.html" data-nav-link="about">About</a>
           <a href="contact.html" data-nav-link="contact">Contact</a>
@@ -52,55 +58,91 @@
       <span class="scroll-progress" data-progress aria-hidden="true"></span>
     </header>
 
-    <main id="main" data-barba="container" data-barba-namespace="property">
-      <article class="property" data-property>
-        <div class="wrap">
+    <main id="main" data-barba="container" data-barba-namespace="properties">
+      <section class="page-head">
+        <div class="wrap page-head-inner">
           <nav class="crumbs" aria-label="Breadcrumb">
-            <a href="index.html">Home</a><span aria-hidden="true">/</span><a href="properties.html">Properties</a
-            ><span aria-hidden="true">/</span><span aria-current="page" data-p-crumb>Property</span>
+            <a href="index.html">Home</a><span aria-hidden="true">/</span><span aria-current="page">Properties</span>
           </nav>
-          <div class="property-grid">
-            <figure class="property-media" data-tilt-media>
-              <img data-p-image src="assets/img/villa.svg" alt="" width="480" height="320" />
-              <figcaption class="property-tag" data-p-category></figcaption>
-            </figure>
-            <div class="property-info">
-              <p class="property-price" data-p-price></p>
-              <h1 class="property-title" data-p-title></h1>
-              <p class="property-loc" data-p-location></p>
-              <ul class="property-specs" data-p-specs></ul>
-              <p class="property-desc" data-p-desc></p>
-              <div class="property-cta">
-                <a class="btn btn-gold" href="#" data-p-wa target="_blank" rel="noopener">Ask about this on WhatsApp</a>
-                <a class="btn btn-outline" href="#" data-tel>Call <span data-field="phoneDisplay"></span></a>
-              </div>
-              <ul class="property-assure">
-                <li>Ownership and dues checked before any token money</li>
-                <li>Visits arranged at a time that suits you</li>
-                <li>Help with transfer and handover</li>
-              </ul>
+          <h1 data-reveal>Properties</h1>
+          <p class="page-lede">
+            Houses, villas, residential and commercial plots and investment projects we're currently showing. Every listing is checked
+            before it goes up.
+          </p>
+          <svg class="page-head-art" viewBox="0 0 400 560" aria-hidden="true">
+            <path d="M20 560V240C20 150 110 90 200 20c90 70 180 130 180 220v320" />
+            <path d="M44 560V246c0-80 82-136 156-196 74 60 156 116 156 196v314" />
+          </svg>
+        </div>
+      </section>
+      <!-- Listings -->
+      <section class="section listings" id="properties" aria-labelledby="properties-title">
+        <div class="wrap">
+          <form class="search search-inline" data-search aria-label="Search properties">
+            <label class="field">
+              <span class="field-label">Area or society</span>
+              <input type="search" name="q" placeholder="e.g. DHA, Bahria Town" autocomplete="off" />
+            </label>
+            <button class="btn btn-gold search-go" type="submit">Search</button>
+          </form>
+          <div class="filters" role="group" aria-label="Filter properties" data-filters>
+            <button type="button" class="chip" data-filter="all" aria-pressed="true">All</button>
+            <button type="button" class="chip" data-filter="home" aria-pressed="false">Houses &amp; villas</button>
+            <button type="button" class="chip" data-filter="residential" aria-pressed="false">Residential plots</button>
+            <button type="button" class="chip" data-filter="commercial" aria-pressed="false">Commercial</button>
+            <button type="button" class="chip" data-filter="investment" aria-pressed="false">Investment</button>
+          </div>
+          <p class="results-count" aria-live="polite" data-count></p>
+          <ul class="listing-grid" data-listings></ul>
+          <div class="empty" data-empty hidden>
+            <p class="empty-title">Nothing on our list matches that yet.</p>
+            <p>Tell us what you're looking for and we'll send you options as soon as they come in.</p>
+            <div class="empty-actions">
+              <button type="button" class="btn btn-outline" data-reset>Show all properties</button>
+              <a class="btn btn-gold" href="contact.html">Tell us what you need</a>
             </div>
           </div>
         </div>
-      </article>
+      </section>
 
-      <div class="property-missing wrap" data-p-missing hidden>
-        <h1>This property isn't on our list any more</h1>
-        <p class="section-intro">It may have been sold. Tell us what you're looking for and we'll send similar options.</p>
-        <div class="empty-actions">
-          <a class="btn btn-gold" href="properties.html">See available properties</a>
-          <a class="btn btn-outline" href="contact.html">Tell us what you need</a>
-        </div>
-      </div>
-
-      <section class="section more" aria-labelledby="more-title">
-        <div class="wrap">
-          <div class="section-head">
-            <h2 id="more-title" data-reveal>More properties</h2>
+      <!-- Converter -->
+      <section class="section tools" id="tools" aria-labelledby="tools-title">
+        <div class="wrap tools-grid">
+          <div>
+            <h2 id="tools-title" data-reveal>Marla, kanal, square feet</h2>
+            <p class="section-intro">Plot sizes are quoted differently everywhere. Type a size to see it in every unit.</p>
+            <p class="tools-note">
+              Most housing societies count 1 marla as 225 sq ft. Older revenue records use 272.25 sq ft — check which one your papers use.
+            </p>
           </div>
-          <ul class="listing-grid" data-more></ul>
+          <form class="converter" data-converter aria-label="Area converter">
+            <div class="converter-input">
+              <label class="field">
+                <span class="field-label">Size</span>
+                <input type="number" name="value" value="10" min="0" step="any" inputmode="decimal" />
+              </label>
+              <label class="field">
+                <span class="field-label">Unit</span>
+                <select name="unit">
+                  <option value="marla" selected>Marla</option>
+                  <option value="kanal">Kanal</option>
+                  <option value="sqft">Square feet</option>
+                  <option value="sqyd">Square yards</option>
+                  <option value="sqm">Square metres</option>
+                  <option value="acre">Acre</option>
+                </select>
+              </label>
+            </div>
+            <fieldset class="marla-size">
+              <legend class="field-label">1 marla equals</legend>
+              <label><input type="radio" name="marla" value="225" checked /><span>225 sq ft</span></label>
+              <label><input type="radio" name="marla" value="272.25" /><span>272.25 sq ft</span></label>
+            </fieldset>
+            <dl class="converter-out" aria-live="polite" data-converter-out></dl>
+          </form>
         </div>
       </section>
+
       <section class="cta-band" aria-labelledby="cta-title">
         <div class="wrap cta-inner">
           <div>

@@ -32,6 +32,7 @@ export function initProperty(container, ctx, url) {
     $("[data-p-category]", container).textContent = categoryLabels[item.category];
     $("[data-p-price]", container).textContent = formatPrice(item.price);
     $("[data-p-title]", container).textContent = item.title;
+    $("[data-p-crumb]", container).textContent = item.title;
     $("[data-p-location]", container).textContent = item.location;
     $("[data-p-specs]", container).innerHTML = specsHtml(item);
     $("[data-p-desc]", container).textContent = item.description || item.note || "";

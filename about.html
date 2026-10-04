@@ -3,11 +3,17 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Property — Mera Ghar Meri Jannat</title>
-    <meta name="description" content="Property details from Mera Ghar Meri Jannat — Real Estate Solutions. Call +92 311 4101892." />
+    <title>About us — Mera Ghar Meri Jannat</title>
+    <meta
+      name="description"
+      content="Mera Ghar Meri Jannat helps families and investors buy houses, villas, plots and commercial property, with every paper checked."
+    />
     <meta name="theme-color" content="#0D0B08" />
-    <meta property="og:title" content="Property — Mera Ghar Meri Jannat" />
-    <meta property="og:description" content="Property details from Mera Ghar Meri Jannat — Real Estate Solutions. Call +92 311 4101892." />
+    <meta property="og:title" content="About us — Mera Ghar Meri Jannat" />
+    <meta
+      property="og:description"
+      content="Mera Ghar Meri Jannat helps families and investors buy houses, villas, plots and commercial property, with every paper checked."
+    />
     <meta property="og:type" content="website" />
     <link rel="icon" href="assets/svg/favicon.svg" type="image/svg+xml" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -39,7 +45,7 @@
           <a href="index.html" data-nav-link="home">Home</a>
           <a href="properties.html" data-nav-link="properties">Properties</a>
           <a href="services.html" data-nav-link="services">Services</a>
-          <a href="about.html" data-nav-link="about">About</a>
+          <a href="about.html" data-nav-link="about" aria-current="page">About</a>
           <a href="contact.html" data-nav-link="contact">Contact</a>
           <a class="btn btn-gold nav-call" href="#" data-tel>
             <svg class="btn-icon" viewBox="0 0 32 32" aria-hidden="true">
@@ -52,55 +58,85 @@
       <span class="scroll-progress" data-progress aria-hidden="true"></span>
     </header>
 
-    <main id="main" data-barba="container" data-barba-namespace="property">
-      <article class="property" data-property>
-        <div class="wrap">
+    <main id="main" data-barba="container" data-barba-namespace="about">
+      <section class="page-head">
+        <div class="wrap page-head-inner">
           <nav class="crumbs" aria-label="Breadcrumb">
-            <a href="index.html">Home</a><span aria-hidden="true">/</span><a href="properties.html">Properties</a
-            ><span aria-hidden="true">/</span><span aria-current="page" data-p-crumb>Property</span>
+            <a href="index.html">Home</a><span aria-hidden="true">/</span><span aria-current="page">About us</span>
           </nav>
-          <div class="property-grid">
-            <figure class="property-media" data-tilt-media>
-              <img data-p-image src="assets/img/villa.svg" alt="" width="480" height="320" />
-              <figcaption class="property-tag" data-p-category></figcaption>
-            </figure>
-            <div class="property-info">
-              <p class="property-price" data-p-price></p>
-              <h1 class="property-title" data-p-title></h1>
-              <p class="property-loc" data-p-location></p>
-              <ul class="property-specs" data-p-specs></ul>
-              <p class="property-desc" data-p-desc></p>
-              <div class="property-cta">
-                <a class="btn btn-gold" href="#" data-p-wa target="_blank" rel="noopener">Ask about this on WhatsApp</a>
-                <a class="btn btn-outline" href="#" data-tel>Call <span data-field="phoneDisplay"></span></a>
-              </div>
-              <ul class="property-assure">
-                <li>Ownership and dues checked before any token money</li>
-                <li>Visits arranged at a time that suits you</li>
-                <li>Help with transfer and handover</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </article>
-
-      <div class="property-missing wrap" data-p-missing hidden>
-        <h1>This property isn't on our list any more</h1>
-        <p class="section-intro">It may have been sold. Tell us what you're looking for and we'll send similar options.</p>
-        <div class="empty-actions">
-          <a class="btn btn-gold" href="properties.html">See available properties</a>
-          <a class="btn btn-outline" href="contact.html">Tell us what you need</a>
-        </div>
-      </div>
-
-      <section class="section more" aria-labelledby="more-title">
-        <div class="wrap">
-          <div class="section-head">
-            <h2 id="more-title" data-reveal>More properties</h2>
-          </div>
-          <ul class="listing-grid" data-more></ul>
+          <h1 data-reveal>About us</h1>
+          <p class="page-lede">A real estate practice built on one simple idea: buying property should feel safe.</p>
+          <svg class="page-head-art" viewBox="0 0 400 560" aria-hidden="true">
+            <path d="M20 560V240C20 150 110 90 200 20c90 70 180 130 180 220v320" />
+            <path d="M44 560V246c0-80 82-136 156-196 74 60 156 116 156 196v314" />
+          </svg>
         </div>
       </section>
+      <section class="section about-intro" aria-labelledby="about-name">
+        <div class="wrap about-grid">
+          <div class="about-name">
+            <p class="about-urdu" lang="ur" dir="rtl" id="about-name">میرا گھر میری جنت</p>
+            <p class="about-meaning">“My home, my paradise.”</p>
+          </div>
+          <div class="about-copy">
+            <p>
+              Mera Ghar Meri Jannat helps families and investors buy houses, villas, plots and commercial property. For most people, a
+              property is the biggest decision they will ever make — and the paperwork, the dues and the unanswered questions can make it
+              stressful.
+            </p>
+            <p>
+              Our job is to take that weight off you. We find properties that genuinely fit, we check every paper before any money changes
+              hands, and we explain each step in plain language — whether you're buying your first plot or adding to a portfolio.
+            </p>
+            <p>
+              We also work with overseas Pakistanis, with video walk-throughs and regular updates on WhatsApp, so you can buy with
+              confidence from wherever you are.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Promise -->
+      <section class="section promise" aria-labelledby="promise-title">
+        <div class="wrap promise-grid">
+          <blockquote class="promise-quote">
+            <p id="promise-title" data-ink>
+              A house is bricks and paperwork. A home is where your family feels at peace. We take care of the first, so you can enjoy the
+              second.
+            </p>
+          </blockquote>
+          <ul class="promise-list">
+            <li>
+              <h3>Papers before payment</h3>
+              <p>No token money until ownership and dues are confirmed.</p>
+            </li>
+            <li>
+              <h3>Straight answers</h3>
+              <p>If a property isn't right for you, we'll say so — even if it means no deal today.</p>
+            </li>
+            <li>
+              <h3>After the deal, too</h3>
+              <p>Questions about the society, meters or tenants once you've moved in? Still call us.</p>
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- YouTube -->
+      <section class="section video" aria-labelledby="video-title">
+        <div class="wrap video-inner">
+          <svg class="video-mark" viewBox="0 0 64 64" aria-hidden="true">
+            <rect x="4" y="14" width="56" height="36" rx="10" />
+            <path d="M27 24v16l14-8Z" />
+          </svg>
+          <div>
+            <h2 id="video-title">Walk through properties on YouTube</h2>
+            <p>Video tours of houses, plots and projects — useful if you're overseas or want a first look before visiting.</p>
+          </div>
+          <a class="btn btn-outline" href="#" data-yt target="_blank" rel="noopener">Watch our channel</a>
+        </div>
+      </section>
+
       <section class="cta-band" aria-labelledby="cta-title">
         <div class="wrap cta-inner">
           <div>

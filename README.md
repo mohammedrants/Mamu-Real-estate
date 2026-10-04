@@ -35,40 +35,45 @@ Every business detail and listing is in **`js/data.js`**:
 
 Listing categories match the services on the cover: `home` (houses & villas), `residential` (residential plots), `commercial` and `investment`.
 
-## What's on the page
+## Pages
 
-- **Gate** (first visit per browser session): the name in Urdu and a short line blur in word by word, then _Enter_.
-- **Hero**: a night scene seen through a gold Mughal arch. The moon rises, the villa's windows light up one by one, and the title blooms in. Scrolling moves the camera through the arch towards the house, each layer at its own depth. The scene then fades to a two-line statement, and on desktop property illustrations trail the cursor.
-- **Search and filters** for the listings. Each card tilts in 3D on hover and opens its own **property page** (`property.html?id=…`).
-- Section headings sharpen in word by word, service icons draw themselves in gold, the gold line between the four steps fills as you scroll, and the promise quote inks in.
-- **Marla / Kanal / sq ft converter**, with both the 225 and 272.25 sq ft marla.
-- **Enquiry form** that opens WhatsApp with the message already written.
-- **Page transitions**: moving between the home page and a property page drops a gold-edged curtain with the logo.
+| Page                 | What's on it                                                                            |
+| -------------------- | --------------------------------------------------------------------------------------- |
+| `index.html`         | Cinematic hero, search, featured properties, services overview, our promise             |
+| `properties.html`    | All listings with search and filters, and the Marla / Kanal / sq ft converter           |
+| `property.html?id=…` | One property in full: price, specs, description, WhatsApp and call buttons              |
+| `services.html`      | The four services in detail, with what we check for each, and the four-step process     |
+| `about.html`         | Who we are, our promise and the YouTube channel                                         |
+| `contact.html`       | Phone, WhatsApp, email and an enquiry form that opens WhatsApp with the message written |
 
-Everything respects the visitor's reduced-motion setting: no gate, no camera travel, simple fades.
+Every page except Contact ends with a call-to-action band, and they all share one header and footer.
+
+**Home page hero:** a night scene seen through a gold Mughal arch. The moon rises, the villa's windows light up one by one and the title blooms in. Scrolling moves the camera through the arch towards the house, then the scene fades to the statement "Every property checked. Every step explained."
+
+**Motion:** headings sharpen in word by word, service icons draw themselves in gold, the line between the four steps fills as you scroll, the promise quote inks in, property cards tilt in 3D on hover, and moving between pages drops a gold-edged curtain with the logo. Everything respects the visitor's reduced-motion setting.
 
 ### Animation libraries
 
-| Library                                                     | Used for                                                  |
-| ----------------------------------------------------------- | --------------------------------------------------------- |
-| [GSAP](https://gsap.com) + ScrollTrigger + SplitText        | All timelines, scroll-driven motion and word splitting    |
-| [Lenis](https://lenis.darkroom.engineering)                 | Smooth scrolling (synced to ScrollTrigger)                |
-| [Barba.js](https://barba.js.org)                            | Page transitions between `index.html` and `property.html` |
-| [Vanilla-Tilt](https://micku7zu.github.io/vanilla-tilt.js/) | 3D tilt and gold glare on property cards                  |
+| Library                                                     | Used for                                               |
+| ----------------------------------------------------------- | ------------------------------------------------------ |
+| [GSAP](https://gsap.com) + ScrollTrigger + SplitText        | All timelines, scroll-driven motion and word splitting |
+| [Lenis](https://lenis.darkroom.engineering)                 | Smooth scrolling (synced to ScrollTrigger)             |
+| [Barba.js](https://barba.js.org)                            | Curtain transitions between pages                      |
+| [Vanilla-Tilt](https://micku7zu.github.io/vanilla-tilt.js/) | 3D tilt and gold glare on property cards               |
 
 They're copied into `vendor/` as plain browser files, so the site still needs no build step.
 
 ### Code layout
 
-| File             | What's in it                                                 |
-| ---------------- | ------------------------------------------------------------ |
-| `js/data.js`     | Business details and listings                                |
-| `js/app.js`      | Entry point: Lenis, header, in-page links, Barba transitions |
-| `js/hero.js`     | Gate, night scene and scroll-driven camera                   |
-| `js/home.js`     | Home page: listings, filters, converter, enquiry form        |
-| `js/property.js` | Property page                                                |
-| `js/motion.js`   | Shared scroll reveals and tilt                               |
-| `js/shared.js`   | Formatting helpers and the listing card                      |
+| File             | What's in it                                                              |
+| ---------------- | ------------------------------------------------------------------------- |
+| `js/data.js`     | Business details and listings                                             |
+| `js/app.js`      | Entry point: Lenis, header, in-page links, Barba transitions              |
+| `js/hero.js`     | Night scene and scroll-driven camera on the home page                     |
+| `js/views.js`    | One init function per page: listings and filters, converter, enquiry form |
+| `js/property.js` | Property page                                                             |
+| `js/motion.js`   | Shared scroll reveals and tilt                                            |
+| `js/shared.js`   | Formatting helpers and the listing card                                   |
 
 ## Assets
 
@@ -78,4 +83,4 @@ They're copied into `vendor/` as plain browser files, so the site still needs no
 
 ## Deploy
 
-Upload the folder to any static host: GitHub Pages, Netlify, Vercel or cPanel hosting. Leave out `node_modules/`. Only `index.html`, `property.html`, `css/`, `js/`, `vendor/` and `assets/` are needed. On Vercel or Netlify, set no build command and use the repository root as the output directory.
+Upload the folder to any static host: GitHub Pages, Netlify, Vercel or cPanel hosting. Leave out `node_modules/`. Only the `.html` files, `css/`, `js/`, `vendor/` and `assets/` are needed. On Vercel or Netlify, set no build command and use the repository root as the output directory.

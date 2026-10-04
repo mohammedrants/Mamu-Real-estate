@@ -12,7 +12,7 @@
     <meta property="og:title" content="Mera Ghar Meri Jannat — Your Dream Property Partner" />
     <meta
       property="og:description"
-      content="Houses, villas, residential plots, commercial plots and property investment. Call +92 311 4101892."
+      content="Mera Ghar Meri Jannat — real estate solutions for houses, villas, residential and commercial plots and property investment. Call +92 311 4101892."
     />
     <meta property="og:type" content="website" />
     <link rel="icon" href="assets/svg/favicon.svg" type="image/svg+xml" />
@@ -28,21 +28,6 @@
   <body data-barba="wrapper">
     <a class="skip-link" href="#main">Skip to content</a>
 
-    <!-- Entry gate: shown once per visit, before the hero plays -->
-    <div class="gate" data-gate hidden>
-      <div class="gate-inner">
-        <img class="gate-logo" src="assets/svg/logo.svg" alt="" width="88" height="88" />
-        <p class="gate-urdu" lang="ur" dir="rtl">میرا گھر میری جنت</p>
-        <p class="gate-words" data-gate-words>Every family deserves a home that feels like jannat. Let us help you find yours.</p>
-        <div class="gate-actions" data-gate-actions>
-          <button class="enter-btn" type="button" data-enter>
-            <span class="enter-label" aria-hidden="true"></span>
-            <span class="sr-only">Enter the website</span>
-          </button>
-        </div>
-      </div>
-    </div>
-
     <header class="site-header" data-header>
       <div class="wrap header-inner">
         <a class="brand" href="index.html" aria-label="Mera Ghar Meri Jannat, home">
@@ -57,11 +42,11 @@
           <span class="sr-only">Menu</span>
         </button>
         <nav class="site-nav" id="site-nav" aria-label="Main" data-nav>
-          <a href="index.html#properties">Properties</a>
-          <a href="index.html#services">Services</a>
-          <a href="index.html#process">How it works</a>
-          <a href="index.html#tools">Area converter</a>
-          <a href="index.html#contact">Contact</a>
+          <a href="index.html" data-nav-link="home" aria-current="page">Home</a>
+          <a href="properties.html" data-nav-link="properties">Properties</a>
+          <a href="services.html" data-nav-link="services">Services</a>
+          <a href="about.html" data-nav-link="about">About</a>
+          <a href="contact.html" data-nav-link="contact">Contact</a>
           <a class="btn btn-gold nav-call" href="#" data-tel>
             <svg class="btn-icon" viewBox="0 0 32 32" aria-hidden="true">
               <path d="M8 4h5l2 7-3 2c1.5 3 4 5.5 7 7l2-3 7 2v5c0 1-1 2-2 2C14 26 6 18 6 6c0-1 1-2 2-2Z" />
@@ -496,23 +481,13 @@
               Houses, villas, plots and commercial buildings — found for you, with every paper checked before you pay.
             </p>
           </div>
-          <a class="scroll-cue" href="#find" data-scroll-cue>
+          <a class="scroll-cue" href="#featured" data-scroll-cue>
             <span>Scroll</span>
             <span class="scroll-cue-line" aria-hidden="true"></span>
           </a>
 
           <div class="statement" data-statement-wrap>
-            <p class="statement-text" data-statement>We don't sell plots.<br />We find you jannat.</p>
-            <div class="trail" data-trail aria-hidden="true">
-              <img class="trail-item" src="assets/img/villa.svg" alt="" />
-              <img class="trail-item" src="assets/img/plot.svg" alt="" />
-              <img class="trail-item" src="assets/img/farmhouse.svg" alt="" />
-              <img class="trail-item" src="assets/img/commercial.svg" alt="" />
-              <img class="trail-item" src="assets/img/townhouse.svg" alt="" />
-              <img class="trail-item" src="assets/img/apartment.svg" alt="" />
-              <img class="trail-item" src="assets/img/villa.svg" alt="" />
-              <img class="trail-item" src="assets/img/plot.svg" alt="" />
-            </div>
+            <p class="statement-text" data-statement>Every property checked.<br />Every step explained.</p>
           </div>
         </div>
       </section>
@@ -527,7 +502,7 @@
             </p>
           </div>
           <div>
-            <form class="search" data-search aria-label="Search properties">
+            <form class="search" action="properties.html" method="get" aria-label="Search properties">
               <label class="field">
                 <span class="field-label">I'm looking for</span>
                 <select name="category">
@@ -549,6 +524,20 @@
         </div>
       </section>
 
+      <!-- Featured properties -->
+      <section class="section featured" id="featured" aria-labelledby="featured-title">
+        <div class="wrap">
+          <div class="section-head section-head-row">
+            <div>
+              <h2 id="featured-title" data-reveal>Featured properties</h2>
+              <p class="section-intro">A few of the homes and plots we're showing this month.</p>
+            </div>
+            <a class="text-link" href="properties.html">View all properties</a>
+          </div>
+          <ul class="listing-grid" data-featured></ul>
+        </div>
+      </section>
+
       <!-- Services, as on the cover -->
       <section class="section services" id="services" aria-labelledby="services-title">
         <div class="wrap">
@@ -566,7 +555,7 @@
                 <path d="M24 8v32M9 24h30" stroke-dasharray="3 3" />
                 <path d="M30 30l4-4 4 4-4 4Z" />
               </svg>
-              <h3>Residential plots</h3>
+              <h3><a class="service-link" href="services.html#residential">Residential plots</a></h3>
               <p>Plots in established and upcoming societies, with possession, dues and development status checked.</p>
             </li>
             <li>
@@ -574,7 +563,7 @@
                 <path d="M8 42V12l14-6v36M22 42V18h18v24M4 42h40" />
                 <path d="M13 16h4M13 22h4M13 28h4M27 24h3M33 24h3M27 30h3M33 30h3M27 36h3M33 36h3" />
               </svg>
-              <h3>Commercial plots</h3>
+              <h3><a class="service-link" href="services.html#commercial">Commercial plots</a></h3>
               <p>Shops, offices and commercial buildings on main roads and boulevards, for business or rental income.</p>
             </li>
             <li>
@@ -583,7 +572,7 @@
                 <path d="M20 42V31h8v11" />
                 <path d="M30 12V8h4v7.5" />
               </svg>
-              <h3>Houses &amp; villas</h3>
+              <h3><a class="service-link" href="services.html#homes">Houses &amp; villas</a></h3>
               <p>Family homes, villas and mansions — we shortlist, arrange visits and negotiate the price for you.</p>
             </li>
             <li>
@@ -591,71 +580,11 @@
                 <path d="M8 42V32h6v10M19 42V26h6v16M30 42V20h6v22M4 42h40" />
                 <path d="M8 22l10-8 8 5 14-11M33 8h7v7" />
               </svg>
-              <h3>Property investment</h3>
+              <h3><a class="service-link" href="services.html#investment">Property investment</a></h3>
               <p>Instalment plans, pre-launch projects and resale deals, with honest advice on where your money grows.</p>
             </li>
           </ul>
-        </div>
-      </section>
-
-      <!-- Listings -->
-      <section class="section listings" id="properties" aria-labelledby="properties-title">
-        <div class="wrap">
-          <div class="section-head">
-            <h2 id="properties-title" data-reveal>Properties available now</h2>
-            <p class="section-intro">
-              A selection from our current list. New properties come in every week — if you don't see what you want, ask us.
-            </p>
-          </div>
-          <div class="filters" role="group" aria-label="Filter properties" data-filters>
-            <button type="button" class="chip" data-filter="all" aria-pressed="true">All</button>
-            <button type="button" class="chip" data-filter="home" aria-pressed="false">Houses &amp; villas</button>
-            <button type="button" class="chip" data-filter="residential" aria-pressed="false">Residential plots</button>
-            <button type="button" class="chip" data-filter="commercial" aria-pressed="false">Commercial</button>
-            <button type="button" class="chip" data-filter="investment" aria-pressed="false">Investment</button>
-          </div>
-          <p class="results-count" aria-live="polite" data-count></p>
-          <ul class="listing-grid" data-listings></ul>
-          <div class="empty" data-empty hidden>
-            <p class="empty-title">Nothing on our list matches that yet.</p>
-            <p>Tell us what you're looking for and we'll send you options as soon as they come in.</p>
-            <div class="empty-actions">
-              <button type="button" class="btn btn-outline" data-reset>Show all properties</button>
-              <a class="btn btn-gold" href="index.html#contact">Tell us what you need</a>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- Process -->
-      <section class="section process" id="process" aria-labelledby="process-title">
-        <div class="wrap">
-          <div class="section-head">
-            <h2 id="process-title" data-reveal>From first call to keys in hand</h2>
-            <p class="section-intro">Four steps, and we're with you through every one.</p>
-          </div>
-          <ol class="steps" data-steps>
-            <li>
-              <span class="step-num" aria-hidden="true">1</span>
-              <h3>Tell us what you need</h3>
-              <p>Budget, area, size and timeline. A short call or a WhatsApp message is enough to start.</p>
-            </li>
-            <li>
-              <span class="step-num" aria-hidden="true">2</span>
-              <h3>Visit the shortlist</h3>
-              <p>We line up viewings that actually fit, and tell you honestly what's good and what isn't.</p>
-            </li>
-            <li>
-              <span class="step-num" aria-hidden="true">3</span>
-              <h3>Check every paper</h3>
-              <p>Ownership, dues, NOCs and society records are verified before any token money is paid.</p>
-            </li>
-            <li>
-              <span class="step-num" aria-hidden="true">4</span>
-              <h3>Token, transfer, keys</h3>
-              <p>We handle the bayana, the transfer and the handover — and we're a call away after you move in.</p>
-            </li>
-          </ol>
+          <p class="section-foot"><a class="text-link" href="services.html">How we work, step by step</a></p>
         </div>
       </section>
 
@@ -681,164 +610,62 @@
               <h3>After the deal, too</h3>
               <p>Questions about the society, meters or tenants once you've moved in? Still call us.</p>
             </li>
+            <li class="promise-more"><a class="text-link" href="about.html">More about us</a></li>
           </ul>
         </div>
       </section>
 
-      <!-- Converter -->
-      <section class="section tools" id="tools" aria-labelledby="tools-title">
-        <div class="wrap tools-grid">
+      <section class="cta-band" aria-labelledby="cta-title">
+        <div class="wrap cta-inner">
           <div>
-            <h2 id="tools-title" data-reveal>Marla, kanal, square feet</h2>
-            <p class="section-intro">Plot sizes are quoted differently everywhere. Type a size to see it in every unit.</p>
-            <p class="tools-note">
-              Most housing societies count 1 marla as 225 sq ft. Older revenue records use 272.25 sq ft — check which one your papers use.
-            </p>
+            <h2 id="cta-title">Looking for something specific?</h2>
+            <p>Tell us your budget, area and size — we'll send you options that fit, usually the same day.</p>
           </div>
-          <form class="converter" data-converter aria-label="Area converter">
-            <div class="converter-input">
-              <label class="field">
-                <span class="field-label">Size</span>
-                <input type="number" name="value" value="10" min="0" step="any" inputmode="decimal" />
-              </label>
-              <label class="field">
-                <span class="field-label">Unit</span>
-                <select name="unit">
-                  <option value="marla" selected>Marla</option>
-                  <option value="kanal">Kanal</option>
-                  <option value="sqft">Square feet</option>
-                  <option value="sqyd">Square yards</option>
-                  <option value="sqm">Square metres</option>
-                  <option value="acre">Acre</option>
-                </select>
-              </label>
-            </div>
-            <fieldset class="marla-size">
-              <legend class="field-label">1 marla equals</legend>
-              <label><input type="radio" name="marla" value="225" checked /><span>225 sq ft</span></label>
-              <label><input type="radio" name="marla" value="272.25" /><span>272.25 sq ft</span></label>
-            </fieldset>
-            <dl class="converter-out" aria-live="polite" data-converter-out></dl>
-          </form>
-        </div>
-      </section>
-
-      <!-- YouTube -->
-      <section class="section video" aria-labelledby="video-title">
-        <div class="wrap video-inner">
-          <svg class="video-mark" viewBox="0 0 64 64" aria-hidden="true">
-            <rect x="4" y="14" width="56" height="36" rx="10" />
-            <path d="M27 24v16l14-8Z" />
-          </svg>
-          <div>
-            <h2 id="video-title">Walk through properties on YouTube</h2>
-            <p>Video tours of houses, plots and projects — useful if you're overseas or want a first look before visiting.</p>
+          <div class="cta-actions">
+            <a class="btn btn-gold" href="#" data-wa target="_blank" rel="noopener">Message us on WhatsApp</a>
+            <a class="btn btn-outline" href="#" data-tel>Call <span data-field="phoneDisplay"></span></a>
           </div>
-          <a class="btn btn-outline" href="#" data-yt target="_blank" rel="noopener">Watch our channel</a>
-        </div>
-      </section>
-
-      <!-- Contact -->
-      <section class="section contact" id="contact" aria-labelledby="contact-title">
-        <div class="wrap contact-grid">
-          <div class="contact-info">
-            <h2 id="contact-title" data-reveal>Tell us about the property you want</h2>
-            <p class="section-intro">Send a few details and we'll reply on WhatsApp with options.</p>
-            <ul class="contact-ways">
-              <li>
-                <svg class="icon" viewBox="0 0 32 32" aria-hidden="true">
-                  <path d="M8 4h5l2 7-3 2c1.5 3 4 5.5 7 7l2-3 7 2v5c0 1-1 2-2 2C14 26 6 18 6 6c0-1 1-2 2-2Z" />
-                </svg>
-                <div><span class="way-label">Phone</span><a href="#" data-tel data-field="phoneDisplay"></a></div>
-              </li>
-              <li>
-                <svg class="icon" viewBox="0 0 32 32" aria-hidden="true">
-                  <path d="M5 27l2-6a11 11 0 1 1 4 4Z" />
-                  <path d="M12 12c0 4 4 8 8 8l1.5-2-2.5-1.5-1 1c-1.5-.5-3-2-3.5-3.5l1-1L14 10.5Z" />
-                </svg>
-                <div>
-                  <span class="way-label">WhatsApp</span><a href="#" data-wa data-field="phoneDisplay" target="_blank" rel="noopener"></a>
-                </div>
-              </li>
-              <li>
-                <svg class="icon" viewBox="0 0 32 32" aria-hidden="true">
-                  <rect x="4" y="7" width="24" height="18" rx="2" />
-                  <path d="m5 9 11 8 11-8" />
-                </svg>
-                <div><span class="way-label">Email</span><a href="#" data-mail data-field="email"></a></div>
-              </li>
-              <li>
-                <svg class="icon" viewBox="0 0 32 32" aria-hidden="true">
-                  <rect x="5" y="5" width="22" height="22" rx="3" />
-                  <path d="M18 27V17h3l.5-3.5H18v-2c0-1 .5-1.5 1.5-1.5H22V7h-3c-3 0-4.5 2-4.5 4.5v2H12V17h2.5v10" />
-                </svg>
-                <div>
-                  <span class="way-label">Facebook</span><a href="#" data-fb target="_blank" rel="noopener">Mera Ghar Meri Jannat</a>
-                </div>
-              </li>
-            </ul>
-          </div>
-
-          <form class="enquiry" data-enquiry novalidate>
-            <label class="field">
-              <span class="field-label">Your name</span>
-              <input type="text" name="name" autocomplete="name" required />
-              <span class="field-error">Enter your name so we know who we're talking to.</span>
-            </label>
-            <label class="field">
-              <span class="field-label">Phone number</span>
-              <input type="tel" name="phone" autocomplete="tel" placeholder="03xx xxxxxxx" required />
-              <span class="field-error">Enter a phone number we can reach you on.</span>
-            </label>
-            <label class="field">
-              <span class="field-label">I want to</span>
-              <select name="intent">
-                <option>Buy a house or villa</option>
-                <option>Buy a residential plot</option>
-                <option>Buy a commercial property</option>
-                <option>Invest in property</option>
-                <option>Sell my property</option>
-                <option>Something else</option>
-              </select>
-            </label>
-            <label class="field">
-              <span class="field-label">Area, budget or size <span class="optional">(optional)</span></span>
-              <input type="text" name="details" placeholder="e.g. 10 marla in DHA" />
-            </label>
-            <label class="field field-wide">
-              <span class="field-label">Anything else <span class="optional">(optional)</span></span>
-              <textarea name="message" rows="3"></textarea>
-            </label>
-            <div class="enquiry-submit field-wide">
-              <button class="btn btn-gold" type="submit">Send on WhatsApp</button>
-              <p class="hint">Opens WhatsApp with your message ready to send.</p>
-            </div>
-          </form>
         </div>
       </section>
     </main>
 
     <footer class="site-footer">
-      <div class="wrap footer-inner">
-        <div class="footer-brand">
-          <img src="assets/svg/logo.svg" alt="" width="72" height="72" />
-          <div>
+      <div class="wrap">
+        <div class="footer-grid">
+          <div class="footer-brand">
+            <img src="assets/svg/logo.svg" alt="" width="64" height="64" />
             <p class="footer-urdu" lang="ur" dir="rtl">میرا گھر میری جنت</p>
-            <p class="footer-meaning">My home, my paradise.</p>
+            <p class="footer-meaning">Real Estate Solutions — your dream property partner.</p>
+          </div>
+          <nav class="footer-col" aria-label="Explore">
+            <h2 class="footer-title">Explore</h2>
+            <a href="properties.html">Properties</a>
+            <a href="services.html">Services</a>
+            <a href="about.html">About us</a>
+            <a href="contact.html">Contact</a>
+            <a href="properties.html#tools">Area converter</a>
+          </nav>
+          <nav class="footer-col" aria-label="Services">
+            <h2 class="footer-title">Services</h2>
+            <a href="services.html#residential">Residential plots</a>
+            <a href="services.html#commercial">Commercial plots</a>
+            <a href="services.html#homes">Houses &amp; villas</a>
+            <a href="services.html#investment">Property investment</a>
+          </nav>
+          <div class="footer-col">
+            <h2 class="footer-title">Get in touch</h2>
+            <a href="#" data-tel data-field="phoneDisplay"></a>
+            <a href="#" data-mail data-field="email"></a>
+            <a href="#" data-wa target="_blank" rel="noopener">WhatsApp</a>
+            <span class="footer-social">
+              <a href="#" data-fb target="_blank" rel="noopener">Facebook</a>
+              <a href="#" data-yt target="_blank" rel="noopener">YouTube</a>
+            </span>
           </div>
         </div>
-        <nav class="footer-nav" aria-label="Footer">
-          <a href="index.html#properties">Properties</a>
-          <a href="index.html#services">Services</a>
-          <a href="index.html#process">How it works</a>
-          <a href="index.html#tools">Area converter</a>
-          <a href="index.html#contact">Contact</a>
-          <a href="#" data-yt target="_blank" rel="noopener">YouTube</a>
-          <a href="#" data-fb target="_blank" rel="noopener">Facebook</a>
-        </nav>
         <p class="footer-legal">
-          © <span data-year></span> Mera Ghar Meri Jannat · Real Estate Solutions. Prices and availability change often; please confirm with
-          us before deciding.
+          © <span data-year></span> Mera Ghar Meri Jannat. Prices and availability change often; please confirm details with us before
+          making a decision.
         </p>
       </div>
     </footer>

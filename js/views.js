@@ -1,34 +1,62 @@
-// Home page: hero, listings, converter, enquiry and the section motion.
+// One init function per page (Barba namespace). Each returns a cleanup function
+// that runs before the next page transition.
 import { $, $$, data, card, waLink } from "./shared.js";
 import { initHero } from "./hero.js";
 import { revealHeadings, drawIcons, riseIn, tilt, inkText, fillSteps } from "./motion.js";
 
-const { gsap } = window;
+const { gsap, ScrollTrigger } = window;
+
+const run = (fns) => () => fns.forEach((fn) => fn && fn());
 
 export function initHome(container, ctx) {
-  const cleanups = [];
-  const hero = $("[data-hero]", container);
-  if (hero) cleanups.push(initHero(hero, ctx));
-
-  cleanups.push(initListings(container, ctx));
-  cleanups.push(initConverter(container));
-  cleanups.push(initEnquiry(container));
-
-  cleanups.push(revealHeadings(container));
-  cleanups.push(drawIcons($("[data-services]", container)));
-  cleanups.push(fillSteps($("[data-steps]", container)));
-  cleanups.push(inkText($("[data-ink]", container)));
-
-  return () => cleanups.forEach((fn) => fn && fn());
+  const featured = $("[data-featured]", container);
+  featured.innerHTML = data.listings.slice(0, 3).map(card).join("");
+  const cards = $$(".listing", featured);
+  return run([
+    initHero($("[data-hero]", container), ctx),
+    riseIn(cards),
+    tilt(cards),
+    revealHeadings(container),
+    drawIcons($("[data-services]", container)),
+    inkText($("[data-ink]", container)),
+  ]);
 }
 
-function initListings(container, ctx) {
+export function initProperties(container, ctx, url) {
+  return run([initListings(container, url), initConverter(container), revealHeadings(container)]);
+}
+
+export function initServices(container) {
+  return run([
+    revealHeadings(container),
+    tilt($$("[data-tilt-media]", container), { max: 6, "max-glare": 0.18 }),
+    riseIn($$(".service-row", container)),
+    fillSteps($("[data-steps]", container)),
+  ]);
+}
+
+export function initAbout(container) {
+  return run([revealHeadings(container), inkText($("[data-ink]", container))]);
+}
+
+export function initContact(container) {
+  return run([initEnquiry(container), revealHeadings(container)]);
+}
+
+/* ---------- Listings with search and filters (properties page) ---------- */
+function initListings(container, url) {
   const list = $("[data-listings]", container);
   const countEl = $("[data-count]", container);
   const emptyEl = $("[data-empty]", container);
   const filters = $("[data-filters]", container);
   const search = $("[data-search]", container);
-  let state = { category: "all", q: "" };
+  const params = new URL(url, location.href).searchParams;
+  const categories = ["all", "home", "residential", "commercial", "investment"];
+  let state = {
+    category: categories.includes(params.get("category")) ? params.get("category") : "all",
+    q: params.get("q") || "",
+  };
+  search.q.value = state.q;
   let untilt = () => {};
   let unrise = () => {};
 
@@ -59,31 +87,25 @@ function initListings(container, ctx) {
     else
       gsap.from(cards, { autoAlpha: 0, y: 24, duration: 0.6, ease: "power3.out", stagger: 0.06 });
     untilt = tilt(cards);
-    window.ScrollTrigger.refresh();
+    ScrollTrigger.refresh();
   }
 
-  const onFilter = (e) => {
+  filters.addEventListener("click", (e) => {
     const btn = e.target.closest("[data-filter]");
     if (!btn) return;
     state.category = btn.getAttribute("data-filter");
     render();
-  };
-  const onReset = () => {
+  });
+  $("[data-reset]", container).addEventListener("click", () => {
     state = { category: "all", q: "" };
     search.reset();
     render();
-  };
-  const onSearch = (e) => {
+  });
+  search.addEventListener("submit", (e) => {
     e.preventDefault();
-    state.category = search.category.value;
     state.q = search.q.value;
     render();
-    ctx.scroll.to("#properties");
-  };
-
-  filters.addEventListener("click", onFilter);
-  $("[data-reset]", container).addEventListener("click", onReset);
-  search.addEventListener("submit", onSearch);
+  });
   render(true);
 
   return () => {
@@ -92,8 +114,10 @@ function initListings(container, ctx) {
   };
 }
 
+/* ---------- Marla / kanal converter ---------- */
 function initConverter(container) {
   const conv = $("[data-converter]", container);
+  if (!conv) return null;
   const out = $("[data-converter-out]", container);
   const names = {
     marla: "Marla",
@@ -131,11 +155,13 @@ function initConverter(container) {
   conv.addEventListener("change", convert);
   conv.addEventListener("submit", (e) => e.preventDefault());
   convert();
-  return () => {};
+  return null;
 }
 
+/* ---------- Enquiry form → WhatsApp ---------- */
 function initEnquiry(container) {
   const form = $("[data-enquiry]", container);
+  if (!form) return null;
   form.addEventListener("submit", (e) => {
     e.preventDefault();
     let ok = true;
@@ -170,5 +196,5 @@ function initEnquiry(container) {
       this.removeAttribute("aria-invalid");
     }),
   );
-  return () => {};
+  return null;
 }
