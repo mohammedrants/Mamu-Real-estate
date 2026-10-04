@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 320" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <linearGradient id="s" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#08080A"/><stop offset="1" stop-color="#2A2010"/></linearGradient>
+    <linearGradient id="gl" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#F8D98A"/><stop offset="1" stop-color="#C98A2C"/></linearGradient>
+  </defs>
+  <rect width="480" height="320" fill="url(#s)"/>
+  <mask id="mm"><rect width="480" height="320" fill="#fff"/><circle cx="312" cy="58" r="20" fill="#000"/></mask><circle cx="300" cy="66" r="22" fill="#D4A64A" mask="url(#mm)"/><g fill="#F5EFE3" opacity=".55"><circle cx="40" cy="40" r="1.2"/><circle cx="200" cy="30" r="1"/><circle cx="300" cy="50" r="1.2"/><circle cx="440" cy="28" r="1"/><circle cx="140" cy="76" r="1"/></g>
+  <path d="M0 236 C90 222 170 228 250 224 S400 218 480 230 V320 H0Z" fill="#1F1A11" opacity=".9"/>
+  <rect y="256" width="480" height="64" fill="#17140E"/>
+  
+  <path d="M52 140 C77.96000000000001 184.84 79.25800000000001 234.4 61.086 258 L42.914 258 C24.741999999999997 234.4 26.04 184.84 52 140Z" fill="#0A0907"/><path d="M80 166 C100.24 200.96 101.252 239.6 87.084 258 L72.916 258 C58.748000000000005 239.6 59.760000000000005 200.96 80 166Z" fill="#0A0907"/><path d="M404 150 C427.76 191.04000000000002 428.948 236.4 412.316 258 L395.684 258 C379.052 236.4 380.24 191.04000000000002 404 150Z" fill="#0A0907"/><path d="M436 130 C464.16 178.64 465.568 232.4 445.856 258 L426.144 258 C406.432 232.4 407.84 178.64 436 130Z" fill="#0A0907"/>
+  <rect x="110" y="150" width="260" height="106" fill="#1E1A13"/>
+  <rect x="100" y="142" width="280" height="10" fill="#3A2F1C"/>
+  <rect x="190" y="112" width="100" height="32" fill="#2A241A"/>
+  <rect x="184" y="106" width="112" height="7" fill="#3A2F1C"/>
+  <path d="M124 256v-38c0-12 9-20 17-26 8 6 17 14 17 26v38Z" fill="url(#gl)" stroke="#D4A64A" stroke-width="1.5"/><path d="M170 256v-38c0-12 9-20 17-26 8 6 17 14 17 26v38Z" fill="url(#gl)" stroke="#D4A64A" stroke-width="1.5"/><path d="M216 256v-38c0-12 9-20 17-26 8 6 17 14 17 26v38Z" fill="url(#gl)" stroke="#D4A64A" stroke-width="1.5"/><path d="M262 256v-38c0-12 9-20 17-26 8 6 17 14 17 26v38Z" fill="url(#gl)" stroke="#D4A64A" stroke-width="1.5"/><path d="M308 256v-38c0-12 9-20 17-26 8 6 17 14 17 26v38Z" fill="url(#gl)" stroke="#D4A64A" stroke-width="1.5"/>
+  <path d="M150 280 h180 l20 24 H130 Z" fill="#3B5F66"/>
+  <path d="M168 290 h40 M250 296 h50" stroke="#F5EFE3" stroke-width="2" stroke-linecap="round" opacity=".8"/>
+
+</svg>
