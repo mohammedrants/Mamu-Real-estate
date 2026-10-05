@@ -190,24 +190,35 @@ document.addEventListener("click", (e) => {
 
 export function card(item) {
   const cover = (item.images && item.images[0]) || item.image;
-  const perMarla =
-    item.category === "investment"
-      ? ""
-      : `<span class="listing-rate">${formatPrice(pricePerMarla(item))} / marla</span>`;
+  // Price per marla (not for investments) and the size in the other unit, on one quiet line.
+  const rate = [
+    item.category === "investment" ? "" : `${formatPrice(pricePerMarla(item))} / marla`,
+    formatAreaAlt(item.area),
+  ]
+    .filter(Boolean)
+    .map((part) => `<span class="nowrap">${part}</span>`)
+    .join(" · ");
   return `
     <li class="listing">
       <div class="listing-media">
         <img src="${escapeHtml(cover)}" alt="Illustration of the ${escapeHtml(item.title.toLowerCase())}" loading="lazy" width="480" height="320">
-        <span class="listing-tag">${categoryLabels[item.category]}</span>
-        ${item.badge ? `<span class="listing-badge">${escapeHtml(item.badge)}</span>` : ""}
         ${saveButtonHtml(item)}
       </div>
-      ${item.verified ? sealHtml("sm") : ""}
       <div class="listing-body">
-        <p class="listing-price">${formatPrice(item.price)} ${perMarla}</p>
+        <div class="listing-head">
+          <div class="listing-head-text">
+            <p class="listing-meta">
+              <span class="listing-tag">${categoryLabels[item.category]}</span>
+              ${item.badge ? `<span class="listing-badge">${escapeHtml(item.badge)}</span>` : ""}
+            </p>
+            <p class="listing-price">${formatPrice(item.price)}</p>
+            <p class="listing-rate">${rate}</p>
+          </div>
+          ${item.verified ? sealHtml("sm") : ""}
+        </div>
         <h3 class="listing-title"><a class="listing-link" href="${propertyUrl(item)}">${escapeHtml(item.title)}</a></h3>
         <p class="listing-loc">${icons.pin}${escapeHtml(locationOf(item))}</p>
-        <ul class="listing-specs">${specsHtml(item)}<li class="listing-alt">${formatAreaAlt(item.area)}</li></ul>
+        <ul class="listing-specs">${specsHtml(item)}</ul>
         <div class="listing-foot">
           <span class="listing-status">${statusLabels[item.status] || ""}</span>
           <a class="listing-ask" href="${waLink(askText(item))}" target="_blank" rel="noopener">Ask on WhatsApp</a>

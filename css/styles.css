@@ -997,42 +997,57 @@ h3 {
 .listing:hover .listing-media img {
   transform: scale(1.04);
 }
+.listing-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-2);
+}
+.listing-head-text {
+  display: grid;
+  gap: 0.2rem;
+  min-width: 0;
+}
+.listing-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem 0.6rem;
+  min-height: 1.5rem;
+}
 .listing-tag {
-  position: absolute;
-  left: 50%;
-  bottom: 0.75rem;
-  transform: translateX(-50%);
-  padding: 0.25rem 0.8rem;
-  border-radius: 999px;
-  background: rgba(13, 11, 8, 0.85);
-  border: 1px solid var(--line-strong);
-  color: var(--gold-hi);
-  font-size: 0.8rem;
-  white-space: nowrap;
+  color: var(--gold);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
 }
 .listing-body {
   position: relative;
   display: flex;
   flex-direction: column;
   gap: 0.35rem;
-  padding: var(--space-3);
+  padding: var(--space-3) var(--space-2) var(--space-2);
   flex: 1;
 }
+@media (min-width: 400px) {
+  .listing-body {
+    padding: var(--space-3);
+  }
+}
 .listing-price {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: baseline;
-  gap: 0.15rem 0.6rem;
-  padding-right: 4.5rem; /* room for the seal */
   font-family: var(--font-serif);
-  font-size: 1.6rem;
+  font-size: clamp(1.4rem, 1.15rem + 0.8vw, 1.6rem);
+  white-space: nowrap;
   line-height: 1.2;
   color: var(--gold-hi);
 }
 .listing-rate {
-  font-family: var(--font-body);
-  font-size: 0.8rem;
+  font-size: 0.82rem;
   color: var(--muted);
+}
+.nowrap {
+  white-space: nowrap;
 }
 .listing-title {
   font-family: var(--font-body);
@@ -1079,9 +1094,6 @@ h3 {
   stroke-linecap: round;
   stroke-linejoin: round;
 }
-.listing-specs .listing-alt {
-  color: var(--muted);
-}
 .listing-foot {
   position: relative;
   z-index: 2;
@@ -1093,6 +1105,7 @@ h3 {
   padding-top: var(--space-2);
 }
 .listing-status {
+  white-space: nowrap;
   display: inline-flex;
   align-items: center;
   gap: 0.45rem;
@@ -1108,6 +1121,7 @@ h3 {
   box-shadow: 0 0 0 3px rgba(127, 191, 142, 0.18);
 }
 .listing-ask {
+  white-space: nowrap;
   display: inline-flex;
   align-items: center;
   min-height: 44px;
@@ -1122,11 +1136,7 @@ h3 {
   border-bottom-color: var(--gold);
 }
 .listing-badge {
-  position: absolute;
-  top: 22%;
-  left: 50%;
-  transform: translateX(-50%);
-  padding: 0.2rem 0.75rem;
+  padding: 0.15rem 0.65rem;
   border-radius: 999px;
   background: var(--gold-metal);
   color: #1a1408;
@@ -2321,12 +2331,9 @@ body {
   color: var(--gold);
 }
 .seal-sm {
-  /* straddles the line between the picture and the details, taking no space of its own */
-  position: relative;
-  z-index: 3;
-  align-self: flex-end;
-  width: 74px;
-  margin: -40px 0.9rem -56px 0;
+  /* beside the price, like a stamp on the listing */
+  width: clamp(56px, 15vw, 66px);
+  margin-top: 0.15rem;
 }
 .seal-md {
   width: 92px;
